@@ -366,7 +366,7 @@
         .video-container {
             margin-top: 3rem;
             position: relative;
-            max-width: 800px;
+            max-width: 1000px;
             margin-left: auto;
             margin-right: auto;
             border-radius: 12px;
@@ -374,7 +374,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             border: 2px solid var(--agh-green);
             background: var(--black);
-            min-height: 300px;
+            min-height: 400px;
         }
 
         .video-container video {
@@ -382,7 +382,7 @@
             height: auto;
             display: block;
             background: var(--black);
-            min-height: 300px;
+            min-height: 400px;
         }
 
         .video-loading {
@@ -1563,6 +1563,18 @@
             color: var(--agh-red);
         }
 
+        /* TABLET RESPONSIVE */
+        @media (max-width: 1024px) {
+            .video-container {
+                max-width: 90%;
+                min-height: 350px;
+            }
+
+            .video-container video {
+                min-height: 350px;
+            }
+        }
+
         /* MOBILE RESPONSIVENESS */
         @media (max-width: 768px) {
             .nav-links {
@@ -1690,6 +1702,12 @@
             .video-container {
                 margin-top: 2rem;
                 border-radius: 8px;
+                max-width: 100%;
+                min-height: 280px;
+            }
+
+            .video-container video {
+                min-height: 280px;
             }
 
             .attractions-content {
