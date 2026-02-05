@@ -27,6 +27,8 @@
         html {
             scroll-behavior: smooth;
             scroll-padding-top: 80px; /* Wysokość nav + dodatkowy margines */
+            width: 100%;
+            overflow-x: hidden;
         }
 
         body {
@@ -35,6 +37,8 @@
             color: var(--white);
             line-height: 1.5;
             overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
         }
 
         /* NAVIGATION */
@@ -541,6 +545,53 @@
 
         .wizzair-text .air {
             color: #00a1e0;
+        }
+
+        /* TRANSPORT INFO */
+        .transport-info {
+            background: rgba(0, 105, 60, 0.1);
+            border: 1px solid var(--agh-green);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .transport-info h3 {
+            color: var(--agh-green);
+            margin-bottom: 1.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 1.3rem;
+        }
+
+        .transport-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .transport-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--agh-green);
+        }
+
+        .transport-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .transport-text p {
+            margin: 0.3rem 0;
+        }
+
+        .transport-text p strong {
+            color: var(--agh-green);
         }
 
         /* PARTICIPANTS */
@@ -1624,7 +1675,10 @@
             }
 
             .section-content {
-                padding: 0 1rem;
+                padding: 0 0.75rem;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
             }
 
             .participants-grid {
@@ -1657,6 +1711,25 @@
 
             .flight-card {
                 padding: 1.5rem;
+            }
+
+            .transport-info {
+                padding: 1rem;
+                margin-top: 2rem;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+
+            .transport-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.8rem;
+                padding: 1.2rem;
+            }
+
+            .transport-icon {
+                font-size: 1.5rem;
             }
 
             .pkpass-btn {
@@ -2217,6 +2290,23 @@
             10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
             20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
+
+        /* EXTRA SMALL MOBILE */
+        @media (max-width: 480px) {
+            .section-content {
+                padding: 0 0.5rem;
+            }
+            
+            .transport-info {
+                padding: 0.75rem;
+                margin: 1.5rem 0;
+            }
+            
+            .countdown-item {
+                min-width: 60px;
+                padding: 0.75rem 1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -2397,7 +2487,7 @@
         <div class="participants-grid">
             <!-- Participant placeholders - replace src with actual photos -->
             <div class="participant">
-                <img src="img/ludzie/raj.jpg" class="accommodation-img clickable-image">
+                <img src="img/ludzie/raj2.jpg" class="accommodation-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Rajmund</p>
                     <!-- <p class="participant-role"></p> -->
@@ -2538,10 +2628,10 @@
                     <span class="flight-city">VLC</span>
                 </div>
                 <div class="flight-details">
-                    <p><strong>Kraków → Valencia</strong></p>
+                    <p><strong>Kraków → Walencja</strong></p>
                     <p>📅 21 lutego 2026</p>
-                    <p>🕐 Godzina: TBD</p>
-                    <p>✈️ Numer lotu: TBD</p>
+                    <p>🕐 16:25 → 19:40</p>
+                    <p>✈️ Numer lotu: W6 2079</p>
                 </div>
                 <div class="airline-logo">
                     <img src="img/wizz.png" alt="Wizz Air" class="wizz-logo">
@@ -2554,22 +2644,50 @@
                     <span class="flight-city">KRK</span>
                 </div>
                 <div class="flight-details">
-                    <p><strong>Valencia → Kraków</strong></p>
+                    <p><strong>Walencja → Kraków</strong></p>
                     <p>📅 3 marca 2026</p>
-                    <p>🕐 Godzina: TBD</p>
-                    <p>✈️ Numer lotu: TBD</p>
+                    <p>🕐 20:20 → 23:30</p>
+                    <p>✈️ Numer lotu: W6 2080</p>
                 </div>
                 <div class="airline-logo">
                     <img src="img/wizz.png" alt="Wizz Air" class="wizz-logo">
                 </div>
             </div>
         </div>
+        
+        <!-- Transport info po przylocie
+        <div class="section-content">
+            <div class="transport-info">
+                <h3>🚗 Transport z lotniska</h3>
+                <div class="transport-details">
+                    <div class="transport-item">
+                        <div class="transport-icon">🏃‍♂️</div>
+                        <div class="transport-text">
+                            <p><strong>Krzysiek, Olaf, Tomek Franczyk i Łukasz</strong> - idą po auta na wypożyczalnię</p>
+                            <p>Reszta zostaje na lotnisku lub jedzie public transport do centrum</p>
+                        </div>
+                    </div>
+                    <div class="transport-item">
+                        <div class="transport-icon">🚙</div>
+                        <div class="transport-text">
+                            <p><strong>2 samochody</strong> dla całej grupy</p>
+                            <p>Odbiór w lokalizacji blisko lotniska → dojazd do willi</p>
+                        </div>
+                    </div>
+                    <div class="transport-item">
+                        <div class="transport-icon">🏡</div>
+                        <div class="transport-text">
+                            <p><strong>Meet-up w willi</strong> około 21:30-22:00</p>
+                            <p>Pierwszy wieczór w Valencia! 🎉</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
     </section>
 
     
-   
 
-    
 
     <!-- ACCOMMODATION -->
     <section class="accommodation fade-in" id="accommodation">
