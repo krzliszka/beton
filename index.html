@@ -1,0 +1,2684 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#BETON | CALPIK 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --agh-green: #00693c;
+            --agh-green-dark: #004d26;
+            --agh-red: #a71930;
+            --black: #1e1e1e;
+            --white: #f5f5f5;
+            --gray: #888;
+            --concrete: #b8b8b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px; /* Wysokość nav + dodatkowy margines */
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* NAVIGATION */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: var(--black);
+            border-bottom: 1px solid var(--agh-green);
+            padding: 1rem;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .agh-logo {
+            width: 40px;
+            height: 40px;
+            background: url('img/agh.png') no-repeat center;
+            background-size: cover;
+            border-radius: 50%;
+            border: 2px solid var(--agh-green);
+            flex-shrink: 0;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            color: var(--white);
+        }
+
+        .logo span {
+            color: var(--agh-green);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--agh-green);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 2px;
+            background: var(--white);
+            transition: 0.3s;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 6rem 1.5rem 2rem;
+            position: relative;
+            border-bottom: 3px solid var(--agh-green);
+            background: url('img/bck.png') center/cover no-repeat, var(--black);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(0, 102, 51, 0.03) 50px,
+                    rgba(0, 102, 51, 0.03) 51px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(0, 102, 51, 0.03) 50px,
+                    rgba(0, 102, 51, 0.03) 51px
+                );
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.08;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(5rem, 18vw, 14rem);
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            line-height: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .hero-title .outline {
+            color: var(--agh-green);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: var(--concrete);
+            max-width: 600px;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        .hero-date {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            color: var(--white);
+            margin-bottom: 3rem;
+        }
+
+        /* COUNTDOWN */
+        .countdown {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .countdown-item {
+            background: var(--agh-green);
+            padding: 1.5rem 2rem;
+            min-width: 100px;
+        }
+
+        .countdown-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 5rem 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(2rem, 6vw, 4rem);
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--agh-green);
+        }
+
+        /* PHILOSOPHY / MOTTO */
+        .philosophy {
+            border-top: 3px solid var(--agh-green);
+            border-bottom: 3px solid var(--agh-green);
+            position: relative;
+        }
+
+        .philosophy::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            border: 1px solid rgba(0, 102, 51, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .philosophy::after {
+            content: '';
+            position: absolute;
+            bottom: 20px;
+            left: 30px;
+            width: 80px;
+            height: 120px;
+            background: rgba(167, 25, 48, 0.3);
+            transform: rotate(-25deg);
+            pointer-events: none;
+        }
+
+        .philosophy-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -20px;
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 102, 51, 0.05);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            pointer-events: none;
+        }
+
+        .philosophy-content::after {
+            content: '';
+            position: absolute;
+            top: 80px;
+            right: 100px;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(167, 25, 48, 0.05);
+            transform: rotate(45deg);
+            pointer-events: none;
+        }
+
+        .philosophy-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .philosophy-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -20px;
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 102, 51, 0.05);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            pointer-events: none;
+        }
+
+        .philosophy-content::after {
+            content: '';
+            position: absolute;
+            top: 80px;
+            right: 100px;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(167, 25, 48, 0.05);
+            transform: rotate(45deg);
+            pointer-events: none;
+        }
+
+        .motto {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            line-height: 1.4;
+            margin-bottom: 2rem;
+        }
+
+        .motto-highlight {
+            color: var(--agh-red);
+        }
+
+        .philosophy-text {
+            font-size: 1.1rem;
+            color: var(--concrete);
+            max-width: 800px;
+            line-height: 1.8;
+        }
+
+        .video-placeholder {
+            margin-top: 3rem;
+            background: rgba(0,0,0,0.5);
+            border: 2px dashed var(--agh-green);
+            padding: 4rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .video-placeholder:hover {
+            background: rgba(0, 102, 51, 0.2);
+        }
+
+        .video-placeholder-text {
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* FLIGHTS */
+        .flights {
+            background: linear-gradient(135deg, var(--agh-red) 0%, var(--black) 100%);
+            border-bottom: 1px solid rgba(0, 102, 51, 0.3);
+            position: relative;
+        }
+
+        .flights::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(0, 102, 51, 0.3) 50%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .flights::after {
+            content: '';
+            position: absolute;
+            bottom: 40px;
+            right: 60px;
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-top: 40px solid rgba(167, 25, 48, 0.3);
+            transform: rotate(15deg);
+            pointer-events: none;
+        }
+
+        .flights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            position: relative;
+        }
+
+        .flight-card {
+            background: linear-gradient(180deg, rgba(0, 102, 51, 0.1) 0%, transparent 100%);
+            border: 1px solid var(--agh-green);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--agh-green);
+        }
+
+        .flight-direction {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .flight-city {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+        }
+
+        .flight-arrow {
+            font-size: 1.5rem;
+            color: var(--agh-green);
+        }
+
+        .flight-details {
+            color: var(--concrete);
+            font-size: 0.9rem;
+        }
+
+        .flight-details p {
+            margin-bottom: 0.5rem;
+        }
+
+        .airline-logo {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .wizzair-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .wizzair-logo svg {
+            width: 100px;
+            height: auto;
+        }
+
+        .wizzair-text {
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .wizzair-text .wizz {
+            color: #c6007e;
+        }
+
+        .wizzair-text .air {
+            color: #00a1e0;
+        }
+
+        /* PARTICIPANTS */
+        .participants {
+            position: relative;
+        }
+
+        .participants::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: 50px;
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 50px solid rgba(167, 25, 48, 0.5);
+            pointer-events: none;
+        }
+
+        .participants-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .participant {
+            position: relative;
+            aspect-ratio: 1;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid var(--agh-green);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .participant:hover {
+            transform: scale(1.05);
+            border-color: var(--agh-red);
+            z-index: 10;
+        }
+
+        .participant-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.4s;
+        }
+
+        .participant:hover .participant-img {
+            filter: grayscale(0%);
+        }
+
+        .participant-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 102, 51, 0.95));
+            padding: 2rem 1rem 1rem;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .participant:hover .participant-info {
+            transform: translateY(0);
+        }
+
+        .participant-name {
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .participant-role {
+            font-size: 0.75rem;
+            color: var(--concrete);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .participant-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--agh-green-dark) 0%, var(--black) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 2rem;
+            color: var(--agh-green);
+        }
+
+        /* HIGHLIGHTS */
+        .highlights {
+            background: linear-gradient(135deg, var(--agh-green-dark) 0%, var(--black) 100%);
+            position: relative;
+        }
+
+        .highlights::before {
+            content: '';
+            position: absolute;
+            top: 100px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 102, 51, 0.3);
+            clip-path: polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%);
+            pointer-events: none;
+        }
+
+        .highlights::after {
+            content: '';
+            position: absolute;
+            bottom: 50px;
+            right: 30px;
+            width: 120px;
+            height: 60px;
+            background: rgba(167, 25, 48, 0.3);
+            transform: rotate(-15deg);
+            pointer-events: none;
+        }
+
+        /* ADDITIONAL ABSTRACT SHAPES */
+        .abstract-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .shape-pentagon {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: rgba(0, 102, 51, 0.3);
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+        }
+
+        .shape-hexagon {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: rgba(167, 25, 48, 0.3);
+            clip-path: polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%);
+        }
+
+        .shape-integral {
+            position: absolute;
+            font-family: 'Space Mono', monospace;
+            font-size: 60px;
+            color: rgba(0, 102, 51, 0.3);
+            font-weight: bold;
+        }
+
+        .shape-gear {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: rgba(167, 25, 48, 0.3);
+            border-radius: 10px;
+            transform: rotate(45deg);
+        }
+
+        .shape-triangle {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 40px solid transparent;
+            border-right: 40px solid transparent;
+            border-bottom: 70px solid rgba(0, 102, 51, 0.3);
+        }
+
+        /* ANIMATIONS */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .highlight-card {
+            position: relative;
+            aspect-ratio: 3/2;
+            overflow: visible;
+            border: 1px solid rgba(0, 102, 51, 0.5);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .highlight-card:hover {
+            transform: scale(1.15);
+            z-index: 10;
+            border-color: var(--agh-red);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .highlight-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .highlight-placeholder {
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                var(--black),
+                var(--black) 10px,
+                rgba(0, 102, 51, 0.1) 10px,
+                rgba(0, 102, 51, 0.1) 20px
+            );
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .highlight-placeholder-icon {
+            font-size: 3rem;
+            opacity: 0.5;
+        }
+
+        .highlight-placeholder-text {
+            font-size: 0.8rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .highlight-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            padding: 2rem 1rem 1rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .highlight-card:hover .highlight-overlay {
+            opacity: 1;
+        }
+
+        .highlight-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-desc {
+            font-size: 0.8rem;
+            color: var(--concrete);
+        }
+
+        /* NEWS/UPDATES */
+        .news {
+            background: linear-gradient(135deg, var(--agh-green-dark) 0%, var(--black) 100%);
+            border-top: 2px solid var(--agh-green);
+            border-bottom: 2px solid var(--agh-green);
+            padding: 4rem 1.5rem 3rem; /* Zwiększony górny padding */
+            position: relative;
+        }
+
+        .news::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            right: 50px;
+            width: 40px;
+            height: 40px;
+            background: rgba(167, 25, 48, 0.3);
+            transform: rotate(45deg);
+            pointer-events: none;
+        }
+
+        .news-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .news-icon {
+            font-size: 3rem;
+            color: var(--agh-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            border: 3px solid var(--agh-green);
+            border-radius: 50%;
+            background: rgba(0, 102, 51, 0.1);
+        }
+
+        .news-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        .news-text strong {
+            color: var(--agh-green);
+        }
+
+        .news-link {
+            color: var(--agh-green);
+            text-decoration: underline;
+            transition: color 0.3s;
+        }
+
+        .news-link:hover {
+            color: var(--agh-red);
+        }
+
+        .news-countdown {
+            color: var(--agh-green);
+            font-weight: bold;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .news-countdown {
+            color: var(--agh-green);
+            font-weight: bold;
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* ACCOMMODATION */
+        .accommodation {
+            background: linear-gradient(135deg, var(--agh-red) 0%, var(--black) 100%);
+            position: relative;
+        }
+
+        .accommodation::before {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            left: -40px;
+            width: 120px;
+            height: 120px;
+            border: 2px solid rgba(0, 102, 51, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .accommodation-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 3rem 2rem;
+            position: relative;
+        }
+
+        .accommodation-main-img {
+            grid-column: 1;
+            grid-row: 1;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            border: 3px solid var(--agh-green);
+            position: relative;
+        }
+
+        .accommodation-info {
+            grid-column: 2;
+            grid-row: 1;
+            background: rgba(0, 102, 51, 0.05);
+            border-left: 4px solid var(--agh-green);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .accommodation-gallery {
+            grid-column: 1 / 3;
+            grid-row: 2;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .accommodation-gallery-img {
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            border: 2px solid var(--agh-green);
+            position: relative;
+        }
+
+        .accommodation-gallery-placeholder {
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                var(--black),
+                var(--black) 10px,
+                rgba(0, 102, 51, 0.1) 10px,
+                rgba(0, 102, 51, 0.1) 20px
+            );
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .accommodation-gallery-placeholder-icon {
+            font-size: 2rem;
+            opacity: 0.5;
+        }
+
+        .accommodation-gallery-placeholder-text {
+            font-size: 0.7rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* ATTRACTIONS */
+        .attractions {
+            background: linear-gradient(135deg, var(--agh-green-dark) 0%, var(--black) 100%);
+            border-top: 2px solid var(--agh-green);
+            position: relative;
+        }
+
+        .attractions::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            width: 50px;
+            height: 50px;
+            background: rgba(167, 25, 48, 0.3);
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            pointer-events: none;
+        }
+
+        .attractions-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .attractions-image {
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            border: 2px solid var(--agh-green);
+            position: relative;
+        }
+
+        .attractions-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%);
+            transition: all 0.4s;
+        }
+
+        .attractions-image:hover img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+
+        .attractions-info {
+            padding: 2rem;
+        }
+
+        .attractions-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.8rem;
+            color: var(--agh-green);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .attractions-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+        }
+
+        .attractions-list {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .attractions-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: var(--concrete);
+        }
+
+        /* .attractions-list li::before {
+            content: '🚴';
+            margin-right: 0.8rem;
+        } */
+
+        /* ATTRACTIONS GALLERY */
+        .attractions-gallery {
+            position: relative;
+        }
+
+        .attractions-slides {
+            position: relative;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            border: 2px solid var(--agh-green);
+            border-radius: 8px;
+        }
+
+        .attractions-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .attractions-slide.active {
+            opacity: 1;
+        }
+
+        .attractions-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%);
+            transition: all 0.4s;
+        }
+
+        .attractions-slide:hover img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+
+        .attractions-dots {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .attractions-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .attractions-dot.active {
+            background: var(--agh-green);
+            transform: scale(1.2);
+        }
+
+        .attractions-dot:hover {
+            background: var(--agh-red);
+            transform: scale(1.1);
+        }
+
+        .attractions-interactive-list {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .attractions-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: var(--concrete);
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .attractions-item::before {
+            content: '→';
+            color: rgba(0, 102, 51, 0.5);
+            margin-right: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .attractions-item:hover,
+        .attractions-item.active {
+            color: var(--agh-green);
+            font-weight: 500;
+            padding-left: 1rem;
+        }
+
+        .attractions-item:hover::before,
+        .attractions-item.active::before {
+            color: var(--agh-green);
+            transform: translateX(5px);
+        }
+
+        /* ATTRACTIONS GALLERY */
+        .attractions-gallery {
+            position: relative;
+        }
+
+        .attractions-slides {
+            position: relative;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            border: 2px solid var(--agh-green);
+            border-radius: 8px;
+        }
+
+        .attractions-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .attractions-slide.active {
+            opacity: 1;
+        }
+
+        .attractions-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%);
+            transition: all 0.4s;
+        }
+
+        .attractions-slide:hover img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+
+        .attractions-dots {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .attractions-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .attractions-dot.active {
+            background: var(--agh-green);
+            transform: scale(1.2);
+        }
+
+        .attractions-dot:hover {
+            background: var(--agh-red);
+            transform: scale(1.1);
+        }
+
+        .attractions-interactive-list {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .attractions-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+            color: var(--concrete);
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .attractions-item::before {
+            content: '→';
+            color: rgba(0, 102, 51, 0.5);
+            margin-right: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .attractions-item:hover,
+        .attractions-item.active {
+            color: var(--agh-green);
+            font-weight: 500;
+            padding-left: 1rem;
+        }
+
+        .attractions-item:hover::before,
+        .attractions-item.active::before {
+            color: var(--agh-green);
+            transform: translateX(5px);
+        }
+
+        .accommodation-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+            filter: grayscale(20%);
+        }
+
+        .accommodation-main-img:hover .accommodation-img,
+        .accommodation-gallery-img:hover .accommodation-img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+
+        .accommodation-main-img::after,
+        .accommodation-gallery-img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 102, 51, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .accommodation-main-img:hover::after,
+        .accommodation-gallery-img:hover::after {
+            opacity: 1;
+            mix-blend-mode: multiply;
+        }
+
+        .accommodation-address {
+            color: var(--concrete);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .accommodation-features {
+            list-style: none;
+        }
+
+        .accommodation-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+        }
+
+        .accommodation-features li::before {
+            content: '→';
+            color: var(--agh-green);
+            margin-right: 0.5rem;
+        }
+
+        /* PKPASS */
+        .pkpass-section {
+            text-align: center;
+            padding: 4rem 1.5rem;
+            border-top: 1px solid rgba(0, 102, 51, 0.3);
+            border-bottom: 1px solid rgba(0, 102, 51, 0.3);
+            position: relative;
+        }
+
+        .pkpass-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50px;
+            width: 40px;
+            height: 40px;
+            background: rgba(167, 25, 48, 0.4);
+            transform: translateY(-50%) rotate(45deg);
+            pointer-events: none;
+        }
+
+        .pkpass-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .pkpass-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--agh-green);
+            color: var(--white);
+            border: none;
+            padding: 1.5rem 3rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pkpass-btn:hover {
+            background: var(--agh-green-dark);
+            transform: translateY(-2px);
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: #25D366;
+            color: var(--white);
+            border: none;
+            padding: 1.5rem 3rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .whatsapp-btn:hover {
+            background: #20b358;
+            transform: translateY(-2px);
+        }
+
+        .google-sheets-btn {
+            background: #0f9d58;
+        }
+
+        .google-sheets-btn:hover {
+            background: #0d8043;
+        }
+
+        .pkpass-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .pkpass-note {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        /* FOOTER */
+        footer {
+            background: linear-gradient(135deg, var(--agh-red) 0%, var(--black) 100%);
+            /* background: var(--agh-red); */
+            padding: 4rem 1.5rem 2rem;
+            border-top: 3px solid var(--agh-green);
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 50px;
+            width: 90px;
+            height: 90px;
+            border: 3px solid rgba(0, 102, 51, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        footer::after {
+            content: '';
+            position: absolute;
+            top: 60px;
+            right: 80px;
+            width: 60px;
+            height: 60px;
+            background: rgba(167, 25, 48, 0.3);
+            clip-path: polygon(25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%, 0% 50%);
+            pointer-events: none;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .footer-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .contacts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-person {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .contact-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--agh-green);
+            overflow: hidden;
+            background: var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-avatar-placeholder {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            color: var(--agh-green);
+        }
+
+        .contact-name {
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-role {
+            font-size: 0.8rem;
+            color: var(--concrete);
+        }
+
+        .contact-social {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .contact-social-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--agh-green);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .contact-social-btn:hover {
+            background: var(--agh-red);
+            transform: scale(1.1);
+        }
+
+        .contact-social-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--white);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--black);
+            border: 2px solid var(--agh-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background: var(--agh-green);
+            transform: scale(1.1);
+        }
+
+        .social-link svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--white);
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .footer-bottom span {
+            color: var(--agh-red);
+        }
+
+        /* MOBILE RESPONSIVENESS */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--black);
+                flex-direction: column;
+                padding: 1rem;
+                border-bottom: 1px solid var(--agh-green);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .countdown-item {
+                padding: 1rem 1.5rem;
+                min-width: 70px;
+            }
+
+            .countdown-number {
+                font-size: 1.8rem;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .participants-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0.75rem;
+            }
+
+            .participant-info {
+                padding: 1rem 0.5rem 0.5rem;
+            }
+
+            .participant-name {
+                font-size: 0.7rem;
+            }
+
+            .participant-role {
+                font-size: 0.6rem;
+            }
+
+            .highlights-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                max-width: 400px;
+            }
+
+            .contacts {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .flight-card {
+                padding: 1.5rem;
+            }
+
+            .pkpass-btn {
+                padding: 1.2rem 2rem;
+                font-size: 0.85rem;
+            }
+
+            .whatsapp-btn {
+                padding: 1.2rem 2rem;
+                font-size: 0.85rem;
+            }
+
+            .pkpass-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .accommodation-item {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .accommodation-item.reverse {
+                direction: ltr;
+            }
+
+            .accommodation-item.reverse .accommodation-info {
+                border-left: 4px solid var(--agh-green);
+                border-right: none;
+            }
+
+            .accommodation-content {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+                gap: 1.5rem;
+            }
+
+            .accommodation-main-img {
+                grid-column: 1;
+                grid-row: 1;
+                aspect-ratio: 16/10;
+            }
+
+            .accommodation-info {
+                grid-column: 1;
+                grid-row: 2;
+                border-left: 4px solid var(--agh-green);
+            }
+
+            .accommodation-gallery {
+                grid-column: 1;
+                grid-row: 3;
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .attractions-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .attractions-info {
+                padding: 1.5rem;
+            }
+
+            .news-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .news-icon {
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .participants-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .countdown {
+                gap: 0.5rem;
+            }
+
+            .countdown-item {
+                padding: 0.75rem 1rem;
+                min-width: 60px;
+            }
+
+            .countdown-number {
+                font-size: 1.5rem;
+            }
+
+            .countdown-label {
+                font-size: 0.6rem;
+            }
+        }
+
+        /* EXTRA ABSTRACT SHAPES FOR BRUTALIST SPECKLED EFFECT */
+        .flights-grid::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 200px;
+            width: 50px;
+            height: 80px;
+            background: rgba(0, 102, 51, 0.3);
+            transform: rotate(-20deg);
+            pointer-events: none;
+        }
+
+        .flights-grid::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 300px;
+            width: 30px;
+            height: 30px;
+            border: 2px solid rgba(167, 25, 48, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .participants-grid::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 102, 51, 0.3);
+            transform: rotate(30deg);
+            pointer-events: none;
+        }
+
+        .participants-grid::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 100px;
+            width: 70px;
+            height: 70px;
+            border: 2px solid rgba(167, 25, 48, 0.3);
+            transform: rotate(60deg);
+            pointer-events: none;
+        }
+
+        .highlights-grid::before {
+            content: '';
+            position: absolute;
+            top: 50px;
+            right: 150px;
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 25px solid rgba(0, 102, 51, 0.3);
+            transform: rotate(45deg);
+            pointer-events: none;
+        }
+
+        .highlights-grid::after {
+            content: '';
+            position: absolute;
+            bottom: 30px;
+            left: 80px;
+            width: 50px;
+            height: 50px;
+            background: rgba(167, 25, 48, 0.3);
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            pointer-events: none;
+        }
+
+        .accommodation-content::before {
+            content: '';
+            position: absolute;
+            top: 200px;
+            left: 50px;
+            width: 90px;
+            height: 50px;
+            background: rgba(167, 25, 48, 0.3);
+            clip-path: polygon(0% 20%, 60% 20%, 60% 0%, 100% 50%, 60% 100%, 60% 80%, 0% 80%);
+            pointer-events: none;
+        }
+
+        .accommodation-content::after {
+            content: '';
+            position: absolute;
+            bottom: 100px;
+            right: 120px;
+            width: 60px;
+            height: 60px;
+            border: 1px solid rgba(0, 102, 51, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* FOOTER ADDITIONAL SHAPES */
+        .footer-content::before {
+            content: '';
+            position: absolute;
+            bottom: 50px;
+            left: 200px;
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 102, 51, 0.3);
+            transform: rotate(25deg);
+            pointer-events: none;
+        }
+
+        .footer-content::after {
+            content: '';
+            position: absolute;
+            top: 100px;
+            right: 50px;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 35px solid rgba(167, 25, 48, 0.3);
+            transform: rotate(-45deg);
+            pointer-events: none;
+        }
+
+        /* MORE ABSTRACT CHAOS - ADDITIONAL LAYERS */
+        section::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 30px;
+            width: 20px;
+            height: 20px;
+            background: rgba(0, 102, 51, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        section::after {
+            content: '';
+            position: absolute;
+            bottom: 15px;
+            left: 40px;
+            width: 15px;
+            height: 25px;
+            background: rgba(167, 25, 48, 0.3);
+            transform: rotate(45deg);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -30px;
+            width: 25px;
+            height: 25px;
+            border: 1px solid rgba(0, 102, 51, 0.3);
+            transform: rotate(45deg);
+            pointer-events: none;
+        }
+
+        /* SCROLL ANIMATIONS */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* GLITCH EFFECT */
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .hero-title:hover {
+            animation: glitch 0.3s ease-in-out;
+        }
+
+        /* STATIC GALLERY */
+        .gallery-section {
+            background: var(--agh-green-dark);
+            border-top: 3px solid var(--agh-green);
+            border-bottom: 3px solid var(--agh-green);
+            padding: 1rem;
+            max-width: 100%;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            border: 2px solid var(--agh-green);
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .gallery-item:hover {
+            border-color: var(--agh-red);
+            transform: scale(1.02);
+            z-index: 10;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(30%);
+            transition: filter 0.3s;
+        }
+
+        .gallery-item:hover img {
+            filter: grayscale(0%);
+        }
+
+        .gallery-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 102, 51, 0.3) 0%, var(--black) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.25rem;
+            }
+
+            .gallery-item {
+                border-width: 1px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="nav-content">
+            <div class="nav-left">
+                <div class="agh-logo"></div>
+                <div class="logo"><span>betonn.cc</span></div>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#news">News</a></li>
+                <li><a href="#philosophy">#BETON</a></li>
+                <li><a href="#highlights">Highlights</a></li>
+                <li><a href="#participants">Uczestnicy</a></li>
+                <li><a href="#flights">Loty</a></li>
+                <li><a href="#accommodation">Domek</a></li>
+                <li><a href="#attractions">Atrakcje</a></li>
+                <li><a href="#dokumenty">Dokumenty</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+            </ul>
+            <div class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1 class="hero-title">
+            <span class="outline"></span><span>#BETON</span>
+        </h1>
+        <!-- <p class="hero-subtitle">CALPIK · Szosa · Exclusive Access</p> -->
+        <p class="hero-date">21.02 – 03.03.2026</p>
+        
+        <div class="countdown" id="countdown">
+            <div class="countdown-item">
+                <span class="countdown-number" id="days">--</span>
+                <span class="countdown-label">Dni</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="hours">--</span>
+                <span class="countdown-label">Godzin</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="minutes">--</span>
+                <span class="countdown-label">Minut</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="seconds">--</span>
+                <span class="countdown-label">Sekund</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATIC GALLERY -->
+    <!-- <section class="gallery-section">
+        <div class="gallery-grid">
+            <div class="gallery-item"><div class="gallery-placeholder">📸 Zdjęcie 1</div></div>
+            <div class="gallery-item"><div class="gallery-placeholder">📸 Zdjęcie 2</div></div>
+            <div class="gallery-item"><div class="gallery-placeholder">📸 Zdjęcie 3</div></div>
+            <div class="gallery-item"><div class="gallery-placeholder">📸 Zdjęcie 4</div></div>
+        </div>
+    </section> -->
+
+
+        <!-- NEWS/UPDATES -->
+    <section class="news fade-in" id="news">
+        <div class="news-content">
+            <div class="news-icon">📢</div>
+            <div class="news-text">
+                <strong>Aktualności:</strong> Słuchajcie, zostało <span id="news-days" class="news-countdown">--</span> dni, <span id="news-hours" class="news-countdown">--</span> godzin i <span id="news-minutes" class="news-countdown">--</span> minut. W girl math to jest dosłownie 3 godziny, więc wpadam w panikę, ale taką aesthetic. 💅 Moja forma jest aktualnie w lesie (w Ohio), ale totalnie to ignoruję, bo uprawiam agresywny manifesting. ✨ Wizualizuję sobie, że wjeżdżam na te góry jak totalny gigachad po 3 miesiącach mewingu. 🤫🧏‍♂️ Walizka niespakowana, rower w rozsypce, ale aura jest na +1000. To będzie sigma event, nie mogę się doczekać, aż będę moggować hiszpańskie emerytki na przejściach dla pieszych. Slay. ✈️🤡
+            </div>
+        </div>
+    </section>
+
+    <!-- PHILOSOPHY / MOTTO -->
+    <section class="philosophy" id="philosophy">
+        <div class="abstract-shapes">
+            <div class="shape-hexagon" style="top: 20%; left: 8%; animation: float 6s ease-in-out infinite;"></div>
+            <div class="shape-pentagon" style="bottom: 25%; right: 10%; transform: rotate(90deg); animation: float 8s ease-in-out infinite reverse;"></div>
+            <div class="shape-integral" style="top: 60%; left: 5%;">∇</div>
+            <div class="shape-gear" style="bottom: 50%; right: 5%; animation: rotate 20s linear infinite reverse;"></div>
+            <div class="shape-triangle" style="top: 15%; right: 15%;"></div>
+        </div>
+        <div class="philosophy-content">
+            <h2 class="section-title">#BETON</h2>
+            <p class="motto">
+                <span class="motto-highlight">BETON</span> — bo kiedy nogi płoną, płuca krzyczą, a podjazd nie ma końca, jedyne co pozostaje to <span class="motto-highlight">kręcić dalej</span>.
+            </p>
+            <p class="philosophy-text">
+                Nie chodzi o to, żeby być najszybszym. Chodzi o to, żeby być niezniszczalnym. Jak beton, który wytrzymuje każdy nacisk — my wytrzymujemy każdy kilometr. Gdy inni schodzą z roweru, my siadamy głębiej na siodełku. Gdy droga się kończy, my znajdujemy następną. To nie jest wyścig. To sposób na życie.
+                <br><br>
+                Razem pedałujemy, razem cierpimy, razem świętujemy. Bo prawdziwa siła nie jest w nogach — jest w grupie, która nie zostawia nikogo z tyłu.
+            </p>
+            <div class="video-placeholder">
+                <p class="video-placeholder-text">📹 Video wkrótce</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- HIGHLIGHTS -->
+    <section class="highlights fade-in" id="highlights">
+        <div class="abstract-shapes">
+            <div class="shape-hexagon" style="top: 15%; left: 10%; animation: float 9s ease-in-out infinite;"></div>
+            <div class="shape-pentagon" style="top: 60%; right: 12%; transform: rotate(30deg); animation: float 5s ease-in-out infinite reverse;"></div>
+            <div class="shape-integral" style="bottom: 20%; left: 5%;">∑</div>
+            <div class="shape-gear" style="top: 40%; right: 5%; animation: rotate 12s linear infinite reverse;"></div>
+            <div class="shape-triangle" style="top: 80%; left: 15%;"></div>
+        </div>
+        <h2 class="section-title">Highlights</h2>
+        <div class="highlights-grid">
+            <div class="highlight-card">
+                <img src="img/basen.jpg" alt="Valencia highlight" class="highlight-img clickable-image">
+            </div>
+            <div class="highlight-card">
+                <img src="img/salon.jpg" alt="Valencia cycling" class="highlight-img clickable-image">
+
+            </div>
+            <div class="highlight-card">
+                <img src="img/salon.jpg" alt="Valencia cycling" class="highlight-img clickable-image">
+            </div>
+            <div class="highlight-card">
+                <img src="img/basen.jpg" alt="Valencia highlight" class="highlight-img clickable-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- PARTICIPANTS -->
+    <section class="participants fade-in" id="participants">
+        <div class="abstract-shapes">
+            <div class="shape-pentagon" style="top: 10%; left: 5%; animation: float 6s ease-in-out infinite;"></div>
+            <div class="shape-hexagon" style="top: 20%; right: 8%; animation: float 8s ease-in-out infinite reverse;"></div>
+            <div class="shape-integral" style="top: 50%; left: 3%;">∫</div>
+            <div class="shape-gear" style="bottom: 30%; right: 5%; animation: rotate 10s linear infinite;"></div>
+            <div class="shape-triangle" style="bottom: 10%; left: 10%;"></div>
+            <div class="shape-pentagon" style="top: 70%; right: 15%; transform: rotate(45deg); animation: float 7s ease-in-out infinite;"></div>
+            <div class="shape-integral" style="top: 30%; right: 2%;">∂</div>
+        </div>
+        <h2 class="section-title">Uczestnicy</h2>
+        <div class="participants-grid">
+            <!-- Participant placeholders - replace src with actual photos -->
+            <div class="participant">
+                <img src="img/ludzie/raj.jpg" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <p class="participant-name">Rajmund</p>
+                    <!-- <p class="participant-role"></p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Krzysiek</p>
+                    <p class="participant-role">Dinozaur</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Olafcinek</p>
+                    <p class="participant-role">AGH Cooking - Chef de Cuisine</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Natalia</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Łukasz</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Dybi</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Imię 7</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Imię 8</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Imię 9</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Imię 10</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Imię 11</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Imię 12</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Imię 13</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Imię 14</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Imię 15</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Imię 16</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Imię 17</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Imię 18</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FLIGHTS -->
+    <section class="flights fade-in" id="flights">
+        <h2 class="section-title">Loty</h2>
+        <div class="flights-grid">
+            <div class="flight-card">
+                <div class="flight-direction">
+                    <span class="flight-city">KRK</span>
+                    <span class="flight-arrow">→</span>
+                    <span class="flight-city">VLC</span>
+                </div>
+                <div class="flight-details">
+                    <p><strong>Kraków → Valencia</strong></p>
+                    <p>📅 21 lutego 2026</p>
+                    <p>🕐 Godzina: TBD</p>
+                    <p>✈️ Numer lotu: TBD</p>
+                </div>
+                <div class="airline-logo">
+                    <div class="wizzair-text"><span class="wizz">Wizz</span><span class="air">Air</span></div>
+                </div>
+            </div>
+            <div class="flight-card">
+                <div class="flight-direction">
+                    <span class="flight-city">VLC</span>
+                    <span class="flight-arrow">→</span>
+                    <span class="flight-city">KRK</span>
+                </div>
+                <div class="flight-details">
+                    <p><strong>Valencia → Kraków</strong></p>
+                    <p>📅 3 marca 2026</p>
+                    <p>🕐 Godzina: TBD</p>
+                    <p>✈️ Numer lotu: TBD</p>
+                </div>
+                <div class="airline-logo">
+                    <div class="wizzair-text"><span class="wizz">Wizz</span><span class="air">Air</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+   
+
+    
+
+    <!-- ACCOMMODATION -->
+    <section class="accommodation fade-in" id="accommodation">
+        <div class="abstract-shapes">
+            <div class="shape-pentagon" style="top: 10%; right: 8%; animation: float 7s ease-in-out infinite;"></div>
+            <div class="shape-hexagon" style="bottom: 15%; left: 5%; transform: rotate(60deg); animation: float 10s ease-in-out infinite reverse;"></div>
+            <div class="shape-integral" style="top: 50%; right: 3%;">∮</div>
+            <div class="shape-gear" style="top: 20%; left: 12%; animation: rotate 15s linear infinite;"></div>
+            <div class="shape-triangle" style="bottom: 40%; right: 10%;"></div>
+        </div>
+        <h2 class="section-title">Domek</h2>
+        <div class="accommodation-content">
+            
+            <!-- Main image on top left -->
+            <div class="accommodation-main-img">
+                <img src="img/basen.jpg" alt="Basen przy willi" class="accommodation-img clickable-image">
+            </div>
+
+            <!-- Text block on top right -->
+            <div class="accommodation-info">
+                <h3 class="accommodation-name">Villa Xenofilia III</h3>
+                <p class="accommodation-address">
+                    Calle Sabina 4, 03724 Moraira, Alicante, Hiszpania<br>
+                    📍 <a href="https://maps.app.goo.gl/4xD3iw4JiZxKWQtQA" target="_blank" style="color: var(--agh-green); text-decoration: underline;">Jak dojechać</a>
+                </p>
+                <ul class="accommodation-features">
+                    <li>480 m², 8 sypialni</li>
+                    <li>7 łazienek</li>
+                    <li>łóżko dla Żabsona</li>
+                    <li>podgrzewany basen</li>
+                    <li>duże patelnie</li>
+                    <li>palma</li>
+                </ul>
+                <p class="accommodation-address" style="margin-top: 1rem;">
+                    <a href="https://www.flickr.com/photos/122801624@N05/albums/72157715028013556/" target="_blank" style="color: var(--agh-green); text-decoration: underline;">📸 Więcej zdjęć</a>
+                </p>
+            </div>
+
+            <!-- Gallery of smaller images on bottom -->
+            <div class="accommodation-gallery">
+                <div class="accommodation-gallery-img">
+                    <img src="img/salon.jpg" class="accommodation-img">
+                </div>
+                <div class="accommodation-gallery-img">
+                    <img src="img/pok.jpg" class="accommodation-img">
+                </div>
+                <div class="accommodation-gallery-img">
+                    <img src="img/kuch.jpg" class="accommodation-img">
+                </div>
+                <div class="accommodation-gallery-img">
+                    <img src="img/kuchnia.jpg" class="accommodation-img">
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ATTRACTIONS -->
+    <section class="attractions fade-in" id="attractions">
+        <h2 class="section-title">Atrakcje</h2>
+        <div class="attractions-content">
+            <div class="attractions-gallery">
+                <div class="attractions-slides">
+                    <div class="attractions-slide active" data-index="0">
+                        <img src="img/valencia-city.jpg" alt="AGH Cooking on Tour">
+                    </div>
+                    <div class="attractions-slide" data-index="1">
+                        <img src="img/basen.jpg" alt="Próbne matury i chemia">
+                    </div>
+                    <div class="attractions-slide" data-index="2">
+                        <img src="img/salon.jpg" alt="Mistrzostwa Gejogeser">
+                    </div>
+                </div>
+                <div class="attractions-dots">
+                    <span class="attractions-dot active" data-slide="0"></span>
+                    <span class="attractions-dot" data-slide="1"></span>
+                    <span class="attractions-dot" data-slide="2"></span>
+                </div>
+            </div>
+            <div class="attractions-info">
+                <p class="attractions-description">
+                    Ay, mi gatito, miau, miau
+Ay, mi gatito, miau, miau
+Ay, mi gatito, miau, miau
+Ay, mi gatito, miau, miau
+Ay, mi gatito, miau, miau
+Ay, mi gatito, miau, miau
+Ay, mi gatito, miau, miau
+Ay, mi gatito, miau, miau
+
+                </p>
+                <ul class="accommodation-features">
+                    <li>AGH COOKING ON TOUR</li>
+                    <li>Próbne matury i chemia</li>
+                    <li>Mistrzostwa Gejogeser</li>
+                    <li>PRELEKCJA: Czy crosscountry jest ciekawsze od maratonów MTB?</li>
+                    <li>Hazard</li>
+                    <li>Trasy rowerowe wzdłuż wybrzeża</li>
+                </ul>
+                 <ul class="attractions-interactive-list">
+                    <li class="attractions-item active" data-index="0">AGH COOKING ON TOUR</li>
+                    <li class="attractions-item" data-index="1">Próbne matury i chemia</li>
+                    <li class="attractions-item" data-index="2">Mistrzostwa Gejogeser</li>
+            </div>
+        </div>
+    </section>
+
+    <!-- DOKUMENTY -->
+    <section class="pkpass-section fade-in" id="dokumenty">
+        <h2 class="section-title">Dokumenty</h2>
+        <div class="pkpass-buttons">
+            <button class="pkpass-btn" id="pkpassBtn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                </svg>
+                Dodaj do Apple Wallet
+            </button>
+            <a href="https://chat.whatsapp.com/HWstQCFxJvh0lrtiycx7f4?mode=gi_t" class="whatsapp-btn" target="_blank">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.130.332.202c.045.072.045.419-.1.824z"/>
+                </svg>
+                📸 Dołącz do grupy ze zdjęciami
+            </a>
+            <a href="https://docs.google.com/spreadsheets/d/13gnNAsKiCCyduxnG0mY16Ddyl93pOEJ2AjanFxEb_uU/edit?gid=0#gid=0" class="pkpass-btn" target="_blank" style="background: #0f9d58; text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19,3H5C3.9,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.9 20.1,3 19,3M9,17H7V10H9V17M13,17H11V7H13V17M17,17H15V13H17V17Z"/>
+                </svg>
+                📊 Wydatki & Rozliczenie
+            </a>
+        </div>
+        <p class="pkpass-note">Dołącz do grupy ze zdjęciami lub sprawdź wydatki</p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact">
+        <div class="footer-content">
+            <h3 class="footer-title">Kontakt</h3>
+            <div class="contacts">
+                <div class="contact-person">
+                    <div class="contact-avatar">
+                        <span class="contact-avatar-placeholder">K</span>
+                    </div>
+                    <div>
+                        <!-- TODO: Zmienic messengera i WA -->
+                        <p class="contact-name">Rajmund</p>
+                        <div class="contact-social">
+                            <a href="https://wa.me/48123456789" class="contact-social-btn" title="WhatsApp" target="_blank">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                </svg>
+                            </a>
+                            <a href="https://m.me/rajmund.facebook.username" class="contact-social-btn" title="Messenger" target="_blank">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 0C5.373 0 0 4.974 0 11.111c0 3.498 1.744 6.614 4.469 8.654V24l4.088-2.242c1.092.301 2.246.464 3.443.464 6.627 0 12-4.974 12-11.111S18.627 0 12 0zm1.191 14.963l-3.055-3.26-5.963 3.26L10.732 8l3.131 3.259L19.752 8l-6.561 6.963z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-person">
+                    <div class="contact-avatar">
+                        <span class="contact-avatar-placeholder">?</span>
+                    </div>
+                    <div>
+                        <!-- TODO: Zmienic messengera -->
+                        <p class="contact-name">Krzysiek</p> 
+                        <div class="contact-social">
+                            <a href="https://wa.me/48537068569" class="contact-social-btn" title="WhatsApp" target="_blank">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                </svg>
+                            </a>
+                            <a href="https://m.me/krzysiek.facebook.username" class="contact-social-btn" title="Messenger" target="_blank">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 0C5.373 0 0 4.974 0 11.111c0 3.498 1.744 6.614 4.469 8.654V24l4.088-2.242c1.092.301 2.246.464 3.443.464 6.627 0 12-4.974 12-11.111S18.627 0 12 0zm1.191 14.963l-3.055-3.26-5.963 3.26L10.732 8l3.131 3.259L19.752 8l-6.561 6.963z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-person">
+                    <div class="contact-avatar">
+                        <span class="contact-avatar-placeholder">🚴</span>
+                    </div>
+                    <div>
+                        <p class="contact-name">@agh_cycling</p>
+                        <div class="contact-social">
+                            <a href="https://instagram.com/agh_cycling" class="contact-social-btn" title="AGH Cycling Instagram" target="_blank">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>BETON © 2026 | Made with 🐈 </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- IMAGE MODAL -->
+    <div id="imageModal" class="image-modal">
+        <span class="modal-close">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" class="modal-image" src="" alt="">
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Countdown timer
+        function updateCountdown() {
+            const targetDate = new Date('2026-02-21T16:25:00');
+            const now = new Date();
+            const diff = targetDate - now;
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                // Aktualizacja głównego countdownu
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+                
+                // Aktualizacja countdownu w aktualnosiach
+                const newsDays = document.getElementById('news-days');
+                const newsHours = document.getElementById('news-hours');
+                const newsMinutes = document.getElementById('news-minutes');
+                
+                if (newsDays) newsDays.textContent = days;
+                if (newsHours) newsHours.textContent = hours;
+                if (newsMinutes) newsMinutes.textContent = minutes;
+            } else {
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                
+                // Aktualizacja countdownu w aktualnosiach dla przypadku gdy czas minął
+                const newsDays = document.getElementById('news-days');
+                const newsHours = document.getElementById('news-hours');
+                const newsMinutes = document.getElementById('news-minutes');
+                
+                if (newsDays) newsDays.textContent = '0';
+                if (newsHours) newsHours.textContent = '0';
+                if (newsMinutes) newsMinutes.textContent = '0';
+            }
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Smooth scrolling z uwzględnieniem nawigacji
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const navHeight = document.querySelector('nav').offsetHeight;
+                    const targetPosition = target.offsetTop - navHeight - 20; // 20px dodatkowego marginesu
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Attractions gallery interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.attractions-slide');
+            const dots = document.querySelectorAll('.attractions-dot');
+            const items = document.querySelectorAll('.attractions-item');
+            
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === index);
+                });
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+                items.forEach((item, i) => {
+                    item.classList.toggle('active', i === index);
+                });
+            }
+            
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => showSlide(index));
+            });
+            
+            items.forEach((item, index) => {
+                item.addEventListener('mouseenter', () => showSlide(index));
+            });
+        });
+
+        // Attractions gallery interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.attractions-slide');
+            const dots = document.querySelectorAll('.attractions-dot');
+            const items = document.querySelectorAll('.attractions-item');
+            
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === index);
+                });
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+                items.forEach((item, i) => {
+                    item.classList.toggle('active', i === index);
+                });
+            }
+            
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => showSlide(index));
+            });
+            
+            items.forEach((item, index) => {
+                item.addEventListener('mouseenter', () => showSlide(index));
+            });
+        });
+
+        // Scroll animations
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(el => observer.observe(el));
+
+        // PKPass placeholder functionality
+        document.getElementById('pkpassBtn').addEventListener('click', () => {
+            alert('Funkcja generowania PKPass zostanie dodana wkrótce! 🚀');
+            // TODO: Implement actual PKPass generation
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Image modal functionality
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const closeModal = document.querySelector('.modal-close');
+
+        // Add click event to all clickable images
+        document.querySelectorAll('.clickable-image').forEach(img => {
+            img.addEventListener('click', function() {
+                modal.style.display = 'block';
+                modalImage.src = this.src;
+                modalImage.alt = this.alt;
+            });
+        });
+
+        // Close modal when clicking the X
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside the image
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.style.display === 'block') {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
