@@ -230,10 +230,15 @@
 
         /* SECTIONS */
         section {
-            padding: 5rem 1.5rem;
+            padding: 5rem 0;
+            position: relative;
+            width: 100%;
+        }
+
+        .section-content {
             max-width: 1400px;
             margin: 0 auto;
-            position: relative;
+            padding: 0 1.5rem;
         }
 
         .section-title {
@@ -1555,7 +1560,11 @@
             }
 
             section {
-                padding: 3rem 1rem;
+                padding: 3rem 0;
+            }
+
+            .section-content {
+                padding: 0 1rem;
             }
 
             .participants-grid {
@@ -2034,25 +2043,27 @@
 
     <!-- PHILOSOPHY / MOTTO -->
     <section class="philosophy" id="philosophy">
-        <div class="abstract-shapes">
-            <div class="shape-hexagon" style="top: 20%; left: 8%; animation: float 6s ease-in-out infinite;"></div>
-            <div class="shape-pentagon" style="bottom: 25%; right: 10%; transform: rotate(90deg); animation: float 8s ease-in-out infinite reverse;"></div>
-            <div class="shape-integral" style="top: 60%; left: 5%;">∇</div>
-            <div class="shape-gear" style="bottom: 50%; right: 5%; animation: rotate 20s linear infinite reverse;"></div>
-            <div class="shape-triangle" style="top: 15%; right: 15%;"></div>
-        </div>
-        <div class="philosophy-content">
-            <h2 class="section-title">#BETON</h2>
-            <p class="motto">
-                <span class="motto-highlight">BETON</span> — bo kiedy nogi płoną, płuca krzyczą, a podjazd nie ma końca, jedyne co pozostaje to <span class="motto-highlight">kręcić dalej</span>.
-            </p>
-            <p class="philosophy-text">
-                Nie chodzi o to, żeby być najszybszym. Chodzi o to, żeby być niezniszczalnym. Jak beton, który wytrzymuje każdy nacisk — my wytrzymujemy każdy kilometr. Gdy inni schodzą z roweru, my siadamy głębiej na siodełku. Gdy droga się kończy, my znajdujemy następną. To nie jest wyścig. To sposób na życie.
-                <br><br>
-                Razem pedałujemy, razem cierpimy, razem świętujemy. Bo prawdziwa siła nie jest w nogach — jest w grupie, która nie zostawia nikogo z tyłu.
-            </p>
-            <div class="video-placeholder">
-                <p class="video-placeholder-text">📹 Video wkrótce</p>
+        <div class="section-content">
+            <div class="abstract-shapes">
+                <div class="shape-hexagon" style="top: 20%; left: 8%; animation: float 6s ease-in-out infinite;"></div>
+                <div class="shape-pentagon" style="bottom: 25%; right: 10%; transform: rotate(90deg); animation: float 8s ease-in-out infinite reverse;"></div>
+                <div class="shape-integral" style="top: 60%; left: 5%;">∇</div>
+                <div class="shape-gear" style="bottom: 50%; right: 5%; animation: rotate 20s linear infinite reverse;"></div>
+                <div class="shape-triangle" style="top: 15%; right: 15%;"></div>
+            </div>
+            <div class="philosophy-content">
+                <h2 class="section-title">#BETON</h2>
+                <p class="motto">
+                    <span class="motto-highlight">BETON</span> — bo kiedy nogi płoną, płuca krzyczą, a podjazd nie ma końca, jedyne co pozostaje to <span class="motto-highlight">kręcić dalej</span>.
+                </p>
+                <p class="philosophy-text">
+                    Nie chodzi o to, żeby być najszybszym. Chodzi o to, żeby być niezniszczalnym. Jak beton, który wytrzymuje każdy nacisk — my wytrzymujemy każdy kilometr. Gdy inni sch odzą z roweru, my siadamy głębiej na siodełku. Gdy droga się kończy, my znajdujemy następną. To nie jest wyścig. To sposób na życie.
+                    <br><br>
+                    Razem pedałujemy, razem cierpimy, razem świętujemy. Bo prawdziwa siła nie jest w nogach — jest w grupie, która nie zostawia nikogo z tyłu.
+                </p>
+                <div class="video-placeholder">
+                    <p class="video-placeholder-text">📹 Video wkrótce</p>
+                </div>
             </div>
         </div>
     </section>
@@ -2229,9 +2240,10 @@
 
     <!-- FLIGHTS -->
     <section class="flights fade-in" id="flights">
-        <h2 class="section-title">Loty</h2>
-        <div class="flights-grid">
-            <div class="flight-card">
+        <div class="section-content">
+            <h2 class="section-title">Loty</h2>
+            <div class="flights-grid">
+                <div class="flight-card">
                 <div class="flight-direction">
                     <span class="flight-city">KRK</span>
                     <span class="flight-arrow">→</span>
