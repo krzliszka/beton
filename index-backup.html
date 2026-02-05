@@ -2650,6 +2650,235 @@ Ay, mi gatito, miau, miau
     </div> <!-- end main-content -->
 
     <script>
+        // MAIN APPLICATION SCRIPT
+        // PASSWORD PROTECTION
+        const correctPassword = "BETON2026"; // Zmień na swoje hasło
+        
+        function checkPassword() {
+            const input = document.getElementById('password-input');
+            const error = document.getElementById('password-error');
+            
+            if (input.value === correctPassword) {
+                document.getElementById('password-overlay').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                localStorage.setItem('betonAccess', 'granted');
+            } else {
+                error.textContent = 'Nieprawidłowe hasło!';
+                input.value = '';
+                input.style.borderColor = 'var(--agh-red)';
+                setTimeout(() => {
+                    error.textContent = '';
+                    input.style.borderColor = 'var(--agh-green)';
+                }, 2000);
+            }
+        }
+        
+        // Enter key support
+        document.getElementById('password-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+        
+        // COUNTDOWN AND OTHER SCRIPTS
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Countdown timer
+        function updateCountdown() {
+            const targetDate = new Date('2026-02-21T16:25:00');
+            const now = new Date();
+            const diff = targetDate - now;
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                // Aktualizacja głównego countdownu
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+                
+                // Aktualizacja countdownu w aktualnosiach
+                const newsDays = document.getElementById('news-days');
+                const newsHours = document.getElementById('news-hours');
+                const newsMinutes = document.getElementById('news-minutes');
+                
+                if (newsDays) newsDays.textContent = days;
+                if (newsHours) newsHours.textContent = hours;
+                if (newsMinutes) newsMinutes.textContent = minutes;
+            } else {
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                
+                // Aktualizacja countdownu w aktualnosiach dla przypadku gdy czas minął
+                const newsDays = document.getElementById('news-days');
+                const newsHours = document.getElementById('news-hours');
+                const newsMinutes = document.getElementById('news-minutes');
+                
+                if (newsDays) newsDays.textContent = '0';
+                if (newsHours) newsHours.textContent = '0';
+                if (newsMinutes) newsMinutes.textContent = '0';
+            }
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Smooth scrolling z uwzględnieniem nawigacji
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const navHeight = document.querySelector('nav').offsetHeight;
+                    const targetPosition = target.offsetTop - navHeight - 20; // 20px dodatkowego marginesu
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Attractions gallery interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.attractions-slide');
+            const dots = document.querySelectorAll('.attractions-dot');
+            const items = document.querySelectorAll('.attractions-item');
+            
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === index);
+                });
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+                items.forEach((item, i) => {
+                    item.classList.toggle('active', i === index);
+                });
+            }
+            
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => showSlide(index));
+            });
+            
+            items.forEach((item, index) => {
+                item.addEventListener('mouseenter', () => showSlide(index));
+            });
+        });
+
+        // Attractions gallery interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.attractions-slide');
+            const dots = document.querySelectorAll('.attractions-dot');
+            const items = document.querySelectorAll('.attractions-item');
+            
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === index);
+                });
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+                items.forEach((item, i) => {
+                    item.classList.toggle('active', i === index);
+                });
+            }
+            
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => showSlide(index));
+            });
+            
+            items.forEach((item, index) => {
+                item.addEventListener('mouseenter', () => showSlide(index));
+            });
+        });
+
+        // Scroll animations
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(el => observer.observe(el));
+
+        // PKPass placeholder functionality
+        document.getElementById('pkpassBtn').addEventListener('click', () => {
+            alert('Funkcja generowania PKPass zostanie dodana wkrótce! 🚀');
+            // TODO: Implement actual PKPass generation
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Image modal functionality
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const closeModal = document.querySelector('.modal-close');
+
+        // Add click event to all clickable images
+        document.querySelectorAll('.clickable-image').forEach(img => {
+            img.addEventListener('click', function() {
+                modal.style.display = 'block';
+                modalImage.src = this.src;
+                modalImage.alt = this.alt;
+            });
+        });
+
+        // Close modal when clicking the X
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside the image
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.style.display === 'block') {
+                modal.style.display = 'none';
+            }
+        });
+
         // Password authentication
         const correctPassword = 'BETON2026';
         
@@ -2669,10 +2898,9 @@ Ay, mi gatito, miau, miau
                 // Save authentication state
                 localStorage.setItem('betonAuth', 'true');
                 
-                // Start countdown and initialize features
+                // Start countdown and other initializations
                 updateCountdown();
                 setInterval(updateCountdown, 1000);
-                initializeFeatures();
             } else {
                 // Wrong password
                 passwordError.textContent = 'Nieprawidłowe hasło!';
@@ -2684,172 +2912,14 @@ Ay, mi gatito, miau, miau
                     passwordInput.style.animation = '';
                 }, 500);
                 
-                // Show alert
+                // Show alert after a short delay
                 setTimeout(() => {
                     alert('Nieprawidłowe hasło! Sprawdź grupę WhatsApp lub skontaktuj się z organizatorami.');
                 }, 100);
             }
         }
-
-        // Countdown timer
-        function updateCountdown() {
-            const targetDate = new Date('2026-02-21T16:25:00');
-            const now = new Date();
-            const diff = targetDate - now;
-
-            if (diff > 0) {
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-                const daysEl = document.getElementById('days');
-                const hoursEl = document.getElementById('hours');
-                const minutesEl = document.getElementById('minutes');
-                const secondsEl = document.getElementById('seconds');
-                
-                if (daysEl) daysEl.textContent = days.toString().padStart(2, '0');
-                if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
-                if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
-                if (secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
-                
-                const newsDays = document.getElementById('news-days');
-                const newsHours = document.getElementById('news-hours');
-                const newsMinutes = document.getElementById('news-minutes');
-                
-                if (newsDays) newsDays.textContent = days;
-                if (newsHours) newsHours.textContent = hours;
-                if (newsMinutes) newsMinutes.textContent = minutes;
-            } else {
-                const daysEl = document.getElementById('days');
-                const hoursEl = document.getElementById('hours');
-                const minutesEl = document.getElementById('minutes');
-                const secondsEl = document.getElementById('seconds');
-                
-                if (daysEl) daysEl.textContent = '00';
-                if (hoursEl) hoursEl.textContent = '00';
-                if (minutesEl) minutesEl.textContent = '00';
-                if (secondsEl) secondsEl.textContent = '00';
-            }
-        }
-
-        // Initialize other features
-        function initializeFeatures() {
-            // Mobile menu toggle
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            const navLinks = document.getElementById('navLinks');
-            
-            if (mobileMenuBtn && navLinks) {
-                mobileMenuBtn.addEventListener('click', () => {
-                    navLinks.classList.toggle('active');
-                });
-
-                // Close menu when clicking a link
-                document.querySelectorAll('.nav-links a').forEach(link => {
-                    link.addEventListener('click', () => {
-                        navLinks.classList.remove('active');
-                    });
-                });
-            }
-
-            // Attractions gallery functionality
-            const slides = document.querySelectorAll('.attractions-slide');
-            const dots = document.querySelectorAll('.attractions-dot');
-            const listItems = document.querySelectorAll('.attractions-item');
-            let currentSlide = 0;
-
-            function showSlide(index) {
-                slides.forEach(slide => slide.classList.remove('active'));
-                dots.forEach(dot => dot.classList.remove('active'));
-                listItems.forEach(item => item.classList.remove('active'));
-
-                if (slides[index]) slides[index].classList.add('active');
-                if (dots[index]) dots[index].classList.add('active');
-                if (listItems[index]) listItems[index].classList.add('active');
-                
-                currentSlide = index;
-            }
-
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => showSlide(index));
-            });
-
-            listItems.forEach((item, index) => {
-                item.addEventListener('click', () => showSlide(index));
-            });
-
-            if (slides.length > 0) showSlide(0);
-
-            // Scroll animations
-            const fadeElements = document.querySelectorAll('.fade-in');
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, observerOptions);
-
-            fadeElements.forEach(element => {
-                observer.observe(element);
-            });
-
-            // Navigation smooth scroll
-            document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href').substring(1);
-                    const target = document.getElementById(targetId);
-                    
-                    if (target) {
-                        const offset = 80;
-                        const targetPosition = target.offsetTop - offset;
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-
-            // Image modal functionality
-            const modal = document.getElementById('imageModal');
-            const modalImage = document.getElementById('modalImage');
-            const closeModal = document.querySelector('.modal-close');
-
-            if (modal && modalImage && closeModal) {
-                document.querySelectorAll('.clickable-image').forEach(img => {
-                    img.addEventListener('click', function() {
-                        modal.style.display = 'block';
-                        modalImage.src = this.src;
-                        modalImage.alt = this.alt;
-                    });
-                });
-
-                closeModal.addEventListener('click', function() {
-                    modal.style.display = 'none';
-                });
-
-                modal.addEventListener('click', function(e) {
-                    if (e.target === modal) {
-                        modal.style.display = 'none';
-                    }
-                });
-
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape' && modal.style.display === 'block') {
-                        modal.style.display = 'none';
-                    }
-                });
-            }
-        }
         
-        // Initialize application
+        // Check authentication on page load
         document.addEventListener('DOMContentLoaded', function() {
             const isAuthenticated = localStorage.getItem('betonAuth');
             const passwordOverlay = document.getElementById('password-overlay');
@@ -2862,7 +2932,6 @@ Ay, mi gatito, miau, miau
                 mainContent.style.display = 'block';
                 updateCountdown();
                 setInterval(updateCountdown, 1000);
-                initializeFeatures();
             } else {
                 // Show password overlay
                 passwordOverlay.style.display = 'flex';
@@ -2870,20 +2939,18 @@ Ay, mi gatito, miau, miau
                 
                 // Focus on password input
                 setTimeout(() => {
-                    if (passwordInput) passwordInput.focus();
+                    passwordInput.focus();
                 }, 100);
             }
             
             // Enter key support for password input
-            if (passwordInput) {
-                passwordInput.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        checkPassword();
-                    }
-                });
-            }
+            passwordInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    checkPassword();
+                }
+            });
         });
-    </script>    </script>
+    </script>
 </body>
 </html>
