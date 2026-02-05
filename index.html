@@ -1963,9 +1963,175 @@
                 border-width: 1px;
             }
         }
+
+        /* PASSWORD PROTECTION */
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--black) 0%, var(--agh-green-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .password-container {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid var(--agh-green);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            backdrop-filter: blur(10px);
+        }
+
+        .password-logo {
+            margin-bottom: 2rem;
+        }
+
+        .password-logo .agh-logo {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+        }
+
+        .password-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3rem;
+            color: var(--agh-green);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .password-subtitle {
+            color: var(--concrete);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 0;
+        }
+
+        .password-form {
+            margin: 2rem 0;
+        }
+
+        #password-input {
+            width: 100%;
+            padding: 1rem;
+            background: transparent;
+            border: 2px solid var(--agh-green);
+            border-radius: 6px;
+            color: var(--white);
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+            box-sizing: border-box;
+        }
+
+        #password-input:focus {
+            outline: none;
+            border-color: var(--agh-red);
+            box-shadow: 0 0 0 2px rgba(167, 25, 48, 0.3);
+        }
+
+        #password-input::placeholder {
+            color: var(--gray);
+        }
+
+        .password-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--agh-green);
+            border: none;
+            border-radius: 6px;
+            color: var(--white);
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-sizing: border-box;
+        }
+
+        .password-btn:hover {
+            background: var(--agh-green-dark);
+            transform: translateY(-2px);
+        }
+
+        .password-error {
+            color: var(--agh-red);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            min-height: 1rem;
+        }
+
+        .password-hint {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .password-hint p {
+            color: var(--gray);
+            font-size: 0.8rem;
+            margin: 0;
+        }
+
+        .main-content {
+            display: none;
+        }
     </style>
 </head>
 <body>
+    <!-- PASSWORD PROTECTION -->
+    <div id="password-overlay" class="password-overlay">
+        <div class="password-container">
+            <div class="password-logo">
+                <div class="agh-logo"></div>
+                <h1 class="password-title">#BETON</h1>
+                <p class="password-subtitle">CALPIK 2026 • Valencia</p>
+            </div>
+            <div class="password-form">
+                <input type="password" id="password-input" placeholder="Hasło dostępu" autocomplete="off">
+                <button onclick="checkPassword()" class="password-btn">Wejdź</button>
+                <p id="password-error" class="password-error"></p>
+            </div>
+            <div class="password-hint">
+                <p>🔒 Tylko dla uczestników wyjazdu</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main-content" class="main-content">
+    <!-- PASSWORD PROTECTION -->
+    <div id="password-overlay" class="password-overlay">
+        <div class="password-container">
+            <div class="password-logo">
+                <div class="agh-logo"></div>
+                <h1 class="password-title">#BETON</h1>
+                <p class="password-subtitle">CALPIK 2026 • Valencia</p>
+            </div>
+            <div class="password-form">
+                <input type="password" id="password-input" placeholder="Hasło dostępu" autocomplete="off">
+                <button onclick="checkPassword()" class="password-btn">Wejdź</button>
+                <p id="password-error" class="password-error"></p>
+            </div>
+            <div class="password-hint">
+                <p>🔒 Tylko dla uczestników wyjazdu</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main-content" class="main-content">
     <!-- NAVIGATION -->
     <nav>
         <div class="nav-content">
@@ -2493,7 +2659,87 @@ Ay, mi gatito, miau, miau
         </div>
     </div>
 
+    </div> <!-- end main-content -->
+
+    </div> <!-- end main-content -->
+
     <script>
+        // PASSWORD PROTECTION
+        const correctPassword = "BETON2026"; // Zmień na swoje hasło
+        
+        function checkPassword() {
+            const input = document.getElementById('password-input');
+            const error = document.getElementById('password-error');
+            
+            if (input.value === correctPassword) {
+                document.getElementById('password-overlay').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                localStorage.setItem('betonAccess', 'granted');
+            } else {
+                error.textContent = 'Nieprawidłowe hasło!';
+                input.value = '';
+                input.style.borderColor = 'var(--agh-red)';
+                setTimeout(() => {
+                    error.textContent = '';
+                    input.style.borderColor = 'var(--agh-green)';
+                }, 2000);
+            }
+        }
+        
+        // Enter key support
+        document.getElementById('password-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+        
+        // Check if already authenticated
+        if (localStorage.getItem('betonAccess') === 'granted') {
+            document.getElementById('password-overlay').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        } else {
+            document.getElementById('main-content').style.display = 'none';
+        }
+
+        // COUNTDOWN AND OTHER SCRIPTS
+        // PASSWORD PROTECTION
+        const correctPassword = "BETON2026"; // Zmień na swoje hasło
+        
+        function checkPassword() {
+            const input = document.getElementById('password-input');
+            const error = document.getElementById('password-error');
+            
+            if (input.value === correctPassword) {
+                document.getElementById('password-overlay').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                localStorage.setItem('betonAccess', 'granted');
+            } else {
+                error.textContent = 'Nieprawidłowe hasło!';
+                input.value = '';
+                input.style.borderColor = 'var(--agh-red)';
+                setTimeout(() => {
+                    error.textContent = '';
+                    input.style.borderColor = 'var(--agh-green)';
+                }, 2000);
+            }
+        }
+        
+        // Enter key support
+        document.getElementById('password-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+        
+        // Check if already authenticated
+        if (localStorage.getItem('betonAccess') === 'granted') {
+            document.getElementById('password-overlay').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        } else {
+            document.getElementById('main-content').style.display = 'none';
+        }
+
+        // COUNTDOWN AND OTHER SCRIPTS
         // Mobile menu toggle
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navLinks = document.getElementById('navLinks');
