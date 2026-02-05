@@ -691,8 +691,8 @@
 
         .highlight-card {
             position: relative;
-            aspect-ratio: 3/2;
-            overflow: visible;
+            aspect-ratio: 4/3;
+            overflow: hidden;
             border: 1px solid rgba(0, 102, 51, 0.5);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -708,6 +708,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center;
         }
 
         .highlight-placeholder {
@@ -2222,14 +2223,15 @@
 
     <!-- HIGHLIGHTS -->
     <section class="highlights fade-in" id="highlights">
-        <div class="abstract-shapes">
-            <div class="shape-hexagon" style="top: 15%; left: 10%; animation: float 9s ease-in-out infinite;"></div>
-            <div class="shape-pentagon" style="top: 60%; right: 12%; transform: rotate(30deg); animation: float 5s ease-in-out infinite reverse;"></div>
-            <div class="shape-integral" style="bottom: 20%; left: 5%;">∑</div>
-            <div class="shape-gear" style="top: 40%; right: 5%; animation: rotate 12s linear infinite reverse;"></div>
-            <div class="shape-triangle" style="top: 80%; left: 15%;"></div>
-        </div>
-        <h2 class="section-title">Highlights</h2>
+        <div class="section-content">
+            <div class="abstract-shapes">
+                <div class="shape-hexagon" style="top: 15%; left: 10%; animation: float 9s ease-in-out infinite;"></div>
+                <div class="shape-pentagon" style="top: 60%; right: 12%; transform: rotate(30deg); animation: float 5s ease-in-out infinite reverse;"></div>
+                <div class="shape-integral" style="bottom: 20%; left: 5%;">∑</div>
+                <div class="shape-gear" style="top: 40%; right: 5%; animation: rotate 12s linear infinite reverse;"></div>
+                <div class="shape-triangle" style="top: 80%; left: 15%;"></div>
+            </div>
+            <h2 class="section-title">Highlights</h2>
         <div class="highlights-grid">
             <div class="highlight-card">
                 <img src="img/basen.jpg" alt="Valencia highlight" class="highlight-img clickable-image">
@@ -2245,20 +2247,22 @@
                 <img src="img/basen.jpg" alt="Valencia highlight" class="highlight-img clickable-image">
             </div>
         </div>
+        </div>
     </section>
 
     <!-- PARTICIPANTS -->
     <section class="participants fade-in" id="participants">
-        <div class="abstract-shapes">
-            <div class="shape-pentagon" style="top: 10%; left: 5%; animation: float 6s ease-in-out infinite;"></div>
-            <div class="shape-hexagon" style="top: 20%; right: 8%; animation: float 8s ease-in-out infinite reverse;"></div>
-            <div class="shape-integral" style="top: 50%; left: 3%;">∫</div>
-            <div class="shape-gear" style="bottom: 30%; right: 5%; animation: rotate 10s linear infinite;"></div>
-            <div class="shape-triangle" style="bottom: 10%; left: 10%;"></div>
-            <div class="shape-pentagon" style="top: 70%; right: 15%; transform: rotate(45deg); animation: float 7s ease-in-out infinite;"></div>
-            <div class="shape-integral" style="top: 30%; right: 2%;">∂</div>
-        </div>
-        <h2 class="section-title">Uczestnicy</h2>
+        <div class="section-content">
+            <div class="abstract-shapes">
+                <div class="shape-pentagon" style="top: 10%; left: 5%; animation: float 6s ease-in-out infinite;"></div>
+                <div class="shape-hexagon" style="top: 20%; right: 8%; animation: float 8s ease-in-out infinite reverse;"></div>
+                <div class="shape-integral" style="top: 50%; left: 3%;">∫</div>
+                <div class="shape-gear" style="bottom: 30%; right: 5%; animation: rotate 10s linear infinite;"></div>
+                <div class="shape-triangle" style="bottom: 10%; left: 10%;"></div>
+                <div class="shape-pentagon" style="top: 70%; right: 15%; transform: rotate(45deg); animation: float 7s ease-in-out infinite;"></div>
+                <div class="shape-integral" style="top: 30%; right: 2%;">∂</div>
+            </div>
+            <h2 class="section-title">Uczestnicy</h2>
         <div class="participants-grid">
             <!-- Participant placeholders - replace src with actual photos -->
             <div class="participant">
@@ -2387,6 +2391,7 @@
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
+        </div>
         </div>
     </section>
 
@@ -2651,7 +2656,7 @@ Ay, mi gatito, miau, miau
 
     <script>
         // Password authentication
-        const correctPassword = 'BETON2026';
+        const correctPassword = 'alamakota';
         
         function checkPassword() {
             const passwordInput = document.getElementById('password-input');
