@@ -363,29 +363,45 @@
             line-height: 1.8;
         }
 
-        .video-placeholder {
+        .video-container {
             margin-top: 3rem;
-            background: rgba(0,0,0,0.5);
-            border: 2px dashed var(--agh-green);
-            padding: 4rem 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
+            position: relative;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--agh-green);
         }
 
-        .video-placeholder:hover {
-            background: rgba(0, 102, 51, 0.2);
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: var(--black);
         }
 
-        .video-placeholder-text {
+        .video-container:hover {
+            box-shadow: 0 12px 40px rgba(0, 102, 51, 0.4);
+            border-color: var(--agh-red);
+        }
+
+        .video-fallback {
             color: var(--gray);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0,0,0,0.8);
+        }
+
+        .video-fallback a {
+            color: var(--agh-green);
+            text-decoration: underline;
         }
 
         /* FLIGHTS */
         .flights {
-            background: linear-gradient(135deg, var(--agh-red) 0%, var(--black) 100%);
+            background: linear-gradient(135deg, var(--agh-green-dark) 0%, var(--black) 100%);
             border-bottom: 1px solid rgba(0, 102, 51, 0.3);
             position: relative;
         }
@@ -591,7 +607,7 @@
 
         /* HIGHLIGHTS */
         .highlights {
-            background: linear-gradient(135deg, var(--agh-green-dark) 0%, var(--black) 100%);
+            background: linear-gradient(135deg, var(--agh-red) 0%, var(--black) 100%);
             position: relative;
         }
 
@@ -844,7 +860,7 @@
 
         /* ACCOMMODATION */
         .accommodation {
-            background: linear-gradient(135deg, var(--agh-red) 0%, var(--black) 100%);
+            background: linear-gradient(135deg, var(--black) 0%, var(--black) 100%);
             position: relative;
         }
 
@@ -1653,6 +1669,11 @@
                 grid-template-columns: repeat(2, 1fr);
             }
 
+            .video-container {
+                margin-top: 2rem;
+                border-radius: 8px;
+            }
+
             .attractions-content {
                 grid-template-columns: 1fr;
                 gap: 2rem;
@@ -2214,8 +2235,13 @@
                     <br><br>
                     Razem pedałujemy, razem cierpimy, razem świętujemy. Bo prawdziwa siła nie jest w nogach — jest w grupie, która nie zostawia nikogo z tyłu.
                 </p>
-                <div class="video-placeholder">
-                    <p class="video-placeholder-text">📹 Video wkrótce</p>
+                <div class="video-container">
+                    <video controls preload="metadata">
+                        <source src="img/beton.mp4" type="video/mp4">
+                        <p class="video-fallback">Twoja przeglądarka nie obsługuje odtwarzania wideo. 
+                           <a href="img/beton.mp4" target="_blank">Pobierz video bezpośrednio</a>.
+                        </p>
+                    </video>
                 </div>
             </div>
         </div>
@@ -2442,14 +2468,15 @@
 
     <!-- ACCOMMODATION -->
     <section class="accommodation fade-in" id="accommodation">
-        <div class="abstract-shapes">
-            <div class="shape-pentagon" style="top: 10%; right: 8%; animation: float 7s ease-in-out infinite;"></div>
-            <div class="shape-hexagon" style="bottom: 15%; left: 5%; transform: rotate(60deg); animation: float 10s ease-in-out infinite reverse;"></div>
-            <div class="shape-integral" style="top: 50%; right: 3%;">∮</div>
-            <div class="shape-gear" style="top: 20%; left: 12%; animation: rotate 15s linear infinite;"></div>
-            <div class="shape-triangle" style="bottom: 40%; right: 10%;"></div>
-        </div>
-        <h2 class="section-title">Domek</h2>
+        <div class="section-content">
+            <div class="abstract-shapes">
+                <div class="shape-pentagon" style="top: 10%; right: 8%; animation: float 7s ease-in-out infinite;"></div>
+                <div class="shape-hexagon" style="bottom: 15%; left: 5%; transform: rotate(60deg); animation: float 10s ease-in-out infinite reverse;"></div>
+                <div class="shape-integral" style="top: 50%; right: 3%;">∮</div>
+                <div class="shape-gear" style="top: 20%; left: 12%; animation: rotate 15s linear infinite;"></div>
+                <div class="shape-triangle" style="bottom: 40%; right: 10%;"></div>
+            </div>
+            <h2 class="section-title">Domek</h2>
         <div class="accommodation-content">
             
             <!-- Main image on top left -->
@@ -2494,11 +2521,13 @@
             </div>
 
         </div>
+        </div>
     </section>
 
     <!-- ATTRACTIONS -->
     <section class="attractions fade-in" id="attractions">
-        <h2 class="section-title">Atrakcje</h2>
+        <div class="section-content">
+            <h2 class="section-title">Atrakcje</h2>
         <div class="attractions-content">
             <div class="attractions-gallery">
                 <div class="attractions-slides">
@@ -2543,6 +2572,7 @@ Ay, mi gatito, miau, miau
                     <li class="attractions-item" data-index="1">Próbne matury i chemia</li>
                     <li class="attractions-item" data-index="2">Mistrzostwa Gejogeser</li>
             </div>
+        </div>
         </div>
     </section>
 
