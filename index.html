@@ -373,6 +373,8 @@
             overflow: hidden;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             border: 2px solid var(--agh-green);
+            background: var(--black);
+            min-height: 300px;
         }
 
         .video-container video {
@@ -380,6 +382,22 @@
             height: auto;
             display: block;
             background: var(--black);
+            min-height: 300px;
+        }
+
+        .video-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--agh-green);
+            text-align: center;
+            z-index: 1;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .video-container video:canplay + .video-loading {
+            display: none;
         }
 
         .video-container:hover {
@@ -950,7 +968,7 @@
 
         /* ATTRACTIONS */
         .attractions {
-            background: linear-gradient(135deg, var(--agh-green-dark) 0%, var(--black) 100%);
+            background: linear-gradient(135deg, var(--agh-red) 0%, var(--black) 100%);
             border-top: 2px solid var(--agh-green);
             position: relative;
         }
@@ -1383,7 +1401,7 @@
 
         /* FOOTER */
         footer {
-            background: linear-gradient(135deg, var(--agh-red) 0%, var(--black) 100%);
+            background: linear-gradient(135deg, var(--agh-green-dark) 0%, var(--black) 100%);
             /* background: var(--agh-red); */
             padding: 4rem 1.5rem 2rem;
             border-top: 3px solid var(--agh-green);
@@ -2236,12 +2254,16 @@
                     Razem pedałujemy, razem cierpimy, razem świętujemy. Bo prawdziwa siła nie jest w nogach — jest w grupie, która nie zostawia nikogo z tyłu.
                 </p>
                 <div class="video-container">
-                    <video controls preload="metadata">
+                    <video controls preload="auto" playsinline muted="false">
+                        <source src="img/beton.mp4" type="video/mp4; codecs='avc1.42E01E, mp4a.40.2'">
                         <source src="img/beton.mp4" type="video/mp4">
                         <p class="video-fallback">Twoja przeglądarka nie obsługuje odtwarzania wideo. 
                            <a href="img/beton.mp4" target="_blank">Pobierz video bezpośrednio</a>.
                         </p>
                     </video>
+                    <div class="video-loading">
+                        <p>🎥 Ładowanie video... (13MB)</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2880,6 +2902,24 @@ Ay, mi gatito, miau, miau
                     if (e.key === 'Escape' && modal.style.display === 'block') {
                         modal.style.display = 'none';
                     }
+                });
+            }
+
+            // Video loading handler
+            const video = document.querySelector('.video-container video');
+            const videoLoading = document.querySelector('.video-loading');
+            
+            if (video && videoLoading) {
+                video.addEventListener('loadstart', function() {
+                    videoLoading.style.display = 'block';
+                });
+                
+                video.addEventListener('canplay', function() {
+                    videoLoading.style.display = 'none';
+                });
+                
+                video.addEventListener('error', function() {
+                    videoLoading.innerHTML = '<p style="color: var(--agh-red);">❌ Błąd ładowania wideo.<br><a href="img/beton.mp4" target="_blank" style="color: var(--agh-green);">Pobierz bezpośrednio</a></p>';
                 });
             }
         }
