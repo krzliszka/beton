@@ -79,6 +79,13 @@
             font-weight: 400;
             letter-spacing: 0.05em;
             color: var(--white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--agh-green);
+            transform: translateY(-1px);
         }
 
         .logo span {
@@ -2233,7 +2240,7 @@
         <div class="nav-content">
             <div class="nav-left">
                 <div class="agh-logo"></div>
-                <div class="logo"><span>betonn.cc</span></div>
+                <div class="logo" onclick="scrollToTop()"><span>betonn.cc</span></div>
             </div>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#news">News</a></li>
@@ -2777,6 +2784,14 @@ Ay, mi gatito, miau, miau
     </div> <!-- end main-content -->
 
     <script>
+        // Scroll to top function for logo
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
         // Password authentication
         const correctPassword = 'alamakota';
         

@@ -1,0 +1,90 @@
+{
+  "description": "#BETON | CALPIK 2026 - Valencia Cycling Trip",
+  "formatVersion": 1,
+  "organizationName": "AGH Cycling Team",
+  "passTypeIdentifier": "pass.com.betonn.calpik2026",
+  "serialNumber": "BETON-2026-001",
+  "teamIdentifier": "YOUR_TEAM_ID",
+  "webServiceURL": "https://krzliszka.github.io/beton",
+  "authenticationToken": "beton2026token",
+  "logoText": "#BETON",
+  "foregroundColor": "rgb(245, 245, 245)",
+  "backgroundColor": "rgb(30, 30, 30)",
+  "labelColor": "rgb(0, 105, 60)",
+  "eventTicket": {
+    "primaryFields": [
+      {
+        "key": "event",
+        "label": "WYDARZENIE",
+        "value": "#BETON | CALPIK 2026"
+      }
+    ],
+    "secondaryFields": [
+      {
+        "key": "destination",
+        "label": "DESTYNACJA",
+        "value": "Valencia, Hiszpania"
+      },
+      {
+        "key": "dates",
+        "label": "DATY",
+        "value": "17-25 MAJ 2026"
+      }
+    ],
+    "auxiliaryFields": [
+      {
+        "key": "participants",
+        "label": "UCZESTNICY",
+        "value": "Ekipa AGH Cycling"
+      },
+      {
+        "key": "website",
+        "label": "STRONA",
+        "value": "betonn.cc"
+      }
+    ],
+    "backFields": [
+      {
+        "key": "description",
+        "label": "OPIS WYJAZDU",
+        "value": "Filozofia betonu w praktyce - cycling trip do Valencii dla znajomych ze studiów AGH. Eksploracja miasta, plaż i okolicy na dwóch kółkach."
+      },
+      {
+        "key": "accommodation",
+        "label": "ZAKWATEROWANIE",
+        "value": "Villa z basenem, 6 pokoi, idealna na grupę przyjaciół"
+      },
+      {
+        "key": "highlights",
+        "label": "ATRAKCJE",
+        "value": "• City of Arts and Sciences\\n• Stare miasto Valencia\\n• Plaże Costa del Sol\\n• Lokalne tapas tours\\n• Rowerowe wyprawy\\n• Relax przy basenie"
+      },
+      {
+        "key": "philosophy",
+        "label": "FILOZOFIA #BETON",
+        "value": "Solidne fundamenty przyjaźni, trwałe wspomnienia, betonowa determinacja w osiąganiu celów podróżniczych."
+      },
+      {
+        "key": "contact",
+        "label": "KONTAKT",
+        "value": "W przypadku pytań sprawdź betonn.cc lub skontaktuj się z organizatorami."
+      }
+    ]
+  },
+  "barcodes": [
+    {
+      "message": "BETON-VALENCIA-2026",
+      "format": "PKBarcodeFormatQR",
+      "messageEncoding": "iso-8859-1"
+    }
+  ],
+  "locations": [
+    {
+      "latitude": 39.4699,
+      "longitude": -0.3763,
+      "relevantText": "Witamy w Valencii! 🚴‍♂️ Czas na #BETON przygodę!"
+    }
+  ],
+  "maxDistance": 100,
+  "relevantDate": "2026-05-17T10:00+02:00"
+}
