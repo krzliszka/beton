@@ -2087,6 +2087,13 @@
         .main-content {
             display: none;
         }
+        
+        /* Shake animation for wrong password */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
     </style>
 </head>
 <body>
@@ -2096,28 +2103,7 @@
             <div class="password-logo">
                 <div class="agh-logo"></div>
                 <h1 class="password-title">#BETON</h1>
-                <p class="password-subtitle">CALPIK 2026 • Valencia</p>
-            </div>
-            <div class="password-form">
-                <input type="password" id="password-input" placeholder="Hasło dostępu" autocomplete="off">
-                <button onclick="checkPassword()" class="password-btn">Wejdź</button>
-                <p id="password-error" class="password-error"></p>
-            </div>
-            <div class="password-hint">
-                <p>🔒 Tylko dla uczestników wyjazdu</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main-content" class="main-content">
-    <!-- PASSWORD PROTECTION -->
-    <div id="password-overlay" class="password-overlay">
-        <div class="password-container">
-            <div class="password-logo">
-                <div class="agh-logo"></div>
-                <h1 class="password-title">#BETON</h1>
-                <p class="password-subtitle">CALPIK 2026 • Valencia</p>
+                <p class="password-subtitle">CALPIK 2026 • AGH Cycling</p>
             </div>
             <div class="password-form">
                 <input type="password" id="password-input" placeholder="Hasło dostępu" autocomplete="off">
@@ -2936,6 +2922,79 @@ Ay, mi gatito, miau, miau
             if (e.key === 'Escape' && modal.style.display === 'block') {
                 modal.style.display = 'none';
             }
+        });
+
+        // Password authentication
+        const correctPassword = 'BETON2026';
+        
+        function checkPassword() {
+            const passwordInput = document.getElementById('password-input');
+            const passwordError = document.getElementById('password-error');
+            const passwordOverlay = document.getElementById('password-overlay');
+            const mainContent = document.getElementById('main-content');
+            const enteredPassword = passwordInput.value;
+            
+            if (enteredPassword === correctPassword) {
+                // Correct password
+                passwordError.textContent = '';
+                passwordOverlay.style.display = 'none';
+                mainContent.style.display = 'block';
+                
+                // Save authentication state
+                localStorage.setItem('betonAuth', 'true');
+                
+                // Start countdown and other initializations
+                updateCountdown();
+                setInterval(updateCountdown, 1000);
+            } else {
+                // Wrong password
+                passwordError.textContent = 'Nieprawidłowe hasło!';
+                passwordInput.value = '';
+                
+                // Add shake animation
+                passwordInput.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    passwordInput.style.animation = '';
+                }, 500);
+                
+                // Show alert after a short delay
+                setTimeout(() => {
+                    alert('Nieprawidłowe hasło! Sprawdź grupę WhatsApp lub skontaktuj się z organizatorami.');
+                }, 100);
+            }
+        }
+        
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const isAuthenticated = localStorage.getItem('betonAuth');
+            const passwordOverlay = document.getElementById('password-overlay');
+            const mainContent = document.getElementById('main-content');
+            const passwordInput = document.getElementById('password-input');
+            
+            if (isAuthenticated === 'true') {
+                // User already authenticated
+                passwordOverlay.style.display = 'none';
+                mainContent.style.display = 'block';
+                updateCountdown();
+                setInterval(updateCountdown, 1000);
+            } else {
+                // Show password overlay
+                passwordOverlay.style.display = 'flex';
+                mainContent.style.display = 'none';
+                
+                // Focus on password input
+                setTimeout(() => {
+                    passwordInput.focus();
+                }, 100);
+            }
+            
+            // Enter key support for password input
+            passwordInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    checkPassword();
+                }
+            });
         });
     </script>
 </body>
