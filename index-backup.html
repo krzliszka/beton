@@ -2646,13 +2646,22 @@ Ay, mi gatito, miau, miau
     <script>
         // MAIN APPLICATION SCRIPT
         // PASSWORD PROTECTION
-        const correctPassword = "alamakota"; // Zmień na swoje hasło
+        const correctPasswordHash = '63b347973bb99fed9277b33cb4646b205e9a31331acfa574add3d2351f445e43'; // SHA-256 hash of password
         
-        function checkPassword() {
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+        
+        async function checkPassword() {
             const input = document.getElementById('password-input');
             const error = document.getElementById('password-error');
+            const enteredPasswordHash = await hashPassword(input.value);
             
-            if (input.value === correctPassword) {
+            if (enteredPasswordHash === correctPasswordHash) {
                 document.getElementById('password-overlay').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
                 localStorage.setItem('betonAccess', 'granted');
@@ -2873,17 +2882,26 @@ Ay, mi gatito, miau, miau
             }
         });
 
-        // Password authentication
-        const correctPassword = 'alamakota';
+        // Password authentication with hash
+        const correctPasswordHash = '63b347973bb99fed9277b33cb4646b205e9a31331acfa574add3d2351f445e43'; // SHA-256 hash of password
         
-        function checkPassword() {
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+        
+        async function checkPassword() {
             const passwordInput = document.getElementById('password-input');
             const passwordError = document.getElementById('password-error');
             const passwordOverlay = document.getElementById('password-overlay');
             const mainContent = document.getElementById('main-content');
             const enteredPassword = passwordInput.value;
+            const enteredPasswordHash = await hashPassword(enteredPassword);
             
-            if (enteredPassword === correctPassword) {
+            if (enteredPasswordHash === correctPasswordHash) {
                 // Correct password
                 passwordError.textContent = '';
                 passwordOverlay.style.display = 'none';
