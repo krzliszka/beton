@@ -1324,6 +1324,7 @@
             object-fit: cover;
             transition: transform 0.5s;
             filter: grayscale(20%);
+            cursor: pointer;
         }
 
         .accommodation-main-img:hover .accommodation-img,
@@ -1343,6 +1344,7 @@
             background: rgba(0, 102, 51, 0.1);
             opacity: 0;
             transition: opacity 0.3s;
+            pointer-events: none;
         }
 
         .accommodation-main-img:hover::after,
@@ -3127,8 +3129,9 @@ Ay, mi gatito, miau, miau
                     modal.style.display = 'none';
                 });
 
+                // Close modal when clicking outside the image
                 modal.addEventListener('click', function(e) {
-                    if (e.target === modal) {
+                    if (e.target === modal || e.target.classList.contains('modal-content')) {
                         modal.style.display = 'none';
                     }
                 });
