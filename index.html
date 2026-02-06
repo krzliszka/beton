@@ -807,6 +807,7 @@
             height: 100%;
             object-fit: cover;
             object-position: center;
+            transition: opacity 0.3s ease-in-out;
         }
 
         .highlight-placeholder {
@@ -2453,12 +2454,12 @@
                 <div class="shape-triangle" style="top: 80%; left: 15%;"></div>
             </div>
             <h2 class="section-title">Highlights</h2>
-        <div class="highlights-grid">
+        <div class="highlights-grid" id="highlightsGrid">
             <div class="highlight-card">
-                <img src="img/basen.jpg" alt="Valencia highlight" class="highlight-img clickable-image">
+                <img src="img/paella.JPEG" alt="Pasza" class="highlight-img clickable-image">
             </div>
             <div class="highlight-card">
-                <img src="img/salon.jpg" alt="Valencia cycling" class="highlight-img clickable-image">
+                <img src="img/highl.jpeg" alt="Valencia cycling" class="highlight-img clickable-image">
 
             </div>
             <div class="highlight-card">
@@ -2730,16 +2731,16 @@
             <!-- Gallery of smaller images on bottom -->
             <div class="accommodation-gallery">
                 <div class="accommodation-gallery-img">
-                    <img src="img/salon.jpg" class="accommodation-img">
+                    <img src="img/salon.jpg" class="accommodation-img clickable-image">
                 </div>
                 <div class="accommodation-gallery-img">
-                    <img src="img/pok.jpg" class="accommodation-img">
+                    <img src="img/pok.jpg" class="accommodation-img clickable-image">
                 </div>
                 <div class="accommodation-gallery-img">
-                    <img src="img/kuch.jpg" class="accommodation-img">
+                    <img src="img/kuch.jpg" class="accommodation-img clickable-image">
                 </div>
                 <div class="accommodation-gallery-img">
-                    <img src="img/kuchnia.jpg" class="accommodation-img">
+                    <img src="img/kuchnia.jpg" class="accommodation-img clickable-image">
                 </div>
             </div>
 
@@ -2755,23 +2756,31 @@
             <div class="attractions-gallery">
                 <div class="attractions-slides">
                     <div class="attractions-slide active" data-index="0">
-                        <img src="img/cook.jpg" alt="AGH Cooking on Tour">
+                        <img src="img/cook2.JPEG" alt="AGH Cooking on Tour" class="clickable-image">
                     </div>
                     <div class="attractions-slide" data-index="1">
-                        <img src="img/at3.JPG" alt="Próbne matury i chemia">
+                        <img src="img/at3.JPG" alt="Próbne matury i chemia" class="clickable-image">
                     </div>
                     <div class="attractions-slide" data-index="2">
-                        <img src="img/at4.png" alt="Mistrzostwa Gejogeser">
+                        <img src="img/at4.png" alt="Mistrzostwa Gejogeser" class="clickable-image">
                     </div>
-                    <div class="attractions-slide active" data-index="3">
-                        <img src="img/mtb.png" alt="PRELEKCJA: Czy crosscountry jest ciekawsze od maratonów MTB?">
+                    <div class="attractions-slide" data-index="3">
+                        <img src="img/mtb.png" alt="PRELEKCJA: Czy crosscountry jest ciekawsze od maratonów MTB?" class="clickable-image">
+                    </div>
+                    <div class="attractions-slide" data-index="4">
+                        <img src="img/at1.png" alt="Hazard" class="clickable-image">
+                    </div>
+                    <div class="attractions-slide" data-index="5">
+                        <img src="img/at2.png" alt="Inne atrakcje" class="clickable-image">
                     </div>
                 </div>
                 <div class="attractions-dots">
                     <span class="attractions-dot active" data-slide="0"></span>
                     <span class="attractions-dot" data-slide="1"></span>
                     <span class="attractions-dot" data-slide="2"></span>
-                    <span class="attractions-dot" data-slide="2"></span>
+                    <span class="attractions-dot" data-slide="3"></span>
+                    <span class="attractions-dot" data-slide="4"></span>
+                    <span class="attractions-dot" data-slide="5"></span>
                 </div>
             </div>
             <div class="attractions-info">
@@ -3000,6 +3009,9 @@ Ay, mi gatito, miau, miau
 
         // Initialize other features
         function initializeFeatures() {
+            // Initialize highlights rotation
+            initHighlightsRotation();
+            
             // Mobile menu toggle
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const navLinks = document.getElementById('navLinks');
@@ -3130,6 +3142,67 @@ Ay, mi gatito, miau, miau
                     videoLoading.innerHTML = '<p style="color: var(--agh-red);">❌ Błąd ładowania wideo.<br><a href="img/beton.mp4" target="_blank" style="color: var(--agh-green);">Pobierz bezpośrednio</a></p>';
                 });
             }
+        }
+        
+        // Highlights images rotation
+        function initHighlightsRotation() {
+            const highlightsGrid = document.getElementById('highlightsGrid');
+            if (!highlightsGrid) return;
+            
+            // All available highlight images
+            const allImages = [
+                { src: 'img/paella.JPEG', alt: 'Paella Valencia' },
+                { src: 'img/highl.jpeg', alt: 'Valencia cycling' },
+                { src: 'img/salon.jpg', alt: 'Villa interior' },
+                { src: 'img/basen.jpg', alt: 'Pool at villa' },
+                { src: 'img/cook1.JPEG', alt: 'Cooking adventures' },
+                { src: 'img/cook2.JPEG', alt: 'More cooking' },
+                { src: 'img/kuch.jpg', alt: 'Kitchen vibes' },
+                { src: 'img/kuchnia.jpg', alt: 'Kitchen setup' },
+                { src: 'img/pok.jpg', alt: 'Room view' },
+                { src: 'img/piano.jpg', alt: 'Piano corner' },
+                { src: 'img/at1.png', alt: 'Attraction 1' },
+                { src: 'img/at2.png', alt: 'Attraction 2' }
+            ];
+            
+            let currentImages = [];
+            
+            function shuffleArray(array) {
+                const shuffled = [...array];
+                for (let i = shuffled.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                }
+                return shuffled;
+            }
+            
+            function rotateImages() {
+                // Shuffle all images and pick first 4
+                const shuffledImages = shuffleArray(allImages);
+                currentImages = shuffledImages.slice(0, 4);
+                
+                // Update each highlight card
+                const cards = highlightsGrid.querySelectorAll('.highlight-card img');
+                cards.forEach((img, index) => {
+                    if (currentImages[index]) {
+                        // Fade out
+                        img.style.opacity = '0';
+                        
+                        setTimeout(() => {
+                            img.src = currentImages[index].src;
+                            img.alt = currentImages[index].alt;
+                            // Fade in
+                            img.style.opacity = '1';
+                        }, 300);
+                    }
+                });
+            }
+            
+            // Initial rotation
+            rotateImages();
+            
+            // Rotate every 8 seconds
+            setInterval(rotateImages, 8000);
         }
         
         // Initialize application
