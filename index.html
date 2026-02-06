@@ -2497,10 +2497,10 @@
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <img src="img/ludzie/ja.JPEG" class="accommodation-img clickable-image">
                 <div class="participant-info">
-                    <!-- <p class="participant-name">Krzysiek</p>
-                    <p class="participant-role">Dinozaur</p> -->
+                    <p class="participant-name">Krzysiek</p>
+                    <!-- <p class="participant-role">Dinozaur</p> -->
                 </div>
             </div>
             <div class="participant">
@@ -3169,30 +3169,43 @@ Ay, mi gatito, miau, miau
             
             // All available highlight images
             const allImages = [
-                { src: 'img/paella.JPEG', alt: 'Paella Valencia' },
-                { src: 'img/highl.jpeg', alt: 'Valencia cycling' },
-                { src: 'img/salon.jpg', alt: 'Villa interior' },
-                { src: 'img/basen.jpg', alt: 'Pool at villa' },
-                { src: 'img/cook1.JPEG', alt: 'Cooking adventures' },
-                { src: 'img/cook2.JPEG', alt: 'More cooking' },
-                { src: 'img/kuch.jpg', alt: 'Kitchen vibes' },
-                { src: 'img/kuchnia.jpg', alt: 'Kitchen setup' },
-                { src: 'img/pok.jpg', alt: 'Room view' },
-                { src: 'img/piano.jpg', alt: 'Piano corner' },
-                { src: 'img/at1.png', alt: 'Attraction 1' },
-                { src: 'img/at2.png', alt: 'Attraction 2' }
+                { src: 'img/paella2.png', alt: 'PASZA' },
+                { src: 'img/highl.jpeg', alt: 'Menele' },
+                { src: 'img/beton.JPEG', alt: 'beton' },
+                { src: 'img/cook3.jpg', alt: 'ciasto dehydracja' },
+                { src: 'img/cook1.JPEG', alt: 'Ubijanie' },
+                { src: 'img/bezy.jpg', alt: 'bezy' },
+                { src: 'img/donsimon.jpg', alt: 'donsimon' },
+                { src: 'img/beton2.JPG', alt: 'beton beton' },
+                { src: 'img/hazard.png', alt: 'hazard' },
+                { src: 'img/s.jpg', alt: 'Piano corner' },
+                { src: 'img/s.png', alt: 'Attraction 1' },
+                { src: 'img/s.png', alt: 'Attraction 2' }
             ];
             
             const cards = highlightsGrid.querySelectorAll('.highlight-card img');
-            let usedImages = [];
             
-            // Initialize with first 4 random images
-            const shuffledInitial = [...allImages].sort(() => 0.5 - Math.random());
-            cards.forEach((img, index) => {
-                if (shuffledInitial[index]) {
-                    img.src = shuffledInitial[index].src;
-                    img.alt = shuffledInitial[index].alt;
-                    usedImages.push(shuffledInitial[index]);
+            // Initialize with first 4 unique random images using proper Fisher-Yates shuffle
+            const shuffledInitial = [...allImages];
+            for (let i = shuffledInitial.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledInitial[i], shuffledInitial[j]] = [shuffledInitial[j], shuffledInitial[i]];
+            }
+            
+            // Set initial images ensuring no duplicates (take first 4 unique)
+            const usedInitialSrcs = new Set();
+            let imageIndex = 0;
+            cards.forEach((img, cardIndex) => {
+                // Find next unique image
+                while (imageIndex < shuffledInitial.length && usedInitialSrcs.has(shuffledInitial[imageIndex].src)) {
+                    imageIndex++;
+                }
+                
+                if (imageIndex < shuffledInitial.length) {
+                    img.src = shuffledInitial[imageIndex].src;
+                    img.alt = shuffledInitial[imageIndex].alt;
+                    usedInitialSrcs.add(shuffledInitial[imageIndex].src);
+                    imageIndex++;
                 }
             });
             
@@ -3200,17 +3213,35 @@ Ay, mi gatito, miau, miau
                 // Pick random card index
                 const randomCardIndex = Math.floor(Math.random() * cards.length);
                 const currentCard = cards[randomCardIndex];
+                const oldSrc = currentCard.src;
                 
-                // Get available images (not currently displayed)
-                const currentSrcs = Array.from(cards).map(img => img.src);
-                const availableImages = allImages.filter(img => !currentSrcs.includes(img.src));
+                // Get currently displayed images by extracting filename (excluding the one we're changing)
+                const currentDisplayedSrcs = new Set();
+                cards.forEach((card, idx) => {
+                    if (idx !== randomCardIndex) {
+                        // Extract filename and reconstruct path
+                        const filename = card.src.split('/').pop();
+                        currentDisplayedSrcs.add('img/' + filename);
+                    }
+                });
+                
+                // Find available images that are not currently displayed
+                const availableImages = allImages.filter(img => !currentDisplayedSrcs.has(img.src));
                 
                 if (availableImages.length === 0) {
-                    // If all images are used, allow any image
-                    availableImages.push(...allImages);
+                    console.warn('No available unique images - using fallback');
+                    // Fallback: use any image different from current card
+                    const currentFilename = oldSrc.split('/').pop();
+                    const currentImgSrc = 'img/' + currentFilename;
+                    const differentImages = allImages.filter(img => img.src !== currentImgSrc);
+                    if (differentImages.length > 0) {
+                        availableImages.push(...differentImages);
+                    } else {
+                        return; // Skip rotation if no different image found
+                    }
                 }
                 
-                // Pick random new image
+                // Pick random image from available ones
                 const randomImage = availableImages[Math.floor(Math.random() * availableImages.length)];
                 
                 // Fade out current image
