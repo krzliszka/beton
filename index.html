@@ -3103,8 +3103,23 @@ Ay, mi gatito, miau, miau
                 document.querySelectorAll('.clickable-image').forEach(img => {
                     img.addEventListener('click', function() {
                         modal.style.display = 'block';
-                        modalImage.src = this.src;
-                        modalImage.alt = this.alt;
+                        
+                        // Special handling for attractions slides - use active slide image
+                        if (this.closest('.attractions-slide')) {
+                            const activeSlide = document.querySelector('.attractions-slide.active');
+                            const activeImg = activeSlide ? activeSlide.querySelector('img') : null;
+                            if (activeImg) {
+                                modalImage.src = activeImg.src;
+                                modalImage.alt = activeImg.alt;
+                            } else {
+                                modalImage.src = this.src;
+                                modalImage.alt = this.alt;
+                            }
+                        } else {
+                            // For all other images, use the clicked image
+                            modalImage.src = this.src;
+                            modalImage.alt = this.alt;
+                        }
                     });
                 });
 
@@ -3165,44 +3180,49 @@ Ay, mi gatito, miau, miau
                 { src: 'img/at2.png', alt: 'Attraction 2' }
             ];
             
-            let currentImages = [];
+            const cards = highlightsGrid.querySelectorAll('.highlight-card img');
+            let usedImages = [];
             
-            function shuffleArray(array) {
-                const shuffled = [...array];
-                for (let i = shuffled.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            // Initialize with first 4 random images
+            const shuffledInitial = [...allImages].sort(() => 0.5 - Math.random());
+            cards.forEach((img, index) => {
+                if (shuffledInitial[index]) {
+                    img.src = shuffledInitial[index].src;
+                    img.alt = shuffledInitial[index].alt;
+                    usedImages.push(shuffledInitial[index]);
                 }
-                return shuffled;
-            }
+            });
             
-            function rotateImages() {
-                // Shuffle all images and pick first 4
-                const shuffledImages = shuffleArray(allImages);
-                currentImages = shuffledImages.slice(0, 4);
+            function rotateSingleImage() {
+                // Pick random card index
+                const randomCardIndex = Math.floor(Math.random() * cards.length);
+                const currentCard = cards[randomCardIndex];
                 
-                // Update each highlight card
-                const cards = highlightsGrid.querySelectorAll('.highlight-card img');
-                cards.forEach((img, index) => {
-                    if (currentImages[index]) {
-                        // Fade out
-                        img.style.opacity = '0';
-                        
-                        setTimeout(() => {
-                            img.src = currentImages[index].src;
-                            img.alt = currentImages[index].alt;
-                            // Fade in
-                            img.style.opacity = '1';
-                        }, 300);
-                    }
-                });
+                // Get available images (not currently displayed)
+                const currentSrcs = Array.from(cards).map(img => img.src);
+                const availableImages = allImages.filter(img => !currentSrcs.includes(img.src));
+                
+                if (availableImages.length === 0) {
+                    // If all images are used, allow any image
+                    availableImages.push(...allImages);
+                }
+                
+                // Pick random new image
+                const randomImage = availableImages[Math.floor(Math.random() * availableImages.length)];
+                
+                // Fade out current image
+                currentCard.style.opacity = '0';
+                
+                setTimeout(() => {
+                    currentCard.src = randomImage.src;
+                    currentCard.alt = randomImage.alt;
+                    // Fade in
+                    currentCard.style.opacity = '1';
+                }, 300);
             }
             
-            // Initial rotation
-            rotateImages();
-            
-            // Rotate every 8 seconds
-            setInterval(rotateImages, 8000);
+            // Rotate single image every 6 seconds
+            setInterval(rotateSingleImage, 6000);
         }
         
         // Initialize application
