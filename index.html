@@ -2616,6 +2616,20 @@
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Imię 19</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Imię 20</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
         </div>
         </div>
     </section>
@@ -3187,78 +3201,43 @@ Ay, mi gatito, miau, miau
             
             const cards = highlightsGrid.querySelectorAll('.highlight-card img');
             
-            // Initialize with first 4 unique random images using proper Fisher-Yates shuffle
-            const shuffledInitial = [...allImages];
-            for (let i = shuffledInitial.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffledInitial[i], shuffledInitial[j]] = [shuffledInitial[j], shuffledInitial[i]];
-            }
-            
-            // Set initial images ensuring no duplicates (take first 4 unique)
-            const usedInitialSrcs = new Set();
-            let imageIndex = 0;
+            // Initialize with first 4 images from the list (sequential)
             cards.forEach((img, cardIndex) => {
-                // Find next unique image
-                while (imageIndex < shuffledInitial.length && usedInitialSrcs.has(shuffledInitial[imageIndex].src)) {
-                    imageIndex++;
-                }
-                
-                if (imageIndex < shuffledInitial.length) {
-                    img.src = shuffledInitial[imageIndex].src;
-                    img.alt = shuffledInitial[imageIndex].alt;
-                    usedInitialSrcs.add(shuffledInitial[imageIndex].src);
-                    imageIndex++;
+                if (cardIndex < allImages.length) {
+                    img.src = allImages[cardIndex].src;
+                    img.alt = allImages[cardIndex].alt;
                 }
             });
             
+            // Keep track of current positions for each card
+            let currentCardPositions = [0, 1, 2, 3]; // Start positions in allImages array
+            let nextCardToRotate = 0; // Which card to rotate next (cycling 0,1,2,3)
+            
             function rotateSingleImage() {
-                // Pick random card index
-                const randomCardIndex = Math.floor(Math.random() * cards.length);
-                const currentCard = cards[randomCardIndex];
-                const oldSrc = currentCard.src;
+                // Get the current card to change
+                const currentCard = cards[nextCardToRotate];
                 
-                // Get currently displayed images by extracting filename (excluding the one we're changing)
-                const currentDisplayedSrcs = new Set();
-                cards.forEach((card, idx) => {
-                    if (idx !== randomCardIndex) {
-                        // Extract filename and reconstruct path
-                        const filename = card.src.split('/').pop();
-                        currentDisplayedSrcs.add('img/' + filename);
-                    }
-                });
-                
-                // Find available images that are not currently displayed
-                const availableImages = allImages.filter(img => !currentDisplayedSrcs.has(img.src));
-                
-                if (availableImages.length === 0) {
-                    console.warn('No available unique images - using fallback');
-                    // Fallback: use any image different from current card
-                    const currentFilename = oldSrc.split('/').pop();
-                    const currentImgSrc = 'img/' + currentFilename;
-                    const differentImages = allImages.filter(img => img.src !== currentImgSrc);
-                    if (differentImages.length > 0) {
-                        availableImages.push(...differentImages);
-                    } else {
-                        return; // Skip rotation if no different image found
-                    }
-                }
-                
-                // Pick random image from available ones
-                const randomImage = availableImages[Math.floor(Math.random() * availableImages.length)];
+                // Move to next image in sequence for this card
+                currentCardPositions[nextCardToRotate] = (currentCardPositions[nextCardToRotate] + 4) % allImages.length;
+                const newImageIndex = currentCardPositions[nextCardToRotate];
+                const newImage = allImages[newImageIndex];
                 
                 // Fade out current image
                 currentCard.style.opacity = '0';
                 
                 setTimeout(() => {
-                    currentCard.src = randomImage.src;
-                    currentCard.alt = randomImage.alt;
+                    currentCard.src = newImage.src;
+                    currentCard.alt = newImage.alt;
                     // Fade in
                     currentCard.style.opacity = '1';
                 }, 300);
+                
+                // Move to next card for next rotation (cycling through 0,1,2,3)
+                nextCardToRotate = (nextCardToRotate + 1) % cards.length;
             }
             
-            // Rotate single image every 6 seconds
-            setInterval(rotateSingleImage, 6000);
+            // Rotate single image every 5 seconds (changed from 6 to 5)
+            setInterval(rotateSingleImage, 5000);
         }
         
         // Initialize application
