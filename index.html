@@ -3166,6 +3166,100 @@ Ay, mi gatito, miau, miau
                 item.addEventListener('click', () => showSlide(index));
             });
 
+            // Keyboard navigation for attractions slider
+            function nextSlide() {
+                const next = currentSlide < slides.length - 1 ? currentSlide + 1 : 0;
+                showSlide(next);
+            }
+
+            function prevSlide() {
+                const prev = currentSlide > 0 ? currentSlide - 1 : slides.length - 1;
+                showSlide(prev);
+            }
+
+            // Keyboard events (only when attractions section is visible)
+            document.addEventListener('keydown', function(e) {
+                const attractionsSection = document.getElementById('attractions');
+                if (!attractionsSection) return;
+                
+                const rect = attractionsSection.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+                
+                if (isVisible && slides.length > 0) {
+                    if (e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        prevSlide();
+                    } else if (e.key === 'ArrowRight') {
+                        e.preventDefault();
+                        nextSlide();
+                    }
+                }
+            });
+
+            // Touch/swipe support for attractions slider
+            const slidesContainer = document.querySelector('.attractions-slides');
+            if (slidesContainer) {
+                let startX = 0;
+                let currentX = 0;
+                let isDragging = false;
+
+                slidesContainer.addEventListener('touchstart', function(e) {
+                    startX = e.touches[0].clientX;
+                    isDragging = true;
+                }, { passive: true });
+
+                slidesContainer.addEventListener('touchmove', function(e) {
+                    if (!isDragging) return;
+                    currentX = e.touches[0].clientX;
+                }, { passive: true });
+
+                slidesContainer.addEventListener('touchend', function(e) {
+                    if (!isDragging) return;
+                    
+                    const diffX = startX - currentX;
+                    const minSwipeDistance = 50;
+                    
+                    if (Math.abs(diffX) > minSwipeDistance) {
+                        if (diffX > 0) {
+                            nextSlide(); // Swipe left -> next slide
+                        } else {
+                            prevSlide(); // Swipe right -> prev slide
+                        }
+                    }
+                    
+                    isDragging = false;
+                }, { passive: true });
+
+                // Mouse support for desktop
+                slidesContainer.addEventListener('mousedown', function(e) {
+                    startX = e.clientX;
+                    isDragging = true;
+                    e.preventDefault();
+                });
+
+                document.addEventListener('mousemove', function(e) {
+                    if (!isDragging) return;
+                    currentX = e.clientX;
+                });
+
+                document.addEventListener('mouseup', function(e) {
+                    if (!isDragging) return;
+                    
+                    const diffX = startX - currentX;
+                    const minSwipeDistance = 50;
+                    
+                    if (Math.abs(diffX) > minSwipeDistance) {
+                        if (diffX > 0) {
+                            nextSlide();
+                        } else {
+                            prevSlide();
+                        }
+                    }
+                    
+                    isDragging = false;
+                });
+            }
+
             if (slides.length > 0) showSlide(0);
 
             // Scroll animations
