@@ -639,6 +639,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center 20%;
             filter: grayscale(100%);
             transition: filter 0.4s;
         }
@@ -646,6 +647,40 @@
         .participant:hover .participant-img {
             filter: grayscale(0%);
         }
+
+        .participant-img[src*="dzo.JPEG"] {
+            object-position: center 25%;
+        }
+
+        .participant-img[src*="tomek.jpg"] {
+            object-position: center 30%;
+        }
+
+        .participant-img[src*="bartek.jpg"] {
+            transform: scale(4);
+            object-position: 30% 70%;
+        }
+
+        /* .participant-img[src*="zaba.jpg"] {
+            object-position: 25%;
+        } */
+
+        .participant-img[src*="gg2.jpg"] {
+            transform: scale(3);
+            transform-origin: center top;
+            object-position: center 0%;
+        }
+
+        .participant-img[src*="mati.jpg"] {
+            object-position: center 50%;
+        }
+
+        .participant-img[src*="tomi.jpg"] {
+            transform: scale(1.5);
+            transform-origin: center right;
+            object-position: center 20%;
+        }
+        
 
         .participant-info {
             position: absolute;
@@ -2491,142 +2526,150 @@
         <div class="participants-grid">
             <!-- Participant placeholders - replace src with actual photos -->
             <div class="participant">
-                <img src="img/ludzie/raj2.png" class="accommodation-img clickable-image">
+                <img src="img/ludzie/raj2.png" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Rajmund</p>
                     <!-- <p class="participant-role"></p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/ja.JPEG" class="accommodation-img clickable-image">
+                <img src="img/ludzie/ja.JPEG" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Krzysiek</p>
                     <!-- <p class="participant-role">Dinozaur</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <img src="img/ludzie/dzo.JPEG" class="participant-img clickable-image">
                 <div class="participant-info">
-                    <!-- <p class="participant-name">Olafcinek</p>
-                    <p class="participant-role">AGH Cooking - Chef de Cuisine</p> -->
+                    <p class="participant-name">Dzonson</p>
+                    <!-- <p class="participant-role">AGH Cooking - Chef de Cuisine</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <img src="img/ludzie/zuza.jpg" class="participant-img clickable-image">
+                <div class="participant-info">
+                    <p class="participant-name">Zuza</p>
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/tomi.jpg" class="participant-img clickable-image">
+                <div class="participant-info">
+                    <p class="participant-name">Tommy G</p>
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/asia.png" class="participant-img clickable-image">
+                <div class="participant-info">
+                    <p class="participant-name">Asia</p>
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+
+            <div class="participant">
+                <img src="img/ludzie/bartek.jpg" class="participant-img clickable-image">
+                <div class="participant-info">
+                    <p class="participant-name">Bartek</p>
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/lukasz.jpg" class="participant-img clickable-image">
+                <div class="participant-info">
+                    <p class="participant-name">Łukasz</p>
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/gg.jpg" class="participant-img clickable-image">
+                <div class="participant-info">
+                    <p class="participant-name">G</p>
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/tomek.jpg" class="participant-img clickable-image">
+                <div class="participant-info">
+                    <p class="participant-name">Tomek</p>
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="participant-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Stefka</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/julka.jpg" class="participant-img clickable-image">
+                <div class="participant-info">
+                    <p class="participant-name">Julka</p>
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="participant-img clickable-image">
                 <div class="participant-info">
                     <!-- <p class="participant-name">Natalia</p> -->
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <img src="img/ludzie/shrek.webp" class="participant-img clickable-image">
                 <div class="participant-info">
-                    <!-- <p class="participant-name">Łukasz</p> -->
+                    <!-- <p class="participant-name">Emilka</p> -->
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <img src="img/ludzie/olaf.JPEG" class="participant-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Olaf</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="participant-img clickable-image">
+                <div class="participant-info">
+                    <!-- <p class="participant-name">Benek</p> -->
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/shrek.webp" class="participant-img clickable-image">
                 <div class="participant-info">
                     <!-- <p class="participant-name">Dybi</p> -->
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <img src="img/ludzie/zaba.jpg"   class="participant-img clickable-image">
                 <div class="participant-info">
-                    <!-- <p class="participant-name">Imię 7</p> -->
+                    <p class="participant-name">Zabs0n</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <img src="img/ludzie/maciek.JPEG" class="participant-img clickable-image">
                 <div class="participant-info">
-                    <!-- <p class="participant-name">Imię 8</p> -->
+                    <p class="participant-name">Maćko</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <img src="img/ludzie/gg2.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
-                    <!-- <p class="participant-name">Imię 9</p> -->
+                    <p class="participant-name">Turkish Hairlines</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
+                <img src="img/ludzie/mati.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
-                    <!-- <p class="participant-name">Imię 10</p> -->
-                    <!-- <p class="participant-role">Funkcja</p> -->
-                </div>
-            </div>
-            <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
-                <div class="participant-info">
-                    <!-- <p class="participant-name">Imię 11</p> -->
-                    <!-- <p class="participant-role">Funkcja</p> -->
-                </div>
-            </div>
-            <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
-                <div class="participant-info">
-                    <!-- <p class="participant-name">Imię 12</p> -->
-                    <!-- <p class="participant-role">Funkcja</p> -->
-                </div>
-            </div>
-            <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
-                <div class="participant-info">
-                    <!-- <p class="participant-name">Imię 13</p> -->
-                    <!-- <p class="participant-role">Funkcja</p> -->
-                </div>
-            </div>
-            <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
-                <div class="participant-info">
-                    <!-- <p class="participant-name">Imię 14</p> -->
-                    <!-- <p class="participant-role">Funkcja</p> -->
-                </div>
-            </div>
-            <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
-                <div class="participant-info">
-                    <!-- <p class="participant-name">Imię 15</p> -->
-                    <!-- <p class="participant-role">Funkcja</p> -->
-                </div>
-            </div>
-            <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
-                <div class="participant-info">
-                    <!-- <p class="participant-name">Imię 16</p> -->
-                    <!-- <p class="participant-role">Funkcja</p> -->
-                </div>
-            </div>
-            <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
-                <div class="participant-info">
-                    <!-- <p class="participant-name">Imię 17</p> -->
-                    <!-- <p class="participant-role">Funkcja</p> -->
-                </div>
-            </div>
-            <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
-                <div class="participant-info">
-                    <!-- <p class="participant-name">Imię 18</p> -->
-                    <!-- <p class="participant-role">Funkcja</p> -->
-                </div>
-            </div>
-            <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
-                <div class="participant-info">
-                    <!-- <p class="participant-name">Imię 19</p> -->
-                    <!-- <p class="participant-role">Funkcja</p> -->
-                </div>
-            </div>
-            <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="accommodation-img clickable-image">
-                <div class="participant-info">
-                    <!-- <p class="participant-name">Imię 20</p> -->
+                    <p class="participant-name">Mati</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
