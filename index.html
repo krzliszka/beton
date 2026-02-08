@@ -625,13 +625,14 @@
             aspect-ratio: 1;
             overflow: hidden;
             cursor: pointer;
-            border: 2px solid var(--agh-green);
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .participant:hover {
             transform: scale(1.05);
-            border-color: var(--agh-red);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             z-index: 10;
         }
 
