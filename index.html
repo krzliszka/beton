@@ -652,6 +652,11 @@
             object-position: center 25%;
         }
 
+
+        .participant-img[src*="dybi.png"] {
+            object-position: center 80%;
+        }
+
         .participant-img[src*="tomek.jpg"] {
             object-position: center 30%;
         }
@@ -661,6 +666,18 @@
             object-position: 30% 70%;
         }
 
+        .participant-img[src*="benek2.png"] {
+            transform: scale(1.4);
+        }
+
+        .participant-img[src*="zabs.jpg"] {
+            transform: scale(1.2);
+        }
+
+        .participant-img[src*="emilka.png"] {
+            transform: scale(2);
+        }
+
         /* .participant-img[src*="zaba.jpg"] {
             object-position: 25%;
         } */
@@ -668,7 +685,13 @@
         .participant-img[src*="gg2.jpg"] {
             transform: scale(3);
             transform-origin: center top;
-            object-position: center 0%;
+            object-position: center 20%;
+        }
+
+        .participant-img[src*="st.jpg"] {
+            transform: scale(2);
+            transform-origin: center top;
+            object-position: center 1%;
         }
 
         .participant-img[src*="mati.jpg"] {
@@ -2358,7 +2381,7 @@
             </div>
             <div class="password-form">
                 <input type="password" id="password-input" placeholder="Hasło dostępu" autocomplete="off">
-                <button onclick="checkPassword()" class="password-btn">Wejdź</button>
+                <button onclick="checkPassword()" class="password-btn">Hop</button>
                 <p id="password-error" class="password-error"></p>
             </div>
             <div class="password-hint">
@@ -2436,14 +2459,14 @@
 
 
         <!-- NEWS/UPDATES -->
-    <section class="news fade-in" id="news">
+    <!-- <section class="news fade-in" id="news">
         <div class="news-content">
             <div class="news-icon">📢</div>
             <div class="news-text">
                 <strong>Aktualności:</strong> Słuchajcie, zostało <span id="news-days" class="news-countdown">--</span> dni, <span id="news-hours" class="news-countdown">--</span> godzin i <span id="news-minutes" class="news-countdown">--</span> minut. W girl math to jest dosłownie 3 godziny, więc wpadam w panikę, ale taką aesthetic. 💅 Moja forma jest aktualnie w lesie (w Ohio), ale totalnie to ignoruję, bo uprawiam agresywny manifesting. ✨ Wizualizuję sobie, że wjeżdżam na te góry jak totalny gigachad po 3 miesiącach mewingu. 🤫🧏‍♂️ Walizka niespakowana, rower w rozsypce, ale aura jest na +1000. To będzie sigma event, nie mogę się doczekać, aż będę moggować hiszpańskie emerytki na przejściach dla pieszych. Slay. ✈️🤡
             </div>
         </div>
-    </section>
+    </section> -->
 
     <!-- PHILOSOPHY / MOTTO -->
     <section class="philosophy" id="philosophy">
@@ -2458,13 +2481,13 @@
             <div class="philosophy-content">
                 <h2 class="section-title">#BETON</h2>
                 <p class="motto">
-                    <span class="motto-highlight">BETON</span> — bo kiedy nogi płoną, płuca krzyczą, a podjazd nie ma końca, jedyne co pozostaje to <span class="motto-highlight">kręcić dalej</span>.
+                    <span class="motto-highlight">BETON</span> - tutaj powinna być definicja, ale nie da się tego opisać i nikt nie chciał współpracować.
                 </p>
-                <p class="philosophy-text">
+                <!-- <p class="philosophy-text">
                     Nie chodzi o to, żeby być najszybszym. Chodzi o to, żeby być niezniszczalnym. Jak beton, który wytrzymuje każdy nacisk — my wytrzymujemy każdy kilometr. Gdy inni sch odzą z roweru, my siadamy głębiej na siodełku. Gdy droga się kończy, my znajdujemy następną. To nie jest wyścig. To sposób na życie.
                     <br><br>
                     Razem pedałujemy, razem cierpimy, razem świętujemy. Bo prawdziwa siła nie jest w nogach — jest w grupie, która nie zostawia nikogo z tyłu.
-                </p>
+                </p> -->
                 <div class="video-container">
                     <video controls preload="auto" playsinline muted="false">
                         <source src="img/beton.mp4" type="video/mp4; codecs='avc1.42E01E, mp4a.40.2'">
@@ -2547,6 +2570,13 @@
                 </div>
             </div>
             <div class="participant">
+                <img src="img/ludzie/asia.png" class="participant-img clickable-image">
+                <div class="participant-info">
+                    <p class="participant-name">Asia</p>
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
                 <img src="img/ludzie/zuza.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Zuza</p>
@@ -2557,21 +2587,6 @@
                 <img src="img/ludzie/tomi.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Tommy G</p>
-                    <!-- <p class="participant-role">Funkcja</p> -->
-                </div>
-            </div>
-            <div class="participant">
-                <img src="img/ludzie/asia.png" class="participant-img clickable-image">
-                <div class="participant-info">
-                    <p class="participant-name">Asia</p>
-                    <!-- <p class="participant-role">Funkcja</p> -->
-                </div>
-            </div>
-
-            <div class="participant">
-                <img src="img/ludzie/bartek.jpg" class="participant-img clickable-image">
-                <div class="participant-info">
-                    <p class="participant-name">Bartek</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
@@ -2590,6 +2605,13 @@
                 </div>
             </div>
             <div class="participant">
+                <img src="img/ludzie/bartek.jpg" class="participant-img clickable-image">
+                <div class="participant-info">
+                    <p class="participant-name">Bartek</p>
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
                 <img src="img/ludzie/tomek.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Tomek</p>
@@ -2597,9 +2619,9 @@
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="participant-img clickable-image">
+                <img src="img/ludzie/st.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
-                    <!-- <p class="participant-name">Stefka</p> -->
+                    <p class="participant-name">Stefka</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
@@ -2611,42 +2633,42 @@
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="participant-img clickable-image">
+                <img src="img/ludzie/natalia.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
-                    <!-- <p class="participant-name">Natalia</p> -->
+                    <p class="participant-name">Natalia</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="participant-img clickable-image">
+                <img src="img/ludzie/emilka.png" class="participant-img clickable-image">
                 <div class="participant-info">
-                    <!-- <p class="participant-name">Emilka</p> -->
+                    <p class="participant-name">Emilka</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
                 <img src="img/ludzie/olaf.JPEG" class="participant-img clickable-image">
                 <div class="participant-info">
-                    <!-- <p class="participant-name">Olaf</p> -->
+                    <p class="participant-name">Olaf</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="participant-img clickable-image">
+                <img src="img/ludzie/benek2.png" class="participant-img clickable-image">
                 <div class="participant-info">
-                    <!-- <p class="participant-name">Benek</p> -->
+                    <p class="participant-name">Benek</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/shrek.webp" class="participant-img clickable-image">
+                <img src="img/ludzie/dybi.png" class="participant-img clickable-image">
                 <div class="participant-info">
-                    <!-- <p class="participant-name">Dybi</p> -->
+                    <p class="participant-name">Dybi</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/zaba.jpg"   class="participant-img clickable-image">
+                <img src="img/ludzie/zabs.jpg"   class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Zabs0n</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
@@ -2670,6 +2692,13 @@
                 <img src="img/ludzie/mati.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Mati</p>
+                    <!-- <p class="participant-role">Funkcja</p> -->
+                </div>
+            </div>
+            <div class="participant">
+                <img src="img/ludzie/kz.png" class="participant-img clickable-image">
+                <div class="participant-info">
+                    <p class="participant-name">Kuba</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
@@ -2844,7 +2873,7 @@
                 </div>
             </div>
             <div class="attractions-info">
-                <p class="attractions-description">
+                <!-- <p class="attractions-description">
                     Ay, mi gatito, miau, miau
 Ay, mi gatito, miau, miau
 Ay, mi gatito, miau, miau
@@ -2854,7 +2883,7 @@ Ay, mi gatito, miau, miau
 Ay, mi gatito, miau, miau
 Ay, mi gatito, miau, miau
 
-                </p>
+                </p> -->
                  <ul class="attractions-interactive-list">
                     <li class="attractions-item active" data-index="0">AGH COOKING ON TOUR</li>
                     <li class="attractions-item" data-index="1">Próbne matury i chemia</li>
@@ -3240,6 +3269,7 @@ Ay, mi gatito, miau, miau
                 { src: 'img/winiacz.jpg', alt: 'plaz' },
                 { src: 'img/muset.JPG', alt: 'musette' },
                 { src: 'img/view.JPG', alt: 'view' }
+                // { src: 'img/high1.jpg', alt: 'siuuu' }
             ];
             
             const cards = highlightsGrid.querySelectorAll('.highlight-card img');
