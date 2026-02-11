@@ -1,0 +1,11 @@
+# Nie wrzucaj tokenów do repo!
+/api/config.json
+/api/cache_*.json
+/api/*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
