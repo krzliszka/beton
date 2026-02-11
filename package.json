@@ -1,0 +1,9 @@
+{
+  "name": "beton-api",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@vercel/analytics": "^1.6.1",
+    "node-fetch": "^3.3.2"
+  }
+}
