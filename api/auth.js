@@ -1,4 +1,4 @@
-// Vercel Serverless Function - OAuth Callback
+// Vercel Serverless Function - OAuth Callback v2
 import fetch from 'node-fetch';
 import fs from 'fs';
 import path from 'path';
