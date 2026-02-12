@@ -11,7 +11,7 @@
     "settings": {
         "cache_ttl_minutes": 5,
         "date_range": {
-            "start": "2026-02-01T00:00:00Z",
+            "start": "2025-01-01T00:00:00Z",
             "end": "2026-03-03T23:59:59Z"
         }
     }
