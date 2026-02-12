@@ -664,8 +664,8 @@
 
         .participant-img[src*="bartek.jpg"] {
             object-fit: none;
-            transform: scale(2.5);
-            transform-origin: 85% 30%;
+            transform: scale(2);
+            transform-origin: 65% 30%;
         }
 
         .participant-img[src*="benek2.png"] {
@@ -4115,8 +4115,8 @@ Ay, mi gatito, miau, miau
             historyEl.innerHTML += history.map(h =>
                 `<div class="hero-history-item">
                     <span style="color:var(--gray);">${h.date}</span>
-                    <span>${h.winner || '—'}</span>
-                    <span style="color:#FFD700;">${h.votes ? '⭐' + h.votes : ''}</span>
+                    <span>🏆 ${h.winner || '—'}</span>
+                    <span style="color:#FFD700;">⭐${h.votes}${h.totalVotes ? ' <span style="color:var(--gray);font-size:0.7rem;">(${h.totalVotes} gł.)</span>' : ''}</span>
                 </div>`
             ).join('');
 

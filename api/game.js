@@ -118,21 +118,39 @@ async function getStats(req, res) {
     d.setDate(d.getDate() - i);
     const dateStr = d.toLocaleDateString('sv-SE', { timeZone: 'Europe/Madrid' });
 
-    let dayBest = null;
+    // Collect all votes for the day
+    const dayVotes = {};
     let dayBestVotes = 0;
 
     for (const p of PARTICIPANTS) {
       const count = await redis('GET', `hero:count:${dateStr}:${p}`);
       const votes = parseInt(count) || 0;
-      if (votes > dayBestVotes) {
-        dayBest = p;
-        dayBestVotes = votes;
+      if (votes > 0) {
+        dayVotes[p] = votes;
+        if (votes > dayBestVotes) dayBestVotes = votes;
       }
     }
 
-    if (dayBest && dayBestVotes > 0) {
-      heroTrophies[dayBest] = (heroTrophies[dayBest] || 0) + 1;
-      heroHistory.push({ date: dateStr, winner: dayBest, votes: dayBestVotes });
+    if (dayBestVotes > 0) {
+      // Find ALL winners (tied for first place)
+      const winners = Object.entries(dayVotes)
+        .filter(([_, v]) => v === dayBestVotes)
+        .map(([name]) => name);
+
+      // Each winner gets a trophy
+      winners.forEach(w => {
+        heroTrophies[w] = (heroTrophies[w] || 0) + 1;
+      });
+
+      // Total votes that day (for history display)
+      const totalVotes = Object.values(dayVotes).reduce((a, b) => a + b, 0);
+
+      heroHistory.push({
+        date: dateStr,
+        winner: winners.join(', '),
+        votes: dayBestVotes,
+        totalVotes: totalVotes
+      });
     }
   }
 
