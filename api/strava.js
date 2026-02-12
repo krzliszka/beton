@@ -10,12 +10,12 @@ export default async function handler(req, res) {
   // Load config from file (for segments and settings)
   let config;
   try {
-    const configPath = path.join(process.cwd(), 'api', 'config.json');
+    const configPath = path.join(process.cwd(), 'api', 'config.public.json');
     config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
   } catch (err) {
     return res.status(500).json({ 
-      error: 'Brak pliku config.json',
-      hint: 'Utwórz api/config.json z segmentami i ustawieniami'
+      error: 'Brak pliku config.public.json',
+      hint: 'Utwórz api/config.public.json z segmentami i ustawieniami'
     });
   }
 
