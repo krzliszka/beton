@@ -1,8 +1,87 @@
-# 🚀 INSTRUKCJA WDROŻENIA - Opcja A (Hybrid)
+# 🚀 INSTRUKCJA WDROŻENIA - Beton Landing + Game System
 
 ## ARCHITEKTURA
-- **betonn.cc** → GitHub Pages (statyczna strona)
-- **betonn.cc/api/** → Vercel Serverless Functions (backend Strava)
+- **betonn.cc** → Vercel (statyczna strona + serverless functions)
+- **Redis** → Upstash (baza danych gry)
+
+---
+
+## 🎮 SYSTEM GRY - RĘCZNE NAPRAWY
+
+### 1. Lista uczestników - jeśli ktoś się nie pojawia
+**Plik:** `api/game.js` linia 17-20
+```javascript
+const PARTICIPANTS = [
+  'Krzysiek','Jan','Olaf','Michał Książek','Marcel','Szymon','Kuba Piszko',
+  'Wiktor','Tomek Franczyk','Paweł','Tomek Piszczek','Łukasz',
+  'Mateusz Kusiak','Mateusz Zając','Mateusz Bogacz','Tomek Gut',
+  'Kuba Wołek','Kacper','Igor','Tymek','Gabriel','Maks'
+];
+```
+**Plik:** `index.html` linia ~4009-4012
+```javascript
+const PARTICIPANTS = [
+  'Krzysiek','Jan','Olaf','Michał Książek','Marcel','Szymon','Kuba Piszko',
+  // ... reszta listy musi być IDENTYCZNA
+];
+```
+
+### 2. Zmiana strefy czasowej - jeśli problemy z resetem o północy
+**Plik:** `api/game.js` linia 25
+```javascript
+function getToday() {
+  return new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Madrid' });
+}
+```
+Zmień `'Europe/Madrid'` na `'Europe/Warsaw'` lub inną strefę.
+
+### 3. Ręczne czyszczenie głosów/chmur w Redis
+**Upstash Console:** https://console.upstash.com/redis
+Komendy do usunięcia:
+```redis
+# Usuń wszystkie głosy dzisiejsze
+DEL hero:vote:Krzysiek:2026-02-12
+DEL hero:count:2026-02-12:Olaf
+
+# Usuń chmurki
+DEL clouds:Jan
+DEL clouds:total:Jan
+
+# Lista wszystkich kluczy
+KEYS *
+```
+
+### 4. Awaria API - backup endpoint test
+```bash
+curl "https://betonn.cc/api/test"
+```
+Jeśli nie działa, problem z Vercel deployment.
+
+### 5. Przyspieszone deploy bez czekania na auto-deploy
+```bash
+cd /Users/krzysiek/beton-landing
+vercel --prod
+```
+
+### 6. Lokalna podmiana API (emergency)
+W `index.html` linia ~4005, zmień:
+```javascript
+const GAME_API = '/api/game';
+```
+na:
+```javascript
+const GAME_API = 'https://backup-domain.com/api/game';
+```
+
+### 7. Wyłączenie całego systemu gry
+W `index.html` dodaj na początku `initGame()`:
+```javascript
+function initGame() {
+  console.log('Game disabled');
+  return; // <-- dodaj tę linię
+  // reszta kodu...
+}
+```
 
 ---
 
