@@ -4087,12 +4087,16 @@ Ay, mi gatito, miau, miau
             // Hero all-time podium
             const trophies = gameStats.hero?.trophies || {};
             const sortedHeroes = Object.entries(trophies).sort((a,b) => b[1] - a[1]);
-            const podiumOrder = [1, 0, 2]; // 2nd, 1st, 3rd visually
-            podiumOrder.forEach((rank, idx) => {
-                const el = document.getElementById('podium-' + (idx + 1));
+            // podium HTML order: podium-1=🥇(center), podium-2=🥈(left), podium-3=🥉(right)
+            const podiumMap = [[0, 'podium-1'], [1, 'podium-2'], [2, 'podium-3']];
+            podiumMap.forEach(([rank, id]) => {
+                const el = document.getElementById(id);
                 if (sortedHeroes[rank]) {
                     el.querySelector('.podium-name').textContent = sortedHeroes[rank][0];
                     el.querySelector('.podium-count').textContent = '🏆×' + sortedHeroes[rank][1];
+                } else {
+                    el.querySelector('.podium-name').textContent = '—';
+                    el.querySelector('.podium-count').textContent = '0';
                 }
             });
 
