@@ -2372,6 +2372,12 @@
             }
         }
     </style>
+    <!-- Preload critical resources -->
+    <link rel="preload" href="img/bck.jpg" as="image">
+    <link rel="preload" href="img/agh.png" as="image">
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <!-- Vercel Web Analytics -->
     <script>
         window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
@@ -2497,7 +2503,7 @@
                     Razem pedałujemy, razem cierpimy, razem świętujemy. Bo prawdziwa siła nie jest w nogach — jest w grupie, która nie zostawia nikogo z tyłu.
                 </p> -->
                 <div class="video-container">
-                    <video controls preload="auto" playsinline muted="false">
+                    <video controls preload="none" playsinline muted="false" poster="img/beton.jpg">
                         <source src="img/beton.mp4" type="video/mp4; codecs='avc1.42E01E, mp4a.40.2'">
                         <source src="img/beton.mp4" type="video/mp4">
                         <p class="video-fallback">Twoja przeglądarka nie obsługuje odtwarzania wideo. 
@@ -2505,7 +2511,7 @@
                         </p>
                     </video>
                     <div class="video-loading">
-                        <p>🎥 Ładowanie video... (13MB)</p>
+                        <p>🎥 Kliknij aby odtworzyć (3.6MB)</p>
                     </div>
                 </div>
             </div>
@@ -2525,17 +2531,17 @@
             <h2 class="section-title">Highlights</h2>
         <div class="highlights-grid" id="highlightsGrid">
             <div class="highlight-card">
-                <img src="img/highl.jpg" alt="grahamka" class="highlight-img clickable-image">
+                <img loading="lazy" src="img/highl.jpg" alt="grahamka" class="highlight-img clickable-image">
             </div>
             <div class="highlight-card">
-                <img src="img/highl.jpg" alt="Valencia cycling" class="highlight-img clickable-image">
+                <img loading="lazy" src="img/highl.jpg" alt="Valencia cycling" class="highlight-img clickable-image">
 
             </div>
             <div class="highlight-card">
-                <img src="img/highl.jpg" alt="Valencia cycling" class="highlight-img clickable-image">
+                <img loading="lazy" src="img/highl.jpg" alt="Valencia cycling" class="highlight-img clickable-image">
             </div>
             <div class="highlight-card">
-                <img src="img/highl.jpg" alt="Valencia highlight" class="highlight-img clickable-image">
+                <img loading="lazy" src="img/highl.jpg" alt="Valencia highlight" class="highlight-img clickable-image">
             </div>
         </div>
         </div>
@@ -2557,154 +2563,154 @@
         <div class="participants-grid">
             <!-- Participant placeholders - replace src with actual photos -->
             <div class="participant">
-                <img src="img/ludzie/raj2.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/raj2.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Rajmund</p>
                     <!-- <p class="participant-role"></p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/ja.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/ja.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Krzysiek</p>
                     <!-- <p class="participant-role">Dinozaur</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/dzo.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/dzo.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Dzonson</p>
                     <!-- <p class="participant-role">AGH Cooking - Chef de Cuisine</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/asia.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/asia.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Asia</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/zuza.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/zuza.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Zuza</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/tomi.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/tomi.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Tommy G</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/lukasz.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/lukasz.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Łukasz</p>
                     <p class="participant-role">AGH Cooking - Chef de Cuisine</p>
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/gg.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/gg.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">G</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/bartek.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/bartek.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Bartek</p>
                     <p class="participant-role">Fotograf</p>
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/tomek.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/tomek.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Tomek</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/st.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/st.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Stefka</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/julka.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/julka.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Julka</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/natalia.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/natalia.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Natalia</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/emilka.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/emilka.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Emilka</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/olaf.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/olaf.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Olaf</p>
                     <p class="participant-role">AGH Cooking - Chef de Cuisine</p>
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/benek2.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/benek2.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Benek</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/dybi.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/dybi.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Dybi</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/zabs.jpg"   class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/zabs.jpg"   class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Zabs0n</p>
                     <p class="participant-role">AGH Cooking - Patissier</p>
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/maciek.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/maciek.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Maćko</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/gg2.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/gg2.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Turkish Hairlines</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/mati.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/mati.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Mati</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
             <div class="participant">
-                <img src="img/ludzie/kz.jpg" class="participant-img clickable-image">
+                <img loading="lazy" src="img/ludzie/kz.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Kuba</p>
                     <!-- <p class="participant-role">Funkcja</p> -->
@@ -2732,7 +2738,7 @@
                     <p>✈️ Numer lotu: W6 2079</p>
                 </div>
                 <div class="airline-logo">
-                    <img src="img/wizz.png" alt="Wizz Air" class="wizz-logo">
+                    <img loading="lazy" src="img/wizz.png" alt="Wizz Air" class="wizz-logo">
                 </div>
             </div>
             <div class="flight-card">
@@ -2748,7 +2754,7 @@
                     <p>✈️ Numer lotu: W6 2080</p>
                 </div>
                 <div class="airline-logo">
-                    <img src="img/wizz.png" alt="Wizz Air" class="wizz-logo">
+                    <img loading="lazy" src="img/wizz.png" alt="Wizz Air" class="wizz-logo">
                 </div>
             </div>
         </div>
@@ -2802,7 +2808,7 @@
             
             <!-- Main image on top left -->
             <div class="accommodation-main-img">
-                <img src="img/basen.jpg" alt="Basen przy willi" class="accommodation-img clickable-image">
+                <img loading="lazy" src="img/basen.jpg" alt="Basen przy willi" class="accommodation-img clickable-image">
             </div>
 
             <!-- Text block on top right -->
@@ -2828,16 +2834,16 @@
             <!-- Gallery of smaller images on bottom -->
             <div class="accommodation-gallery">
                 <div class="accommodation-gallery-img">
-                    <img src="img/salon.jpg" class="accommodation-img clickable-image">
+                    <img loading="lazy" src="img/salon.jpg" class="accommodation-img clickable-image">
                 </div>
                 <div class="accommodation-gallery-img">
-                    <img src="img/pok.jpg" class="accommodation-img clickable-image">
+                    <img loading="lazy" src="img/pok.jpg" class="accommodation-img clickable-image">
                 </div>
                 <div class="accommodation-gallery-img">
-                    <img src="img/kuch.jpg" class="accommodation-img clickable-image">
+                    <img loading="lazy" src="img/kuch.jpg" class="accommodation-img clickable-image">
                 </div>
                 <div class="accommodation-gallery-img">
-                    <img src="img/kuchnia.jpg" class="accommodation-img clickable-image">
+                    <img loading="lazy" src="img/kuchnia.jpg" class="accommodation-img clickable-image">
                 </div>
             </div>
 
@@ -2853,22 +2859,22 @@
             <div class="attractions-gallery">
                 <div class="attractions-slides">
                     <div class="attractions-slide active" data-index="0">
-                        <img src="img/cook2.jpg" alt="AGH Cooking on Tour" class="clickable-image">
+                        <img loading="lazy" src="img/cook2.jpg" alt="AGH Cooking on Tour" class="clickable-image">
                     </div>
                     <div class="attractions-slide" data-index="1">
-                        <img src="img/at3.jpg" alt="Próbne matury i chemia" class="clickable-image">
+                        <img loading="lazy" src="img/at3.jpg" alt="Próbne matury i chemia" class="clickable-image">
                     </div>
                     <div class="attractions-slide" data-index="2">
-                        <img src="img/at4.jpg" alt="Mistrzostwa Gejogeser" class="clickable-image">
+                        <img loading="lazy" src="img/at4.jpg" alt="Mistrzostwa Gejogeser" class="clickable-image">
                     </div>
                     <div class="attractions-slide" data-index="3">
-                        <img src="img/mtb.jpg" alt="PRELEKCJA: Czy crosscountry jest ciekawsze od maratonów MTB?" class="clickable-image">
+                        <img loading="lazy" src="img/mtb.jpg" alt="PRELEKCJA: Czy crosscountry jest ciekawsze od maratonów MTB?" class="clickable-image">
                     </div>
                     <div class="attractions-slide" data-index="4">
-                        <img src="img/hazard.jpg" alt="Hazard" class="clickable-image">
+                        <img loading="lazy" src="img/hazard.jpg" alt="Hazard" class="clickable-image">
                     </div>
                     <div class="attractions-slide" data-index="5">
-                        <img src="img/tudons.jpg" alt="Tudons" class="clickable-image">
+                        <img loading="lazy" src="img/tudons.jpg" alt="Tudons" class="clickable-image">
                     </div>
                 </div>
                 <div class="attractions-dots">
@@ -2931,7 +2937,7 @@ Ay, mi gatito, miau, miau
             <div class="contacts">
                 <div class="contact-person">
                     <div class="contact-avatar">
-                         <img src="img/ludzie/raj2.jpg" class="accommodation-img">
+                         <img loading="lazy" src="img/ludzie/raj2.jpg" class="accommodation-img">
                     </div>
                     <div>
                         <p class="contact-name">Rajmund</p>
@@ -2951,7 +2957,7 @@ Ay, mi gatito, miau, miau
                 </div>
                 <div class="contact-person">
                     <div class="contact-avatar">
-                         <img src="img/ludzie/ja.jpg" class="accommodation-img">
+                         <img loading="lazy" src="img/ludzie/ja.jpg" class="accommodation-img">
                     </div>
                     <div>
                         <p class="contact-name">Krzysiek</p> 
@@ -2971,7 +2977,7 @@ Ay, mi gatito, miau, miau
                 </div>
                 <div class="contact-person">
                     <div class="contact-avatar">
-                        <img src="img/agh.png" class="accommodation-img">
+                        <img loading="lazy" src="img/agh.png" class="accommodation-img">
                     </div>
                     <div>
                         <p class="contact-name">@agh_cycling</p>
