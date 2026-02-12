@@ -8,6 +8,7 @@ export default async function handler(req, res) {
 
   // Load config from environment variables or file
   let config;
+  let configPath = null;
   
   if (process.env.STRAVA_CLIENT_ID) {
     config = {
@@ -19,7 +20,7 @@ export default async function handler(req, res) {
     };
   } else {
     try {
-      const configPath = path.join(process.cwd(), 'api', 'config.json');
+      configPath = path.join(process.cwd(), 'api', 'config.json');
       config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
     } catch (err) {
       return res.status(500).json({ 
@@ -80,10 +81,16 @@ export default async function handler(req, res) {
       config.participants.push(participant);
     }
 
-    // Save config (in production use database)
-    fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+    // Save config - only works with local config.json
+    if (configPath) {
+      try {
+        fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+      } catch (writeErr) {
+        console.warn('Cannot save config (Vercel filesystem is read-only):', writeErr.message);
+      }
+    }
 
-    return res.status(200).send(successPage(userProfile));
+    return res.status(200).send(successPage(userProfile, participant));
 
   } catch (err) {
     console.error('Auth error:', err);
@@ -167,7 +174,9 @@ function instructionsPage(authUrl) {
 </html>`;
 }
 
-function successPage(userProfile) {
+function successPage(userProfile, participant) {
+  const participantJson = JSON.stringify(participant, null, 2);
+  
   return `<!DOCTYPE html>
 <html>
 <head>
@@ -181,9 +190,20 @@ function successPage(userProfile) {
       padding: 50px;
       margin: 0;
     }
-    .container { max-width: 600px; margin: 0 auto; }
+    .container { max-width: 700px; margin: 0 auto; }
     .success { color: #00ff88; font-size: 2rem; margin: 20px 0; }
     h1 { color: #006633; }
+    .code-box {
+      background: #2a2a2a;
+      border: 1px solid #006633;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 20px 0;
+      text-align: left;
+      overflow-x: auto;
+    }
+    pre { margin: 0; font-size: 0.9rem; color: #00ff88; }
+    .note { color: #888; font-size: 0.9rem; margin-top: 20px; }
   </style>
 </head>
 <body>
@@ -191,6 +211,13 @@ function successPage(userProfile) {
     <h1>✅ Połączono!</h1>
     <div class='success'>Witaj, ${userProfile.firstname}!</div>
     <p>Twoje konto Strava zostało połączone z rywalizacją #BETON.</p>
+    
+    <h3>📋 Dodaj do api/config.json:</h3>
+    <div class='code-box'>
+      <pre>${participantJson}</pre>
+    </div>
+    
+    <p class='note'>Skopiuj powyższy JSON i dodaj do tablicy "participants" w pliku api/config.json</p>
     <p><a href='/' style='color: #006633;'>← Wróć do strony głównej</a></p>
   </div>
 </body>
