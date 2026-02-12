@@ -2,18 +2,16 @@
     "segments": [
         {
             "id": 3421652,
-            "name": "PRZYKŁAD: CZASOWKA ZOO",
+            "name": "Czasówka ZOO",
             "type": "GORY",
-            "distance_km": 3.2,
-            "avg_grade": 7.5,
             "multiplier": 1.0
         }
     ],
 
     "settings": {
-        "cache_ttl_minutes": 30,
+        "cache_ttl_minutes": 5,
         "date_range": {
-            "start": "2026-02-21T00:00:00Z",
+            "start": "2026-02-01T00:00:00Z",
             "end": "2026-03-03T23:59:59Z"
         }
     }

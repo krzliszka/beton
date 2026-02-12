@@ -19,6 +19,12 @@ export default async function handler(req, res) {
     });
   }
 
+  // Add Strava credentials from env vars
+  config.strava_app = {
+    client_id: process.env.STRAVA_CLIENT_ID,
+    client_secret: process.env.STRAVA_CLIENT_SECRET
+  };
+
   // Load participants from Redis (if available) or config.json
   let participants;
   if (isRedisAvailable()) {
