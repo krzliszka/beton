@@ -59,10 +59,17 @@ export default async function handler(req, res) {
   // Exchange code for tokens
   try {
     const redirectUri = `https://${req.headers.host}/api/auth`;
-    const tokenData = await exchangeCodeForTokens(code, config, redirectUri);
-    if (!tokenData) {
-      return res.status(400).send(errorPage('Nie udało się pobrać tokenów.'));
+    const tokenResult = await exchangeCodeForTokens(code, config, redirectUri);
+    if (tokenResult.error) {
+      return res.status(400).send(errorPage(
+        `Token exchange failed: ${tokenResult.error}<br><br>` +
+        `<small style="color:#888;">Status: ${tokenResult.status}<br>` +
+        `Client ID: ${config.strava_app.client_id}<br>` +
+        `Redirect URI: ${redirectUri}<br>` +
+        `Code length: ${code.length}</small>`
+      ));
     }
+    const tokenData = tokenResult;
 
     // Get user profile
     const userProfile = await getUserProfile(tokenData.access_token);
@@ -101,7 +108,10 @@ export default async function handler(req, res) {
 
   } catch (err) {
     console.error('Auth error:', err);
-    return res.status(500).send(errorPage('Wystąpił błąd podczas autoryzacji.'));
+    return res.status(500).send(errorPage(
+      `Błąd: ${err.message}<br><br>` +
+      `<small style="color:#888;word-break:break-all;">Stack: ${err.stack}</small>`
+    ));
   }
 }
 
@@ -129,18 +139,21 @@ async function exchangeCodeForTokens(code, config, redirectUri) {
     body: JSON.stringify(requestBody)
   });
 
+  const responseText = await response.text();
+  console.log('DEBUG: Strava response status:', response.status);
+  console.log('DEBUG: Strava response body:', responseText);
+
   if (response.ok) {
-    const data = await response.json();
+    const data = JSON.parse(responseText);
     console.log('DEBUG: Token exchange SUCCESS');
     return data;
   }
   
-  // Log error for debugging
-  const errorText = await response.text();
-  console.error('DEBUG: Strava token exchange FAILED');
-  console.error('DEBUG: Status:', response.status);
-  console.error('DEBUG: Response:', errorText);
-  return null;
+  // Return error details instead of null
+  return { 
+    error: responseText, 
+    status: response.status 
+  };
 }
 
 async function getUserProfile(accessToken) {
