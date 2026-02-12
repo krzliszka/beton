@@ -14,12 +14,12 @@ async function redis(command, ...args) {
   return data.result;
 }
 
-// Participants list (must match frontend!)
+// Participants list (must match HTML participant-name!)
 const PARTICIPANTS = [
-  'Krzysiek','Jan','Olaf','Michał Książek','Marcel','Szymon','Kuba Piszko',
-  'Wiktor','Tomek Franczyk','Paweł','Tomek Piszczek','Łukasz',
-  'Mateusz Kusiak','Mateusz Zając','Mateusz Bogacz','Tomek Gut',
-  'Kuba Wołek','Kacper','Igor','Tymek','Gabriel','Maks'
+  'Rajmund','Krzysiek','Dzonson','Asia','Zuza','Tommy G',
+  'Łukasz','G','Bartek','Tomek','Stefka','Julka',
+  'Natalia','Emilka','Olaf','Benek','Dybi','Zabs0n',
+  'Maćko','Turkish Hairlines','Mati','Kuba'
 ];
 
 function getToday() {
@@ -44,51 +44,17 @@ export default async function handler(req, res) {
 
   try {
     switch (action) {
-      case 'addCloud':
-        return await addCloud(req, res);
       case 'voteHero':
         return await voteHero(req, res);
       case 'stats':
         return await getStats(req, res);
       default:
-        return res.status(400).json({ error: 'Nieznana akcja. Użyj: addCloud, voteHero, stats' });
+        return res.status(400).json({ error: 'Nieznana akcja. Użyj: voteHero, stats' });
     }
   } catch (err) {
     console.error('Game API error:', err);
     return res.status(500).json({ error: err.message });
   }
-}
-
-// ☁️ ADD CLOUD
-async function addCloud(req, res) {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Użyj POST' });
-
-  const { from, to, reason } = req.body || {};
-
-  if (!from || !to) return res.status(400).json({ error: 'Podaj from i to' });
-  if (!isValidParticipant(from)) return res.status(400).json({ error: `Nieznany uczestnik: ${from}` });
-  if (!isValidParticipant(to)) return res.status(400).json({ error: `Nieznany uczestnik: ${to}` });
-  if (from === to) return res.status(400).json({ error: 'Nie możesz dać chmurki sobie!' });
-
-  const today = getToday();
-  const cloudData = JSON.stringify({
-    from, to,
-    reason: reason || 'Brak powodu',
-    date: today,
-    timestamp: new Date().toISOString()
-  });
-
-  await redis('RPUSH', `clouds:${to}`, cloudData);
-  await redis('INCR', `clouds:total:${to}`);
-  await redis('RPUSH', `clouds:day:${today}`, cloudData);
-
-  const total = await redis('GET', `clouds:total:${to}`);
-
-  return res.status(200).json({
-    success: true,
-    message: `☁️ ${from} dał chmurkę dla ${to}!`,
-    total: parseInt(total)
-  });
 }
 
 // 🏆 VOTE HERO
@@ -128,15 +94,6 @@ async function getStats(req, res) {
   const today = getToday();
   const from = req.query.from || null;
 
-  // --- CLOUDS ---
-  const cloudTotals = {};
-  for (const p of PARTICIPANTS) {
-    const total = await redis('GET', `clouds:total:${p}`);
-    if (total && parseInt(total) > 0) {
-      cloudTotals[p] = parseInt(total);
-    }
-  }
-
   // --- HERO TODAY ---
   const heroToday = {};
   for (const p of PARTICIPANTS) {
@@ -156,7 +113,7 @@ async function getStats(req, res) {
   const heroTrophies = {};
   const heroHistory = [];
 
-  for (let i = 1; i <= 15; i++) {
+  for (let i = 1; i <= 30; i++) {
     const d = new Date();
     d.setDate(d.getDate() - i);
     const dateStr = d.toLocaleDateString('sv-SE', { timeZone: 'Europe/Madrid' });
@@ -181,7 +138,6 @@ async function getStats(req, res) {
 
   return res.status(200).json({
     date: today,
-    clouds: { totals: cloudTotals },
     hero: {
       today: heroToday,
       myVote: myVote,

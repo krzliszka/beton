@@ -3282,7 +3282,6 @@ Ay, mi gatito, miau, miau
         <!-- Tabs -->
         <div class="game-tabs">
             <div class="game-tab active" data-panel="hero-panel">🏆 Hero of the Day</div>
-            <div class="game-tab" data-panel="cloud-panel">🌧️ Czarne Chmurki</div>
             <div class="game-tab" data-panel="ranking-panel">📊 Ranking</div>
         </div>
 
@@ -3293,14 +3292,6 @@ Ay, mi gatito, miau, miau
             </p>
             <div class="hero-grid" id="hero-grid"></div>
             <p id="hero-status" style="text-align:center; margin-top:1rem; font-size:0.85rem; color:var(--gray);"></p>
-        </div>
-
-        <!-- PANEL: CLOUD GIVING -->
-        <div class="game-panel" id="cloud-panel">
-            <p style="text-align:center; color:var(--concrete); margin-bottom:1rem;">
-                Przyznaj komuś Czarną Chmurkę ☁️ — bo na to zasłużył.
-            </p>
-            <div class="cloud-grid" id="cloud-grid"></div>
         </div>
 
         <!-- PANEL: RANKINGS -->
@@ -3331,33 +3322,20 @@ Ay, mi gatito, miau, miau
                             <div class="podium-count">0</div>
                         </div>
                     </div>
+                    <ul class="ranking-list" id="hero-full-ranking" style="display:none;"></ul>
+                    <button class="show-full-ranking-btn" id="toggle-hero-ranking" style="margin-top:0.75rem;background:none;border:1px solid var(--gray);color:var(--gray);padding:0.4rem 1rem;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:0.75rem;width:100%;">Pokaż cały ranking ▼</button>
                     <div class="hero-history" id="hero-history"></div>
                 </div>
 
                 <div class="ranking-card">
                     <h3>🌧️ Ranking Chmur</h3>
                     <ul class="ranking-list" id="cloud-ranking"></ul>
+                    <ul class="ranking-list" id="cloud-full-ranking" style="display:none;"></ul>
+                    <button class="show-full-ranking-btn" id="toggle-cloud-ranking" style="margin-top:0.75rem;background:none;border:1px solid var(--gray);color:var(--gray);padding:0.4rem 1rem;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:0.75rem;width:100%;display:none;">Pokaż cały ranking ▼</button>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- CLOUD MODAL -->
-    <div class="cloud-modal" id="cloud-modal">
-        <div class="cloud-modal-content">
-            <h3>☁️ Chmurka dla: <span id="cloud-modal-target"></span></h3>
-            <p style="color:var(--concrete); font-size:0.85rem;">Za co?</p>
-            <div class="cloud-reasons">
-                <button class="cloud-reason-btn" data-reason="Spóźnienie">⏰ Spóźnienie</button>
-                <button class="cloud-reason-btn" data-reason="Marudzenie">😤 Marudzenie</button>
-                <button class="cloud-reason-btn" data-reason="Lenistwo">🛋️ Lenistwo</button>
-                <button class="cloud-reason-btn" data-reason="Słaby żart">😐 Słaby żart</button>
-                <button class="cloud-reason-btn" data-reason="Brak betonu">🚫 Brak betonu</button>
-                <button class="cloud-reason-btn" data-reason="Inne">❓ Inne</button>
-            </div>
-            <button class="cloud-cancel" id="cloud-cancel">Anuluj</button>
-        </div>
-    </div>
 
     <!-- GAME TOAST -->
     <div class="game-toast" id="game-toast"></div>
@@ -3936,16 +3914,38 @@ Ay, mi gatito, miau, miau
     <!-- GAME LOGIC -->
     <script>
     (function() {
+        // Participants - must match HTML .participant-name values!
         const PARTICIPANTS = [
-            'Krzysiek','Jan','Olaf','Michał Książek','Marcel','Szymon','Kuba Piszko',
-            'Wiktor','Tomek Franczyk','Paweł','Tomek Piszczek','Łukasz',
-            'Mateusz Kusiak','Mateusz Zając','Mateusz Bogacz','Tomek Gut',
-            'Kuba Wołek','Kacper','Igor','Tymek','Gabriel','Maks'
+            'Rajmund','Krzysiek','Dzonson','Asia','Zuza','Tommy G',
+            'Łukasz','G','Bartek','Tomek','Stefka','Julka',
+            'Natalia','Emilka','Olaf','Benek','Dybi','Zabs0n',
+            'Maćko','Turkish Hairlines','Mati','Kuba'
+        ];
+
+        // ☁️ CHMURKI - KOMISYJNE (edytuj tutaj, Krzysiek!)
+        // Format: { to: 'Imię', reason: 'Powód', date: 'YYYY-MM-DD' }
+        const CLOUDS = [
+            // Przykład:
+            // { to: 'Dzonson', reason: 'Spóźnienie na lotnisko', date: '2026-02-21' },
+            // { to: 'Tomek', reason: 'Marudzenie na pogodę', date: '2026-02-22' },
         ];
 
         const GAME_API = '/api/game';
         let gameStats = null;
         let myIdentity = localStorage.getItem('beton-identity') || '';
+
+        // --- Compute cloud totals from hardcoded list ---
+        function getCloudTotals() {
+            const totals = {};
+            CLOUDS.forEach(c => {
+                totals[c.to] = (totals[c.to] || 0) + 1;
+            });
+            return totals;
+        }
+
+        function getCloudList() {
+            return CLOUDS.sort((a, b) => b.date.localeCompare(a.date));
+        }
 
         // --- Init ---
         function initGame() {
@@ -3963,7 +3963,7 @@ Ay, mi gatito, miau, miau
             sel.addEventListener('change', function() {
                 myIdentity = this.value;
                 localStorage.setItem('beton-identity', myIdentity);
-                renderAll();
+                loadStats();
             });
 
             // Tabs
@@ -3976,24 +3976,27 @@ Ay, mi gatito, miau, miau
                 });
             });
 
-            // Cloud modal cancel
-            document.getElementById('cloud-cancel').addEventListener('click', () => {
-                document.getElementById('cloud-modal').classList.remove('show');
-            });
-
-            // Cloud reason buttons
-            document.querySelectorAll('.cloud-reason-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const target = document.getElementById('cloud-modal').dataset.target;
-                    let reason = this.dataset.reason;
-                    if (reason === 'Inne') {
-                        reason = prompt('Za co chmurka?');
-                        if (!reason) return;
-                    }
-                    sendCloud(target, reason);
-                    document.getElementById('cloud-modal').classList.remove('show');
+            // Toggle full hero ranking
+            const toggleHero = document.getElementById('toggle-hero-ranking');
+            if (toggleHero) {
+                toggleHero.addEventListener('click', function() {
+                    const list = document.getElementById('hero-full-ranking');
+                    const isHidden = list.style.display === 'none';
+                    list.style.display = isHidden ? 'block' : 'none';
+                    this.textContent = isHidden ? 'Zwiń ranking ▲' : 'Pokaż cały ranking ▼';
                 });
-            });
+            }
+
+            // Toggle full cloud ranking
+            const toggleCloud = document.getElementById('toggle-cloud-ranking');
+            if (toggleCloud) {
+                toggleCloud.addEventListener('click', function() {
+                    const list = document.getElementById('cloud-full-ranking');
+                    const isHidden = list.style.display === 'none';
+                    list.style.display = isHidden ? 'block' : 'none';
+                    this.textContent = isHidden ? 'Zwiń ranking ▲' : 'Pokaż cały ranking ▼';
+                });
+            }
 
             loadStats();
         }
@@ -4008,21 +4011,6 @@ Ay, mi gatito, miau, miau
                 if (gameStats.error) { console.error(gameStats.error); return; }
                 renderAll();
             } catch(e) { console.error('Game stats error:', e); }
-        }
-
-        async function sendCloud(to, reason) {
-            if (!myIdentity) { showToast('Najpierw wybierz siebie!', true); return; }
-            try {
-                const r = await fetch(GAME_API, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ action: 'addCloud', from: myIdentity, to, reason })
-                });
-                const data = await r.json();
-                if (data.error) { showToast(data.error, true); return; }
-                showToast('☁️ Chmurka przyznana dla ' + to + '!');
-                loadStats();
-            } catch(e) { showToast('Błąd połączenia', true); }
         }
 
         async function sendHeroVote(hero) {
@@ -4044,7 +4032,6 @@ Ay, mi gatito, miau, miau
         function renderAll() {
             if (!gameStats) return;
             renderHeroGrid();
-            renderCloudGrid();
             renderRankings();
             renderBadges();
         }
@@ -4088,33 +4075,6 @@ Ay, mi gatito, miau, miau
             }
         }
 
-        function renderCloudGrid() {
-            const grid = document.getElementById('cloud-grid');
-            if (!grid) return;
-
-            const cloudTotals = gameStats.clouds?.totals || {};
-            grid.innerHTML = '';
-
-            PARTICIPANTS.forEach(name => {
-                if (name === myIdentity) return;
-                const card = document.createElement('div');
-                card.className = 'cloud-target';
-                const count = cloudTotals[name] || 0;
-                card.innerHTML = `
-                    <span class="cloud-target-emoji">😈</span>
-                    <span class="cloud-target-name">${name}</span>
-                    ${count > 0 ? '<span class="cloud-target-count">☁️×' + count + '</span>' : ''}
-                `;
-                card.addEventListener('click', () => {
-                    if (!myIdentity) { showToast('Najpierw wybierz siebie!', true); return; }
-                    document.getElementById('cloud-modal').dataset.target = name;
-                    document.getElementById('cloud-modal-target').textContent = name;
-                    document.getElementById('cloud-modal').classList.add('show');
-                });
-                grid.appendChild(card);
-            });
-        }
-
         function renderRankings() {
             // Hero today banner
             const banner = document.getElementById('hero-today-banner');
@@ -4126,7 +4086,7 @@ Ay, mi gatito, miau, miau
                 document.getElementById('hero-today-votes').textContent = 'głosów: ' + topToday[0][1];
             }
 
-            // Hero all-time podium (trophies = number of days won)
+            // Hero all-time podium
             const trophies = gameStats.hero?.trophies || {};
             const sortedHeroes = Object.entries(trophies).sort((a,b) => b[1] - a[1]);
             const podiumOrder = [1, 0, 2]; // 2nd, 1st, 3rd visually
@@ -4138,10 +4098,23 @@ Ay, mi gatito, miau, miau
                 }
             });
 
+            // Full hero ranking list (hidden by default)
+            const heroFullRanking = document.getElementById('hero-full-ranking');
+            if (heroFullRanking && sortedHeroes.length > 0) {
+                heroFullRanking.innerHTML = sortedHeroes.map((item, i) =>
+                    `<li class="ranking-item">
+                        <span class="rank">${i + 1}.</span>
+                        <span class="name">${item[0]}</span>
+                        <span class="value">🏆×${item[1]}</span>
+                    </li>`
+                ).join('');
+            }
+
             // Hero history
             const historyEl = document.getElementById('hero-history');
             const history = gameStats.hero?.history || [];
-            historyEl.innerHTML = history.map(h =>
+            historyEl.innerHTML = history.length > 0 ? '<h4 style="margin-top:1rem;font-size:0.85rem;color:var(--concrete);">Historia:</h4>' : '';
+            historyEl.innerHTML += history.map(h =>
                 `<div class="hero-history-item">
                     <span style="color:var(--gray);">${h.date}</span>
                     <span>${h.winner || '—'}</span>
@@ -4149,29 +4122,60 @@ Ay, mi gatito, miau, miau
                 </div>`
             ).join('');
 
-            // Cloud ranking
+            // Cloud ranking (from hardcoded CLOUDS)
+            const cloudTotals = getCloudTotals();
             const cloudRanking = document.getElementById('cloud-ranking');
-            const cloudTotals = gameStats.clouds?.totals || {};
             const sortedClouds = Object.entries(cloudTotals).sort((a,b) => b[1] - a[1]);
-            cloudRanking.innerHTML = sortedClouds.map((item, i) =>
+
+            // Top 3 visible
+            const top3 = sortedClouds.slice(0, 3);
+            cloudRanking.innerHTML = top3.map((item, i) =>
                 `<li class="ranking-item">
                     <span class="rank">${i + 1}.</span>
                     <span class="name">${item[0]}</span>
                     <span class="value" style="color:var(--agh-red);">☁️×${item[1]}</span>
                 </li>`
             ).join('');
+
             if (sortedClouds.length === 0) {
                 cloudRanking.innerHTML = '<li class="ranking-item"><span style="color:var(--gray);">Jeszcze czyste niebo ☀️</span></li>';
+            }
+
+            // Full cloud ranking (hidden)
+            const cloudFullRanking = document.getElementById('cloud-full-ranking');
+            const toggleCloudBtn = document.getElementById('toggle-cloud-ranking');
+            if (sortedClouds.length > 3) {
+                cloudFullRanking.innerHTML = sortedClouds.map((item, i) =>
+                    `<li class="ranking-item">
+                        <span class="rank">${i + 1}.</span>
+                        <span class="name">${item[0]}</span>
+                        <span class="value" style="color:var(--agh-red);">☁️×${item[1]}</span>
+                    </li>`
+                ).join('');
+
+                // Show last clouds log
+                const recentClouds = getCloudList().slice(0, 10);
+                if (recentClouds.length > 0) {
+                    cloudFullRanking.innerHTML += '<li style="padding-top:1rem;border:none;"><strong style="color:var(--concrete);font-size:0.8rem;">Ostatnie chmurki:</strong></li>';
+                    cloudFullRanking.innerHTML += recentClouds.map(c =>
+                        `<li class="ranking-item" style="font-size:0.75rem;">
+                            <span style="color:var(--gray);">${c.date}</span>
+                            <span>☁️ ${c.to}</span>
+                            <span style="color:var(--concrete);">${c.reason}</span>
+                        </li>`
+                    ).join('');
+                }
+
+                toggleCloudBtn.style.display = 'block';
             }
         }
 
         function renderBadges() {
-            // Add badges to participant cards in #participants section
             const cards = document.querySelectorAll('.participant');
-            if (!cards.length || !gameStats) return;
+            if (!cards.length) return;
 
-            const cloudTotals = gameStats.clouds?.totals || {};
-            const heroTrophies = gameStats.hero?.trophies || {};
+            const cloudTotals = getCloudTotals();
+            const heroTrophies = gameStats?.hero?.trophies || {};
 
             cards.forEach(card => {
                 const nameEl = card.querySelector('.participant-name');
@@ -4183,12 +4187,12 @@ Ay, mi gatito, miau, miau
                 if (old) old.remove();
 
                 const clouds = cloudTotals[name] || 0;
-                const trophies = heroTrophies[name] || 0;
-                if (clouds === 0 && trophies === 0) return;
+                const trophy = heroTrophies[name] || 0;
+                if (clouds === 0 && trophy === 0) return;
 
                 const badgeDiv = document.createElement('div');
                 badgeDiv.className = 'participant-badges';
-                if (trophies > 0) badgeDiv.innerHTML += `<span class="badge badge-hero">🏆×${trophies}</span>`;
+                if (trophy > 0) badgeDiv.innerHTML += `<span class="badge badge-hero">🏆×${trophy}</span>`;
                 if (clouds > 0) badgeDiv.innerHTML += `<span class="badge badge-cloud">☁️×${clouds}</span>`;
                 nameEl.after(badgeDiv);
             });
