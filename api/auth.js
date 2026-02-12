@@ -108,25 +108,38 @@ export default async function handler(req, res) {
 // === Helper Functions ===
 
 async function exchangeCodeForTokens(code, config, redirectUri) {
+  const requestBody = {
+    client_id: config.strava_app.client_id,
+    client_secret: config.strava_app.client_secret,
+    code: code,
+    grant_type: 'authorization_code',
+    redirect_uri: redirectUri
+  };
+  
+  console.log('DEBUG: Token exchange request:', {
+    client_id: requestBody.client_id,
+    redirect_uri: requestBody.redirect_uri,
+    code_length: code.length,
+    has_secret: !!requestBody.client_secret
+  });
+  
   const response = await fetch('https://www.strava.com/oauth/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      client_id: config.strava_app.client_id,
-      client_secret: config.strava_app.client_secret,
-      code: code,
-      grant_type: 'authorization_code',
-      redirect_uri: redirectUri
-    })
+    body: JSON.stringify(requestBody)
   });
 
   if (response.ok) {
-    return await response.json();
+    const data = await response.json();
+    console.log('DEBUG: Token exchange SUCCESS');
+    return data;
   }
   
   // Log error for debugging
   const errorText = await response.text();
-  console.error('Strava token exchange failed:', response.status, errorText);
+  console.error('DEBUG: Strava token exchange FAILED');
+  console.error('DEBUG: Status:', response.status);
+  console.error('DEBUG: Response:', errorText);
   return null;
 }
 
