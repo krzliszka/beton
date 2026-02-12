@@ -2775,7 +2775,7 @@
                 <li><a href="#flights">Loty</a></li>
                 <li><a href="#accommodation">Domek</a></li>
                 <li><a href="#attractions">Atrakcje</a></li>
-                <li><a href="#gra">⚔️ Gra</a></li>
+                <li><a href="#gra">Ranking</a></li>
                 <li><a href="#dokumenty">Dokumenty</a></li>
                 <li><a href="#contact">Kontakt</a></li>
             </ul>
@@ -3267,7 +3267,7 @@ Ay, mi gatito, miau, miau
 
     <!-- GRA - CHMURKI & HERO -->
     <section class="section game-section fade-in" id="gra">
-        <h2 class="section-title">Rywalizacja</h2>
+        <h2 class="section-title">Ranking</h2>
 
         <!-- Identity selector -->
         <div class="game-identity">
@@ -4087,13 +4087,34 @@ Ay, mi gatito, miau, miau
             // Hero all-time podium
             const trophies = gameStats.hero?.trophies || {};
             const sortedHeroes = Object.entries(trophies).sort((a,b) => b[1] - a[1]);
-            // podium HTML order: podium-1=🥇(center), podium-2=🥈(left), podium-3=🥉(right)
-            const podiumMap = [[0, 'podium-1'], [1, 'podium-2'], [2, 'podium-3']];
-            podiumMap.forEach(([rank, id]) => {
+            
+            // Group by trophy count (handle ties)
+            const podiumGroups = [];
+            let currentCount = null;
+            let currentGroup = [];
+            
+            sortedHeroes.forEach(([name, count]) => {
+                if (count !== currentCount) {
+                    if (currentGroup.length > 0) {
+                        podiumGroups.push({ names: currentGroup, count: currentCount });
+                    }
+                    currentCount = count;
+                    currentGroup = [name];
+                } else {
+                    currentGroup.push(name);
+                }
+            });
+            if (currentGroup.length > 0) {
+                podiumGroups.push({ names: currentGroup, count: currentCount });
+            }
+            
+            // Assign to podium places (🥇, 🥈, 🥉)
+            const podiumIds = ['podium-1', 'podium-2', 'podium-3'];
+            podiumIds.forEach((id, idx) => {
                 const el = document.getElementById(id);
-                if (sortedHeroes[rank]) {
-                    el.querySelector('.podium-name').textContent = sortedHeroes[rank][0];
-                    el.querySelector('.podium-count').textContent = '🏆×' + sortedHeroes[rank][1];
+                if (podiumGroups[idx]) {
+                    el.querySelector('.podium-name').textContent = podiumGroups[idx].names.join(', ');
+                    el.querySelector('.podium-count').textContent = '🏆×' + podiumGroups[idx].count;
                 } else {
                     el.querySelector('.podium-name').textContent = '—';
                     el.querySelector('.podium-count').textContent = '0';
@@ -4116,14 +4137,13 @@ Ay, mi gatito, miau, miau
             const historyEl = document.getElementById('hero-history');
             const history = gameStats.hero?.history || [];
             historyEl.innerHTML = history.length > 0 ? '<h4 style="margin-top:1rem;font-size:0.85rem;color:var(--concrete);">Historia:</h4>' : '';
-            historyEl.innerHTML += history.map(h => {
-                const totalVotesText = h.totalVotes ? ` <span style="color:var(--gray);font-size:0.7rem;">(${h.totalVotes} gł.)</span>` : '';
-                return `<div class="hero-history-item">
+            historyEl.innerHTML += history.map(h => `
+                <div class="hero-history-item">
                     <span style="color:var(--gray);">${h.date}</span>
                     <span>🏆 ${h.winner || '—'}</span>
-                    <span style="color:#FFD700;">⭐${h.votes}${totalVotesText}</span>
-                </div>`;
-            }).join('');
+                    <span style="color:#FFD700;">⭐${h.votes}</span>
+                </div>`
+            ).join('');
 
             // Cloud ranking (from hardcoded CLOUDS)
             const cloudTotals = getCloudTotals();
