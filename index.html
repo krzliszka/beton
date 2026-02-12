@@ -4116,13 +4116,14 @@ Ay, mi gatito, miau, miau
             const historyEl = document.getElementById('hero-history');
             const history = gameStats.hero?.history || [];
             historyEl.innerHTML = history.length > 0 ? '<h4 style="margin-top:1rem;font-size:0.85rem;color:var(--concrete);">Historia:</h4>' : '';
-            historyEl.innerHTML += history.map(h =>
-                `<div class="hero-history-item">
+            historyEl.innerHTML += history.map(h => {
+                const totalVotesText = h.totalVotes ? ` <span style="color:var(--gray);font-size:0.7rem;">(${h.totalVotes} gł.)</span>` : '';
+                return `<div class="hero-history-item">
                     <span style="color:var(--gray);">${h.date}</span>
                     <span>🏆 ${h.winner || '—'}</span>
-                    <span style="color:#FFD700;">⭐${h.votes}${h.totalVotes ? ' <span style="color:var(--gray);font-size:0.7rem;">(${h.totalVotes} gł.)</span>' : ''}</span>
-                </div>`
-            ).join('');
+                    <span style="color:#FFD700;">⭐${h.votes}${totalVotesText}</span>
+                </div>`;
+            }).join('');
 
             // Cloud ranking (from hardcoded CLOUDS)
             const cloudTotals = getCloudTotals();
