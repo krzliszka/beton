@@ -1,37 +1,41 @@
-// Vercel Serverless Function - Strava Rankings API
+// Vercel Serverless Function - Strava Rankings API v2 with Redis
 import fetch from 'node-fetch';
 import fs from 'fs';
 import path from 'path';
+import { getAllParticipants, isRedisAvailable } from './redis.js';
 
 export default async function handler(req, res) {
   const { action = 'rankings' } = req.query;
 
-  // Load config from environment variables or file
+  // Load config from file (for segments and settings)
   let config;
-  
-  // Try environment variables first (Vercel recommended)
-  if (process.env.STRAVA_CLIENT_ID) {
-    config = {
-      strava_app: {
-        client_id: process.env.STRAVA_CLIENT_ID,
-        client_secret: process.env.STRAVA_CLIENT_SECRET
-      },
-      segments: JSON.parse(process.env.STRAVA_SEGMENTS || '[]'),
-      participants: JSON.parse(process.env.STRAVA_PARTICIPANTS || '[]'),
-      settings: JSON.parse(process.env.STRAVA_SETTINGS || '{"cache_ttl_minutes":30,"date_range":{"start":"2026-02-21T00:00:00Z","end":"2026-03-03T23:59:59Z"}}')
-    };
-  } else {
-    // Fallback to config file (for local development)
-    try {
-      const configPath = path.join(process.cwd(), 'api', 'config.json');
-      config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-    } catch (err) {
-      return res.status(500).json({ 
-        error: 'Brak konfiguracji. Ustaw zmienne środowiskowe w Vercel.',
-        hint: 'STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET, STRAVA_SEGMENTS, STRAVA_PARTICIPANTS'
-      });
-    }
+  try {
+    const configPath = path.join(process.cwd(), 'api', 'config.json');
+    config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  } catch (err) {
+    return res.status(500).json({ 
+      error: 'Brak pliku config.json',
+      hint: 'Utwórz api/config.json z segmentami i ustawieniami'
+    });
   }
+
+  // Load participants from Redis (if available) or config.json
+  let participants;
+  if (isRedisAvailable()) {
+    try {
+      participants = await getAllParticipants();
+      console.log(`✅ Loaded ${participants.length} participants from Redis`);
+    } catch (err) {
+      console.error('Redis read error:', err);
+      // Fallback to config.json
+      participants = config.participants || [];
+    }
+  } else {
+    participants = config.participants || [];
+  }
+
+  // Add participants to config object for compatibility
+  config.participants = participants;
 
   switch (action) {
     case 'rankings':
@@ -39,7 +43,7 @@ export default async function handler(req, res) {
     case 'segments':
       return res.status(200).json(config.segments);
     case 'participants':
-      return res.status(200).json(config.participants.map(p => ({
+      return res.status(200).json(participants.map(p => ({
         name: p.display_name,
         strava_id: p.strava_id
       })));

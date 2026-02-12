@@ -1,7 +1,8 @@
-// Vercel Serverless Function - OAuth Callback v2
+// Vercel Serverless Function - OAuth Callback v3 with Redis
 import fetch from 'node-fetch';
 import fs from 'fs';
 import path from 'path';
+import { saveParticipant, isRedisAvailable } from './redis.js';
 
 export default async function handler(req, res) {
   const { code, error } = req.query;
@@ -86,25 +87,23 @@ export default async function handler(req, res) {
       added_at: new Date().toISOString()
     };
 
-    // Check if exists
-    const existingIndex = config.participants.findIndex(p => p.strava_id === userProfile.id);
-    
-    if (existingIndex >= 0) {
-      config.participants[existingIndex] = participant;
-    } else {
-      config.participants.push(participant);
-    }
-
-    // Save config - only works with local config.json
-    if (configPath) {
+    // Save to Redis (if available) or show manual instructions
+    if (isRedisAvailable()) {
       try {
-        fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
-      } catch (writeErr) {
-        console.warn('Cannot save config (Vercel filesystem is read-only):', writeErr.message);
+        await saveParticipant(participant);
+        console.log(`✅ Participant ${participant.strava_id} saved to Redis`);
+        return res.status(200).send(successPageAuto(userProfile));
+      } catch (redisErr) {
+        console.error('Redis save error:', redisErr);
+        return res.status(500).send(errorPage(
+          `Błąd zapisu do bazy danych: ${redisErr.message}`
+        ));
       }
+    } else {
+      // Fallback: show JSON for manual config.json update
+      console.warn('Redis not available, showing manual instructions');
+      return res.status(200).send(successPage(userProfile, participant));
     }
-
-    return res.status(200).send(successPage(userProfile, participant));
 
   } catch (err) {
     console.error('Auth error:', err);
@@ -257,6 +256,42 @@ function successPage(userProfile, participant) {
     
     <p class='note'>Skopiuj powyższy JSON i dodaj do tablicy "participants" w pliku api/config.json</p>
     <p><a href='/' style='color: #006633;'>← Wróć do strony głównej</a></p>
+  </div>
+</body>
+</html>`;
+}
+
+function successPageAuto(userProfile) {
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <title>Sukces! - #BETON</title>
+  <style>
+    body { 
+      background: #1a1a1a; 
+      color: #fff; 
+      font-family: 'Space Mono', monospace; 
+      text-align: center; 
+      padding: 50px;
+      margin: 0;
+    }
+    .container { max-width: 600px; margin: 0 auto; }
+    .success { color: #00ff88; font-size: 2.5rem; margin: 20px 0; }
+    h1 { color: #006633; font-size: 3rem; }
+    p { font-size: 1.2rem; line-height: 1.8; }
+    .checkmark { font-size: 5rem; color: #00ff88; margin: 30px 0; }
+    a { color: #006633; text-decoration: none; font-size: 1.1rem; }
+    a:hover { color: #00ff88; }
+  </style>
+</head>
+<body>
+  <div class='container'>
+    <div class='checkmark'>✅</div>
+    <h1>Gotowe!</h1>
+    <div class='success'>Witaj w drużynie, ${userProfile.firstname}!</div>
+    <p>Twoje konto Strava zostało automatycznie dodane do rywalizacji #BETON.</p>
+    <p>Możesz teraz zamknąć tę kartę.</p>
+    <p style='margin-top: 40px;'><a href='/'>← Wróć do strony głównej</a></p>
   </div>
 </body>
 </html>`;
