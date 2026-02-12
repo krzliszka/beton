@@ -746,6 +746,362 @@
             color: var(--agh-green);
         }
 
+        /* GAME - CLOUDS & HERO */
+        .game-section {
+            position: relative;
+        }
+
+        .game-identity {
+            background: rgba(0, 102, 51, 0.15);
+            border: 2px solid var(--agh-green);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .game-identity label {
+            font-size: 1rem;
+            margin-right: 1rem;
+            color: var(--concrete);
+        }
+
+        .game-identity select {
+            background: var(--black);
+            color: var(--white);
+            border: 2px solid var(--agh-green);
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .game-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--agh-green);
+        }
+
+        .game-tab {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray);
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .game-tab:hover { color: var(--white); }
+        .game-tab.active {
+            color: var(--agh-green);
+            border-bottom-color: var(--agh-green);
+        }
+
+        .game-panel { display: none; }
+        .game-panel.active { display: block; }
+
+        /* HERO VOTING */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .hero-candidate {
+            text-align: center;
+            cursor: pointer;
+            padding: 0.75rem 0.5rem;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .hero-candidate:hover {
+            border-color: var(--agh-green);
+            transform: translateY(-2px);
+        }
+
+        .hero-candidate.voted {
+            border-color: #FFD700;
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .hero-candidate.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .hero-candidate-emoji {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .hero-candidate-name {
+            font-size: 0.7rem;
+            color: var(--concrete);
+        }
+
+        /* CLOUD GIVING */
+        .cloud-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .cloud-target {
+            text-align: center;
+            cursor: pointer;
+            padding: 0.75rem 0.5rem;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .cloud-target:hover {
+            border-color: var(--agh-red);
+            transform: translateY(-2px);
+        }
+
+        .cloud-target-emoji {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        .cloud-target-name {
+            font-size: 0.7rem;
+            color: var(--concrete);
+        }
+
+        .cloud-target-count {
+            font-size: 0.7rem;
+            color: var(--agh-red);
+            margin-top: 0.2rem;
+        }
+
+        /* CLOUD REASONS MODAL */
+        .cloud-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cloud-modal.show { display: flex; }
+
+        .cloud-modal-content {
+            background: #1a1a1a;
+            border: 2px solid var(--agh-red);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .cloud-modal h3 {
+            color: var(--agh-red);
+            margin-bottom: 1rem;
+        }
+
+        .cloud-reasons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .cloud-reason-btn {
+            background: rgba(167, 25, 48, 0.2);
+            border: 1px solid var(--agh-red);
+            color: var(--white);
+            padding: 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .cloud-reason-btn:hover {
+            background: var(--agh-red);
+        }
+
+        .cloud-cancel {
+            margin-top: 1rem;
+            background: none;
+            border: 1px solid var(--gray);
+            color: var(--gray);
+            padding: 0.6rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* RANKINGS */
+        .rankings-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .ranking-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .ranking-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .podium {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+            height: 160px;
+        }
+
+        .podium-place {
+            text-align: center;
+            flex: 1;
+            max-width: 100px;
+        }
+
+        .podium-bar {
+            background: linear-gradient(180deg, var(--agh-green) 0%, var(--agh-green-dark) 100%);
+            border-radius: 6px 6px 0 0;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .podium-place:nth-child(1) .podium-bar { height: 100px; }
+        .podium-place:nth-child(2) .podium-bar { height: 130px; background: linear-gradient(180deg, #FFD700 0%, #B8860B 100%); }
+        .podium-place:nth-child(3) .podium-bar { height: 75px; }
+
+        .podium-name {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            color: var(--concrete);
+        }
+
+        .podium-count {
+            font-size: 0.7rem;
+            color: var(--agh-green);
+        }
+
+        .ranking-list {
+            list-style: none;
+        }
+
+        .ranking-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.85rem;
+        }
+
+        .ranking-item .rank { color: var(--gray); width: 25px; }
+        .ranking-item .name { flex: 1; }
+        .ranking-item .value { color: var(--agh-green); font-weight: bold; }
+
+        .hero-today-banner {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(0, 102, 51, 0.15) 100%);
+            border: 2px solid #FFD700;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-today-banner h3 { color: #FFD700; font-size: 1.2rem; }
+
+        .hero-history {
+            margin-top: 1rem;
+        }
+
+        .hero-history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.8rem;
+        }
+
+        .game-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--agh-green);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-family: 'Space Mono', monospace;
+            z-index: 10001;
+            transition: transform 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .game-toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .game-toast.error { background: var(--agh-red); }
+
+        /* Participant badges */
+        .participant-badges {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 0.25rem;
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .badge-cloud { color: #888; }
+        .badge-hero { color: #FFD700; }
+
+        @media (max-width: 768px) {
+            .rankings-container {
+                grid-template-columns: 1fr;
+            }
+            .hero-grid, .cloud-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .game-tab { font-size: 0.7rem; padding: 0.75rem 0.5rem; }
+        }
+
         /* HIGHLIGHTS */
         .highlights {
             background: linear-gradient(135deg, var(--agh-red) 0%, var(--black) 100%);
@@ -2421,6 +2777,7 @@
                 <li><a href="#flights">Loty</a></li>
                 <li><a href="#accommodation">Domek</a></li>
                 <li><a href="#attractions">Atrakcje</a></li>
+                <li><a href="#gra">⚔️ Gra</a></li>
                 <li><a href="#dokumenty">Dokumenty</a></li>
                 <li><a href="#contact">Kontakt</a></li>
             </ul>
@@ -2909,6 +3266,101 @@ Ay, mi gatito, miau, miau
         </div>
         </div>
     </section>
+
+    <!-- GRA - CHMURKI & HERO -->
+    <section class="section game-section fade-in" id="gra">
+        <h2 class="section-title">Rywalizacja</h2>
+
+        <!-- Identity selector -->
+        <div class="game-identity">
+            <label for="game-who">🎭 Jestem:</label>
+            <select id="game-who">
+                <option value="">Wybierz siebie...</option>
+            </select>
+        </div>
+
+        <!-- Tabs -->
+        <div class="game-tabs">
+            <div class="game-tab active" data-panel="hero-panel">🏆 Hero of the Day</div>
+            <div class="game-tab" data-panel="cloud-panel">🌧️ Czarne Chmurki</div>
+            <div class="game-tab" data-panel="ranking-panel">📊 Ranking</div>
+        </div>
+
+        <!-- PANEL: HERO VOTING -->
+        <div class="game-panel active" id="hero-panel">
+            <p style="text-align:center; color:var(--concrete); margin-bottom:1rem;">
+                Głosuj na Bohatera Dnia — jedna osoba, jeden głos dziennie. Reset o północy 🕛
+            </p>
+            <div class="hero-grid" id="hero-grid"></div>
+            <p id="hero-status" style="text-align:center; margin-top:1rem; font-size:0.85rem; color:var(--gray);"></p>
+        </div>
+
+        <!-- PANEL: CLOUD GIVING -->
+        <div class="game-panel" id="cloud-panel">
+            <p style="text-align:center; color:var(--concrete); margin-bottom:1rem;">
+                Przyznaj komuś Czarną Chmurkę ☁️ — bo na to zasłużył.
+            </p>
+            <div class="cloud-grid" id="cloud-grid"></div>
+        </div>
+
+        <!-- PANEL: RANKINGS -->
+        <div class="game-panel" id="ranking-panel">
+            <div class="hero-today-banner" id="hero-today-banner" style="display:none;">
+                <h3>🏆 Dzisiejszy Hero</h3>
+                <p id="hero-today-name" style="font-size:1.5rem; margin:0.5rem 0;">—</p>
+                <p id="hero-today-votes" style="font-size:0.8rem; color:var(--concrete);">głosów: 0</p>
+            </div>
+
+            <div class="rankings-container">
+                <div class="ranking-card">
+                    <h3>🏆 Hall of Heroes</h3>
+                    <div class="podium" id="hero-podium">
+                        <div class="podium-place" id="podium-2">
+                            <div class="podium-bar">🥈</div>
+                            <div class="podium-name">—</div>
+                            <div class="podium-count">0</div>
+                        </div>
+                        <div class="podium-place" id="podium-1">
+                            <div class="podium-bar">🥇</div>
+                            <div class="podium-name">—</div>
+                            <div class="podium-count">0</div>
+                        </div>
+                        <div class="podium-place" id="podium-3">
+                            <div class="podium-bar">🥉</div>
+                            <div class="podium-name">—</div>
+                            <div class="podium-count">0</div>
+                        </div>
+                    </div>
+                    <div class="hero-history" id="hero-history"></div>
+                </div>
+
+                <div class="ranking-card">
+                    <h3>🌧️ Ranking Chmur</h3>
+                    <ul class="ranking-list" id="cloud-ranking"></ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLOUD MODAL -->
+    <div class="cloud-modal" id="cloud-modal">
+        <div class="cloud-modal-content">
+            <h3>☁️ Chmurka dla: <span id="cloud-modal-target"></span></h3>
+            <p style="color:var(--concrete); font-size:0.85rem;">Za co?</p>
+            <div class="cloud-reasons">
+                <button class="cloud-reason-btn" data-reason="Spóźnienie">⏰ Spóźnienie</button>
+                <button class="cloud-reason-btn" data-reason="Marudzenie">😤 Marudzenie</button>
+                <button class="cloud-reason-btn" data-reason="Lenistwo">🛋️ Lenistwo</button>
+                <button class="cloud-reason-btn" data-reason="Słaby żart">😐 Słaby żart</button>
+                <button class="cloud-reason-btn" data-reason="Brak betonu">🚫 Brak betonu</button>
+                <button class="cloud-reason-btn" data-reason="Inne">❓ Inne</button>
+            </div>
+            <button class="cloud-cancel" id="cloud-cancel">Anuluj</button>
+        </div>
+    </div>
+
+    <!-- GAME TOAST -->
+    <div class="game-toast" id="game-toast"></div>
 
     <!-- DOKUMENTY -->
     <section class="pkpass-section fade-in" id="dokumenty">
@@ -3479,6 +3931,283 @@ Ay, mi gatito, miau, miau
                 });
             }
         });
+    </script>
+
+    <!-- GAME LOGIC -->
+    <script>
+    (function() {
+        const PARTICIPANTS = [
+            'Krzysiek','Jan','Olaf','Michał Książek','Marcel','Szymon','Kuba Piszko',
+            'Wiktor','Tomek Franczyk','Paweł','Tomek Piszczek','Łukasz',
+            'Mateusz Kusiak','Mateusz Zając','Mateusz Bogacz','Tomek Gut',
+            'Kuba Wołek','Kacper','Igor','Tymek','Gabriel','Maks'
+        ];
+
+        const GAME_API = '/api/game';
+        let gameStats = null;
+        let myIdentity = localStorage.getItem('beton-identity') || '';
+
+        // --- Init ---
+        function initGame() {
+            const sel = document.getElementById('game-who');
+            if (!sel) return;
+
+            PARTICIPANTS.forEach(name => {
+                const opt = document.createElement('option');
+                opt.value = name;
+                opt.textContent = name;
+                if (name === myIdentity) opt.selected = true;
+                sel.appendChild(opt);
+            });
+
+            sel.addEventListener('change', function() {
+                myIdentity = this.value;
+                localStorage.setItem('beton-identity', myIdentity);
+                renderAll();
+            });
+
+            // Tabs
+            document.querySelectorAll('.game-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.game-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.game-panel').forEach(p => p.classList.remove('active'));
+                    this.classList.add('active');
+                    document.getElementById(this.dataset.panel).classList.add('active');
+                });
+            });
+
+            // Cloud modal cancel
+            document.getElementById('cloud-cancel').addEventListener('click', () => {
+                document.getElementById('cloud-modal').classList.remove('show');
+            });
+
+            // Cloud reason buttons
+            document.querySelectorAll('.cloud-reason-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const target = document.getElementById('cloud-modal').dataset.target;
+                    let reason = this.dataset.reason;
+                    if (reason === 'Inne') {
+                        reason = prompt('Za co chmurka?');
+                        if (!reason) return;
+                    }
+                    sendCloud(target, reason);
+                    document.getElementById('cloud-modal').classList.remove('show');
+                });
+            });
+
+            loadStats();
+        }
+
+        // --- API calls ---
+        async function loadStats() {
+            try {
+                let url = GAME_API + '?action=stats';
+                if (myIdentity) url += '&from=' + encodeURIComponent(myIdentity);
+                const r = await fetch(url);
+                gameStats = await r.json();
+                if (gameStats.error) { console.error(gameStats.error); return; }
+                renderAll();
+            } catch(e) { console.error('Game stats error:', e); }
+        }
+
+        async function sendCloud(to, reason) {
+            if (!myIdentity) { showToast('Najpierw wybierz siebie!', true); return; }
+            try {
+                const r = await fetch(GAME_API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'addCloud', from: myIdentity, to, reason })
+                });
+                const data = await r.json();
+                if (data.error) { showToast(data.error, true); return; }
+                showToast('☁️ Chmurka przyznana dla ' + to + '!');
+                loadStats();
+            } catch(e) { showToast('Błąd połączenia', true); }
+        }
+
+        async function sendHeroVote(hero) {
+            if (!myIdentity) { showToast('Najpierw wybierz siebie!', true); return; }
+            try {
+                const r = await fetch(GAME_API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'voteHero', from: myIdentity, hero })
+                });
+                const data = await r.json();
+                if (data.error) { showToast(data.error, true); return; }
+                showToast('🏆 Zagłosowałeś na ' + hero + '!');
+                loadStats();
+            } catch(e) { showToast('Błąd połączenia', true); }
+        }
+
+        // --- Render ---
+        function renderAll() {
+            if (!gameStats) return;
+            renderHeroGrid();
+            renderCloudGrid();
+            renderRankings();
+            renderBadges();
+        }
+
+        function renderHeroGrid() {
+            const grid = document.getElementById('hero-grid');
+            const status = document.getElementById('hero-status');
+            if (!grid) return;
+
+            const todayVotes = gameStats.hero?.today || {};
+            const myVotedFor = gameStats.hero?.myVote || null;
+            const hasVoted = !!myVotedFor;
+
+            grid.innerHTML = '';
+            PARTICIPANTS.forEach(name => {
+                if (name === myIdentity) return;
+                const card = document.createElement('div');
+                card.className = 'hero-candidate';
+                if (myVotedFor === name) card.classList.add('voted');
+                if (hasVoted && myVotedFor !== name) card.classList.add('disabled');
+
+                const votes = todayVotes[name] || 0;
+                card.innerHTML = `
+                    <span class="hero-candidate-emoji">🦸</span>
+                    <span class="hero-candidate-name">${name}</span>
+                    ${votes > 0 ? '<span style="font-size:0.7rem;color:#FFD700;">⭐' + votes + '</span>' : ''}
+                `;
+
+                if (!hasVoted && myIdentity) {
+                    card.addEventListener('click', () => sendHeroVote(name));
+                }
+                grid.appendChild(card);
+            });
+
+            if (hasVoted) {
+                status.innerHTML = '✅ Zagłosowałeś dziś na <strong style="color:#FFD700;">' + myVotedFor + '</strong>';
+            } else if (!myIdentity) {
+                status.textContent = '⬆️ Wybierz siebie żeby głosować';
+            } else {
+                status.textContent = 'Kliknij na osobę, żeby oddać głos';
+            }
+        }
+
+        function renderCloudGrid() {
+            const grid = document.getElementById('cloud-grid');
+            if (!grid) return;
+
+            const cloudTotals = gameStats.clouds?.totals || {};
+            grid.innerHTML = '';
+
+            PARTICIPANTS.forEach(name => {
+                if (name === myIdentity) return;
+                const card = document.createElement('div');
+                card.className = 'cloud-target';
+                const count = cloudTotals[name] || 0;
+                card.innerHTML = `
+                    <span class="cloud-target-emoji">😈</span>
+                    <span class="cloud-target-name">${name}</span>
+                    ${count > 0 ? '<span class="cloud-target-count">☁️×' + count + '</span>' : ''}
+                `;
+                card.addEventListener('click', () => {
+                    if (!myIdentity) { showToast('Najpierw wybierz siebie!', true); return; }
+                    document.getElementById('cloud-modal').dataset.target = name;
+                    document.getElementById('cloud-modal-target').textContent = name;
+                    document.getElementById('cloud-modal').classList.add('show');
+                });
+                grid.appendChild(card);
+            });
+        }
+
+        function renderRankings() {
+            // Hero today banner
+            const banner = document.getElementById('hero-today-banner');
+            const todayVotes = gameStats.hero?.today || {};
+            const topToday = Object.entries(todayVotes).sort((a,b) => b[1] - a[1]);
+            if (topToday.length > 0) {
+                banner.style.display = 'block';
+                document.getElementById('hero-today-name').textContent = topToday[0][0];
+                document.getElementById('hero-today-votes').textContent = 'głosów: ' + topToday[0][1];
+            }
+
+            // Hero all-time podium (trophies = number of days won)
+            const trophies = gameStats.hero?.trophies || {};
+            const sortedHeroes = Object.entries(trophies).sort((a,b) => b[1] - a[1]);
+            const podiumOrder = [1, 0, 2]; // 2nd, 1st, 3rd visually
+            podiumOrder.forEach((rank, idx) => {
+                const el = document.getElementById('podium-' + (idx + 1));
+                if (sortedHeroes[rank]) {
+                    el.querySelector('.podium-name').textContent = sortedHeroes[rank][0];
+                    el.querySelector('.podium-count').textContent = '🏆×' + sortedHeroes[rank][1];
+                }
+            });
+
+            // Hero history
+            const historyEl = document.getElementById('hero-history');
+            const history = gameStats.hero?.history || [];
+            historyEl.innerHTML = history.map(h =>
+                `<div class="hero-history-item">
+                    <span style="color:var(--gray);">${h.date}</span>
+                    <span>${h.winner || '—'}</span>
+                    <span style="color:#FFD700;">${h.votes ? '⭐' + h.votes : ''}</span>
+                </div>`
+            ).join('');
+
+            // Cloud ranking
+            const cloudRanking = document.getElementById('cloud-ranking');
+            const cloudTotals = gameStats.clouds?.totals || {};
+            const sortedClouds = Object.entries(cloudTotals).sort((a,b) => b[1] - a[1]);
+            cloudRanking.innerHTML = sortedClouds.map((item, i) =>
+                `<li class="ranking-item">
+                    <span class="rank">${i + 1}.</span>
+                    <span class="name">${item[0]}</span>
+                    <span class="value" style="color:var(--agh-red);">☁️×${item[1]}</span>
+                </li>`
+            ).join('');
+            if (sortedClouds.length === 0) {
+                cloudRanking.innerHTML = '<li class="ranking-item"><span style="color:var(--gray);">Jeszcze czyste niebo ☀️</span></li>';
+            }
+        }
+
+        function renderBadges() {
+            // Add badges to participant cards in #participants section
+            const cards = document.querySelectorAll('.participant');
+            if (!cards.length || !gameStats) return;
+
+            const cloudTotals = gameStats.clouds?.totals || {};
+            const heroTrophies = gameStats.hero?.trophies || {};
+
+            cards.forEach(card => {
+                const nameEl = card.querySelector('.participant-name');
+                if (!nameEl) return;
+                const name = nameEl.textContent.trim();
+
+                // Remove existing badges
+                const old = card.querySelector('.participant-badges');
+                if (old) old.remove();
+
+                const clouds = cloudTotals[name] || 0;
+                const trophies = heroTrophies[name] || 0;
+                if (clouds === 0 && trophies === 0) return;
+
+                const badgeDiv = document.createElement('div');
+                badgeDiv.className = 'participant-badges';
+                if (trophies > 0) badgeDiv.innerHTML += `<span class="badge badge-hero">🏆×${trophies}</span>`;
+                if (clouds > 0) badgeDiv.innerHTML += `<span class="badge badge-cloud">☁️×${clouds}</span>`;
+                nameEl.after(badgeDiv);
+            });
+        }
+
+        function showToast(msg, isError) {
+            const toast = document.getElementById('game-toast');
+            toast.textContent = msg;
+            toast.className = 'game-toast show' + (isError ? ' error' : '');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Init when DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initGame);
+        } else {
+            initGame();
+        }
+    })();
     </script>
 </body>
 </html>

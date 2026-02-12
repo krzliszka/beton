@@ -4,6 +4,7 @@
   "rewrites": [
     { "source": "/api/auth", "destination": "/api/auth.js" },
     { "source": "/api/strava", "destination": "/api/strava.js" },
+    { "source": "/api/game", "destination": "/api/game.js" },
     { "source": "/api/test", "destination": "/api/test.js" }
   ],
   "headers": [
