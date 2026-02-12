@@ -6,11 +6,15 @@ import path from 'path';
 export default async function handler(req, res) {
   const { code, error } = req.query;
 
+  console.log('DEBUG: Starting auth handler');
+  console.log('DEBUG: Environment vars present:', !!process.env.STRAVA_CLIENT_ID);
+
   // Load config from environment variables or file
   let config;
   let configPath = null;
   
   if (process.env.STRAVA_CLIENT_ID) {
+    console.log('DEBUG: Using environment variables');
     config = {
       strava_app: {
         client_id: process.env.STRAVA_CLIENT_ID,
@@ -19,10 +23,12 @@ export default async function handler(req, res) {
       participants: []
     };
   } else {
+    console.log('DEBUG: Using config.json file');
     try {
       configPath = path.join(process.cwd(), 'api', 'config.json');
       config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
     } catch (err) {
+      console.error('DEBUG: Config file error:', err);
       return res.status(500).json({ 
         error: 'Brak konfiguracji. Ustaw STRAVA_CLIENT_ID i STRAVA_CLIENT_SECRET w Vercel.'
       });
