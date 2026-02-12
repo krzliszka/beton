@@ -654,9 +654,8 @@
         }
 
 
-        .participant-img[src*="dybi.png"] {
-            transform: translateY(5%);
-            object-position: center center;
+        .participant-img[src*="dybi.jpg"] {
+            object-position: center 80%;
         }
 
         .participant-img[src*="tomek.jpg"] {
@@ -664,8 +663,8 @@
         }
 
         .participant-img[src*="bartek.jpg"] {
-            transform: scale(4) translate(2%, -2%);
-            transform-origin: center center;
+            transform: scale(4);
+            object-position: 30% 70%;
         }
 
         .participant-img[src*="benek2.png"] {
@@ -679,6 +678,7 @@
         .participant-img[src*="emilka.png"] {
             transform: scale(2);
         }
+
 
         .participant-img[src*="gg2.jpg"] {
             transform: scale(3);
@@ -1073,25 +1073,20 @@
 
         /* Participant badges */
         .participant-badges {
-            position: absolute;
-            top: 6px;
-            left: 6px;
             display: flex;
-            gap: 4px;
-            z-index: 5;
-            pointer-events: none;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 0.25rem;
         }
 
         .badge {
-            font-size: 0.65rem;
-            padding: 0.2rem 0.4rem;
+            font-size: 0.7rem;
+            padding: 0.15rem 0.4rem;
             border-radius: 4px;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(4px);
-            white-space: nowrap;
+            background: rgba(0,0,0,0.5);
         }
 
-        .badge-cloud { color: #ff6b6b; }
+        .badge-cloud { color: #888; }
         .badge-hero { color: #FFD700; }
 
         @media (max-width: 768px) {
@@ -4196,7 +4191,7 @@ Ay, mi gatito, miau, miau
                 badgeDiv.className = 'participant-badges';
                 if (trophy > 0) badgeDiv.innerHTML += `<span class="badge badge-hero">🏆×${trophy}</span>`;
                 if (clouds > 0) badgeDiv.innerHTML += `<span class="badge badge-cloud">☁️×${clouds}</span>`;
-                card.appendChild(badgeDiv);
+                nameEl.after(badgeDiv);
             });
         }
 
