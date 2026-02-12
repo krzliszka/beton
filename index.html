@@ -1076,20 +1076,25 @@
 
         /* Participant badges */
         .participant-badges {
+            position: absolute;
+            top: 6px;
+            left: 6px;
             display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            margin-top: 0.25rem;
+            gap: 4px;
+            z-index: 5;
+            pointer-events: none;
         }
 
         .badge {
-            font-size: 0.7rem;
-            padding: 0.15rem 0.4rem;
+            font-size: 0.65rem;
+            padding: 0.2rem 0.4rem;
             border-radius: 4px;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            white-space: nowrap;
         }
 
-        .badge-cloud { color: #888; }
+        .badge-cloud { color: #ff6b6b; }
         .badge-hero { color: #FFD700; }
 
         @media (max-width: 768px) {
@@ -4194,7 +4199,7 @@ Ay, mi gatito, miau, miau
                 badgeDiv.className = 'participant-badges';
                 if (trophy > 0) badgeDiv.innerHTML += `<span class="badge badge-hero">🏆×${trophy}</span>`;
                 if (clouds > 0) badgeDiv.innerHTML += `<span class="badge badge-cloud">☁️×${clouds}</span>`;
-                nameEl.after(badgeDiv);
+                card.appendChild(badgeDiv);
             });
         }
 
