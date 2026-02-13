@@ -1106,6 +1106,7 @@
 
         .badge-cloud { color: #ff6b6b; }
         .badge-hero { color: #FFD700; }
+        .badge-spioch { color: #9b59b6; }
 
         @media (max-width: 768px) {
             .rankings-container {
@@ -3345,10 +3346,17 @@ Ay, mi gatito, miau, miau
                 </div>
 
                 <div class="ranking-card">
-                    <h3>🌧️ Ranking Chmur</h3>
+                    <h3>🌧️ Ranking Chmurek</h3>
                     <ul class="ranking-list" id="cloud-ranking"></ul>
                     <ul class="ranking-list" id="cloud-full-ranking" style="display:none;"></ul>
                     <button class="show-full-ranking-btn" id="toggle-cloud-ranking" style="margin-top:0.75rem;background:none;border:1px solid var(--gray);color:var(--gray);padding:0.4rem 1rem;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:0.75rem;width:100%;display:none;">Pokaż cały ranking ▼</button>
+                </div>
+
+                <div class="ranking-card">
+                    <h3>😴 Ranking Spiocha</h3>
+                    <ul class="ranking-list" id="spioch-ranking"></ul>
+                    <ul class="ranking-list" id="spioch-full-ranking" style="display:none;"></ul>
+                    <button class="show-full-ranking-btn" id="toggle-spioch-ranking" style="margin-top:0.75rem;background:none;border:1px solid var(--gray);color:var(--gray);padding:0.4rem 1rem;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:0.75rem;width:100%;display:none;">Pokaż cały ranking ▼</button>
                 </div>
             </div>
         </div>
@@ -3948,6 +3956,14 @@ Ay, mi gatito, miau, miau
             { to: 'Tomek', reason: 'Marudzenie na pogodę', date: '2026-02-22' },
         ];
 
+        // 😴 SPIOCH - KOMISYJNY (edytuj tutaj, Krzysiek!)
+        // Ostatni na śniadaniu dostaje spiocha
+        // Format: { to: 'Imię', date: 'YYYY-MM-DD' }
+        const SPIOCH = [
+            // Przykład:
+            // { to: 'Dzonson', date: '2026-02-22' },
+        ];
+
         const GAME_API = '/api/game';
         let gameStats = null;
         let myIdentity = localStorage.getItem('beton-identity') || '';
@@ -3963,6 +3979,18 @@ Ay, mi gatito, miau, miau
 
         function getCloudList() {
             return CLOUDS.sort((a, b) => b.date.localeCompare(a.date));
+        }
+
+        function getSpiochTotals() {
+            const totals = {};
+            SPIOCH.forEach(s => {
+                totals[s.to] = (totals[s.to] || 0) + 1;
+            });
+            return totals;
+        }
+
+        function getSpiochList() {
+            return SPIOCH.sort((a, b) => b.date.localeCompare(a.date));
         }
 
         // --- Init ---
@@ -4010,6 +4038,17 @@ Ay, mi gatito, miau, miau
             if (toggleCloud) {
                 toggleCloud.addEventListener('click', function() {
                     const list = document.getElementById('cloud-full-ranking');
+                    const isHidden = list.style.display === 'none';
+                    list.style.display = isHidden ? 'block' : 'none';
+                    this.textContent = isHidden ? 'Zwiń ranking ▲' : 'Pokaż cały ranking ▼';
+                });
+            }
+
+            // Toggle full spioch ranking
+            const toggleSpioch = document.getElementById('toggle-spioch-ranking');
+            if (toggleSpioch) {
+                toggleSpioch.addEventListener('click', function() {
+                    const list = document.getElementById('spioch-full-ranking');
                     const isHidden = list.style.display === 'none';
                     list.style.display = isHidden ? 'block' : 'none';
                     this.textContent = isHidden ? 'Zwiń ranking ▲' : 'Pokaż cały ranking ▼';
@@ -4230,6 +4269,49 @@ Ay, mi gatito, miau, miau
 
                 toggleCloudBtn.style.display = 'block';
             }
+
+            // Spioch ranking (from hardcoded SPIOCH)
+            const spiochTotals = getSpiochTotals();
+            const spiochRanking = document.getElementById('spioch-ranking');
+            const sortedSpioch = Object.entries(spiochTotals).sort((a,b) => b[1] - a[1]);
+
+            const spiochTop3 = sortedSpioch.slice(0, 3);
+            spiochRanking.innerHTML = spiochTop3.map((item, i) =>
+                `<li class="ranking-item">
+                    <span class="rank">${i + 1}.</span>
+                    <span class="name">${item[0]}</span>
+                    <span class="value" style="color:#9b59b6;">😴×${item[1]}</span>
+                </li>`
+            ).join('');
+
+            if (sortedSpioch.length === 0) {
+                spiochRanking.innerHTML = '<li class="ranking-item"><span style="color:var(--gray);">Wszyscy wstają o świcie! 🌅</span></li>';
+            }
+
+            const spiochFullRanking = document.getElementById('spioch-full-ranking');
+            const toggleSpiochBtn = document.getElementById('toggle-spioch-ranking');
+            if (sortedSpioch.length > 3) {
+                spiochFullRanking.innerHTML = sortedSpioch.map((item, i) =>
+                    `<li class="ranking-item">
+                        <span class="rank">${i + 1}.</span>
+                        <span class="name">${item[0]}</span>
+                        <span class="value" style="color:#9b59b6;">😴×${item[1]}</span>
+                    </li>`
+                ).join('');
+
+                const recentSpioch = getSpiochList().slice(0, 10);
+                if (recentSpioch.length > 0) {
+                    spiochFullRanking.innerHTML += '<li style="padding-top:1rem;border:none;"><strong style="color:var(--concrete);font-size:0.8rem;">Ostatni spiochy:</strong></li>';
+                    spiochFullRanking.innerHTML += recentSpioch.map(s =>
+                        `<li class="ranking-item" style="font-size:0.75rem;">
+                            <span style="color:var(--gray);">${s.date}</span>
+                            <span>😴 ${s.to}</span>
+                        </li>`
+                    ).join('');
+                }
+
+                toggleSpiochBtn.style.display = 'block';
+            }
         }
 
         function renderBadges() {
@@ -4237,6 +4319,7 @@ Ay, mi gatito, miau, miau
             if (!cards.length) return;
 
             const cloudTotals = getCloudTotals();
+            const spiochTotals2 = getSpiochTotals();
             const heroTrophies = gameStats?.hero?.trophies || {};
 
             cards.forEach(card => {
@@ -4250,13 +4333,15 @@ Ay, mi gatito, miau, miau
 
                 const clouds = cloudTotals[name] || 0;
                 const trophy = heroTrophies[name] || 0;
-                if (clouds === 0 && trophy === 0) return;
+                const spioch = spiochTotals2[name] || 0;
+                if (clouds === 0 && trophy === 0 && spioch === 0) return;
 
                 const badgeDiv = document.createElement('div');
                 badgeDiv.className = 'participant-badges';
                 if (trophy > 0) badgeDiv.innerHTML += `<span class="badge badge-hero">🏆×${trophy}</span>`;
                 if (clouds > 0) badgeDiv.innerHTML += `<span class="badge badge-cloud">☁️×${clouds}</span>`;
-                nameEl.after(badgeDiv);
+                if (spioch > 0) badgeDiv.innerHTML += `<span class="badge badge-spioch">😴×${spioch}</span>`;
+                card.appendChild(badgeDiv);
             });
         }
 
