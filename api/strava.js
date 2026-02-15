@@ -1,4 +1,4 @@
-// Vercel Serverless Function - Strava Rankings API v2 with Redis
+// TODO: After strava integration fix
 import fetch from 'node-fetch';
 import fs from 'fs';
 import path from 'path';
@@ -7,7 +7,6 @@ import { getAllParticipants, isRedisAvailable } from './redis.js';
 export default async function handler(req, res) {
   const { action = 'rankings' } = req.query;
 
-  // Load config from file (for segments and settings)
   let config;
   try {
     const configPath = path.join(process.cwd(), 'api', 'config.public.json');
