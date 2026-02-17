@@ -47,6 +47,11 @@ export async function getParticipant(stravaId) {
 
 // Get all participants
 export async function getAllParticipants() {
+  if (cache.has('allParticipants')) {
+    console.log('Using cached participants data');
+    return cache.get('allParticipants');
+  }
+
   // Get all participant IDs
   const ids = await redis('SMEMBERS', 'participants:ids');
   
@@ -54,14 +59,16 @@ export async function getAllParticipants() {
     return [];
   }
 
-  // Fetch all participant data
-  const participants = [];
-  for (const id of ids) {
-    const participant = await getParticipant(id);
-    if (participant) {
-      participants.push(participant);
-    }
-  }
+  // Use MGET to fetch all participant data in one call
+  const keys = ids.map(id => `participant:${id}`);
+  const data = await redis('MGET', ...keys);
+
+  // Parse and filter non-null results
+  const participants = data.map(item => (item ? JSON.parse(item) : null)).filter(Boolean);
+
+  // Cache the result for 5 minutes
+  cache.set('allParticipants', participants);
+  setTimeout(() => cache.delete('allParticipants'), 5 * 60 * 1000);
 
   return participants;
 }
@@ -70,3 +77,6 @@ export async function getAllParticipants() {
 export function isRedisAvailable() {
   return !!(REDIS_URL && REDIS_TOKEN);
 }
+
+// Add in-memory caching for frequently accessed data
+const cache = new Map();

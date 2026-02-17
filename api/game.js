@@ -113,7 +113,10 @@ async function getStats(req, res) {
   const heroTrophies = {};
   const heroHistory = [];
 
-  for (let i = 1; i <= 30; i++) {
+  // Reduce stats calculation to 20 days
+  const MAX_STATS_DAYS = 20;
+
+  for (let i = 1; i <= MAX_STATS_DAYS; i++) {
     const d = new Date();
     d.setDate(d.getDate() - i);
     const dateStr = d.toLocaleDateString('sv-SE', { timeZone: 'Europe/Madrid' });
