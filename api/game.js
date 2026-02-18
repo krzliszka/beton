@@ -67,7 +67,6 @@ async function voteHero(req, res) {
   if (!isValidParticipant(from)) return res.status(400).json({ error: `Nieznany uczestnik: ${from}` });
   if (!isValidParticipant(hero)) return res.status(400).json({ error: `Nieznany uczestnik: ${hero}` });
 
-  // Prevent Stefka from voting
   if (from === 'Stefka') {
     return res.status(403).json({ error: 'DZIECI I RYBY....' });
   }
@@ -89,6 +88,9 @@ async function voteHero(req, res) {
   await redis('INCR', `hero:count:${today}:${hero}`);
   await redis('SADD', `hero:voters:${today}`, from);
 
+  // Aktualizuj ranking po głosie
+  await updateHeroRanking(today);
+
   return res.status(200).json({
     success: true,
     message: `🏆 ${from} głosuje na ${hero} jako Hero of the Day!`
@@ -97,40 +99,57 @@ async function voteHero(req, res) {
 
 // 📊 GET STATS
 async function getStats(req, res) {
+  const now = Date.now();
+  if (statsCache.data && (now - statsCache.timestamp < CACHE_TTL)) {
+    return res.status(200).json(statsCache.data);
+  }
   const today = getToday();
   const from = req.query.from || null;
-
   // --- HERO TODAY ---
-  const heroToday = {};
-  for (const p of PARTICIPANTS) {
-    const count = await redis('GET', `hero:count:${today}:${p}`);
-    if (count && parseInt(count) > 0) {
-      heroToday[p] = parseInt(count);
-    }
+  let heroToday = {};
+  let heroRanking = [];
+  const rankingRaw = await redis('GET', `hero:ranking:${today}`);
+  if (rankingRaw) {
+    try {
+      heroRanking = JSON.parse(rankingRaw);
+      heroRanking.forEach(([name, count]) => { heroToday[name] = count; });
+    } catch {}
   }
-
+  // --- CLOUD RANKING ---
+  let cloudToday = {};
+  let cloudRanking = [];
+  const cloudRankingRaw = await redis('GET', `cloud:ranking:${today}`);
+  if (cloudRankingRaw) {
+    try {
+      cloudRanking = JSON.parse(cloudRankingRaw);
+      cloudRanking.forEach(([name, count]) => { cloudToday[name] = count; });
+    } catch {}
+  }
+  // --- SPIOCH RANKING ---
+  let spiochToday = {};
+  let spiochRanking = [];
+  const spiochRankingRaw = await redis('GET', `spioch:ranking:${today}`);
+  if (spiochRankingRaw) {
+    try {
+      spiochRanking = JSON.parse(spiochRankingRaw);
+      spiochRanking.forEach(([name, count]) => { spiochToday[name] = count; });
+    } catch {}
+  }
   // --- MY VOTE ---
   let myVote = null;
   if (from && isValidParticipant(from)) {
     myVote = await redis('GET', `hero:vote:${from}:${today}`);
   }
-
-  // --- ALL-TIME HERO TROPHIES ---
+  // --- ALL-TIME HERO TROPHIES & HISTORY (ograniczone do 15 dni, jak poprzednio) ---
   const heroTrophies = {};
   const heroHistory = [];
-
-  // Reduce stats calculation to 20 days
-  const MAX_STATS_DAYS = 20;
-
+  const MAX_STATS_DAYS = 15;
   for (let i = 1; i <= MAX_STATS_DAYS; i++) {
     const d = new Date();
     d.setDate(d.getDate() - i);
     const dateStr = d.toLocaleDateString('sv-SE', { timeZone: 'Europe/Madrid' });
-
-    // Collect all votes for the day
     const dayVotes = {};
     let dayBestVotes = 0;
-
     for (const p of PARTICIPANTS) {
       const count = await redis('GET', `hero:count:${dateStr}:${p}`);
       const votes = parseInt(count) || 0;
@@ -139,21 +158,14 @@ async function getStats(req, res) {
         if (votes > dayBestVotes) dayBestVotes = votes;
       }
     }
-
     if (dayBestVotes > 0) {
-      // Find ALL winners (tied for first place)
       const winners = Object.entries(dayVotes)
         .filter(([_, v]) => v === dayBestVotes)
         .map(([name]) => name);
-
-      // Each winner gets a trophy
       winners.forEach(w => {
         heroTrophies[w] = (heroTrophies[w] || 0) + 1;
       });
-
-      // Total votes that day (for history display)
       const totalVotes = Object.values(dayVotes).reduce((a, b) => a + b, 0);
-
       heroHistory.push({
         date: dateStr,
         winner: winners.join(', '),
@@ -162,14 +174,72 @@ async function getStats(req, res) {
       });
     }
   }
-
-  return res.status(200).json({
+  const statsData = {
     date: today,
     hero: {
       today: heroToday,
+      ranking: heroRanking,
       myVote: myVote,
       trophies: heroTrophies,
       history: heroHistory
+    },
+    clouds: {
+      today: cloudToday,
+      ranking: cloudRanking
+    },
+    spioch: {
+      today: spiochToday,
+      ranking: spiochRanking
     }
-  });
+  };
+  statsCache.data = statsData;
+  statsCache.timestamp = Date.now();
+  return res.status(200).json(statsData);
+}
+
+// --- CACHE SETUP ---
+const statsCache = {
+  data: null,
+  timestamp: 0
+};
+const CACHE_TTL = 5 * 60 * 1000; // 5 minut
+
+// --- AGREGACJA I CZYSZCZENIE RANKINGÓW HERO, CHMURKI, SPIOCH ---
+async function updateHeroRanking(today) {
+  const heroToday = {};
+  for (const p of PARTICIPANTS) {
+    const count = await redis('GET', `hero:count:${today}:${p}`);
+    if (count && parseInt(count) > 0) {
+      heroToday[p] = parseInt(count);
+    }
+  }
+  const sorted = Object.entries(heroToday).sort((a,b) => b[1]-a[1]).slice(0, 10);
+  // 30 dni = 2592000 sekund
+  await redis('SET', `hero:ranking:${today}`, JSON.stringify(sorted), 'EX', '2592000');
+}
+
+async function updateCloudRanking(today) {
+  // Załóżmy, że chmurki są w Redis jako cloud:count:{today}:{name}
+  const cloudToday = {};
+  for (const p of PARTICIPANTS) {
+    const count = await redis('GET', `cloud:count:${today}:${p}`);
+    if (count && parseInt(count) > 0) {
+      cloudToday[p] = parseInt(count);
+    }
+  }
+  const sorted = Object.entries(cloudToday).sort((a,b) => b[1]-a[1]).slice(0, 10);
+  await redis('SET', `cloud:ranking:${today}`, JSON.stringify(sorted), 'EX', '2592000');
+}
+
+async function updateSpiochRanking(today) {
+  // Załóżmy, że spiochy są w Redis jako spioch:count:{today}:{name}
+  const spiochToday = {};
+  for (const p of PARTICIPANTS) {
+    const count = await redis('GET', `spioch:count:${today}:${p}`);
+    if (count && parseInt(count) > 0) {
+      spiochToday[p] = parseInt(count);
+    }
+  }
+  const sorted = Object.entries(spiochToday).sort((a,b) => b[1]-a[1]).slice(0, 10);
+  await redis('SET', `spioch:ranking:${today}`, JSON.stringify(sorted), 'EX', '2592000');
 }
