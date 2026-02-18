@@ -66,6 +66,12 @@ async function voteHero(req, res) {
   if (!from || !hero) return res.status(400).json({ error: 'Podaj from i hero' });
   if (!isValidParticipant(from)) return res.status(400).json({ error: `Nieznany uczestnik: ${from}` });
   if (!isValidParticipant(hero)) return res.status(400).json({ error: `Nieznany uczestnik: ${hero}` });
+
+  // Prevent Stefka from voting
+  if (from === 'Stefka') {
+    return res.status(403).json({ error: 'DZIECI I RYBY....' });
+  }
+
   if (from === hero) return res.status(400).json({ error: 'Nie możesz głosować na siebie!' });
 
   const today = getToday();
