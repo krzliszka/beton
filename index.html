@@ -3192,7 +3192,7 @@ Ay, mi gatito, miau, miau
 
         <!-- Identity selector -->
         <div class="game-identity">
-            <label for="game-who">🎭 Jestem:</label>
+            <label for="game-who">Jestem:</label>
             <select id="game-who">
                 <option value="">Wybierz siebie...</option>
             </select>
@@ -3207,7 +3207,7 @@ Ay, mi gatito, miau, miau
         <!-- PANEL: HERO VOTING -->
         <div class="game-panel active" id="hero-panel">
             <p style="text-align:center; color:var(--concrete); margin-bottom:1rem;">
-                Głosuj na Bohatera Dnia — jedna osoba, jeden głos dziennie. Reset o północy 🕛
+                Głosuj na Bohatera Dnia — jedna osoba, jeden głos dziennie. Reset o północy
             </p>
             <div class="hero-grid" id="hero-grid"></div>
             <p id="hero-status" style="text-align:center; margin-top:1rem; font-size:0.85rem; color:var(--gray);"></p>
@@ -3750,7 +3750,7 @@ Ay, mi gatito, miau, miau
                 { src: 'img/cook1.jpg', alt: 'Ubijanie' },
                 { src: 'img/bezy.jpg', alt: 'bezy' },
                 { src: 'img/donsimon.JPG', alt: 'donsimon' },
-                { src: 'img/beton2.jpg', alt: 'beton beton' },
+                { src: 'img/beton2.png', alt: 'betonbeton' },
                 { src: 'img/detka.jpg', alt: 'detki' },
                 { src: 'img/winiacz.jpg', alt: 'plaz' },
                 { src: 'img/muset.JPG', alt: 'musette' },
@@ -3845,9 +3845,9 @@ Ay, mi gatito, miau, miau
         // Participants - must match HTML .participant-name values!
         const PARTICIPANTS = [
             'Rajmund','Krzysiek','Dzonson','Asia','Zuza','Tommy G',
-            'Łukasz','G','Bartek','Tomek','Stefka','Julka',
+            'Łukasz','Bartek','Tomek','Stefka','Julka',
             'Natalia','Emilka','Olaf','Benek','Dybi','Zabs0n',
-            'Maćko','Turkish Hairlines','Mati','Kuba'
+            'Maćko','Kuba'
         ];
 
         // ☁️ CHMURKI - KOMISYJNE (edytuj tutaj, Krzysiek!)
@@ -4013,8 +4013,23 @@ Ay, mi gatito, miau, miau
                 if (hasVoted && myVotedFor !== name) card.classList.add('disabled');
 
                 const votes = todayVotes[name] || 0;
+                // card.innerHTML = `
+                //     <span class="hero-candidate-emoji">🦸</span>
+                //     <span class="hero-candidate-name">${name}</span>
+                //     ${votes > 0 ? '<span style="font-size:0.7rem;color:#FFD700;">⭐' + votes + '</span>' : ''}
+                // `;
+
+                // Spróbuj znaleźć zdjęcie uczestnika po imieniu
+                let imgSrc = null;
+                document.querySelectorAll('.participant').forEach(part => {
+                    const pname = part.querySelector('.participant-name')?.textContent?.trim();
+                    if (pname === name) {
+                        const pimg = part.querySelector('img');
+                        if (pimg) imgSrc = pimg.src;
+                    }
+                });
                 card.innerHTML = `
-                    <span class="hero-candidate-emoji">🦸</span>
+                    ${imgSrc ? `<img src="${imgSrc}" class="hero-candidate-photo" style="width:28px;height:28px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-bottom:2px;">` : ''}
                     <span class="hero-candidate-name">${name}</span>
                     ${votes > 0 ? '<span style="font-size:0.7rem;color:#FFD700;">⭐' + votes + '</span>' : ''}
                 `;
@@ -4187,7 +4202,7 @@ Ay, mi gatito, miau, miau
             ).join('');
 
             if (sortedSpioch.length === 0) {
-                spiochRanking.innerHTML = '<li class="ranking-item"><span style="color:var(--gray);">Wszyscy wstają o świcie! 🌅</span></li>';
+                spiochRanking.innerHTML = '<li class="ranking-item"><span style="color:var(--gray);">Wszyscy wstają o świcie! </span></li>';
             }
 
             const spiochFullRanking = document.getElementById('spioch-full-ranking');

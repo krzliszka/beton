@@ -17,9 +17,9 @@ async function redis(command, ...args) {
 // Participants list (must match HTML participant-name!)
 const PARTICIPANTS = [
   'Rajmund','Krzysiek','Dzonson','Asia','Zuza','Tommy G',
-  'Łukasz','G','Bartek','Tomek','Stefka','Julka',
+  'Łukasz','Bartek','Tomek','Stefka','Julka',
   'Natalia','Emilka','Olaf','Benek','Dybi','Zabs0n',
-  'Maćko','Turkish Hairlines','Mati','Kuba'
+  'Maćko','Kuba'
 ];
 
 function getToday() {
