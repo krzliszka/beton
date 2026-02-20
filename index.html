@@ -2101,9 +2101,11 @@
             }
 
             .accommodation-content {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto auto auto;
-                gap: 1.5rem;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: auto auto;
+                gap: 3rem 2rem;
+                position: relative;
             }
 
             .accommodation-main-img {
@@ -2136,8 +2138,12 @@
             }
 
             .attractions-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 3rem;
+                align-items: center;
+                max-width: 1200px;
+                margin: 0 auto;
             }
 
             .attractions-info {
@@ -2633,10 +2639,9 @@
         /* EXTRA SMALL MOBILE */
         @media (max-width: 480px) {
             .section-content {
-                padding: 0 0.5rem;
-            }
-            
-            .transport-info {
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 0 1.5rem;
                 padding: 0.75rem;
                 margin: 1.5rem 0;
             }
