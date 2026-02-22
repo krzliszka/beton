@@ -2892,13 +2892,13 @@
                     <p class="participant-role">AGH Cooking - Chef de Cuisine</p>
                 </div>
             </div>
-            <!-- <div class="participant">
+            <div class="participant">
                 <img loading="lazy" src="img/ludzie/gg.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">G</p>
                     <p class="participant-role">Funkcja</p>
                 </div>
-            </div> -->
+            </div>
             <div class="participant">
                 <img loading="lazy" src="img/ludzie/bartek.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
@@ -2983,22 +2983,22 @@
                     <!-- <p class="participant-role">Funkcja</p> -->
                 </div>
             </div>
-            <!-- <div class="participant">
+            <div class="participant">
                 <img loading="lazy" src="img/ludzie/gg2.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Turkish Hairlines</p>
-                    <p class="participant-role">Funkcja</p> -->
-                <!-- </div>
-            </div> --> 
-            <!-- <div class="participant">
+                    <p class="participant-role">Funkcja</p>
+                </div>
+            </div>
+            <div class="participant">
                 <img loading="lazy" src="img/ludzie/mati.jpg" class="participant-img clickable-image">
                 <div class="participant-info">
                     <p class="participant-name">Mati</p>
                     <p class="participant-role">Funkcja</p>
                 </div>
-            </div> -->
-        </div> <!-- participants-grid -->
-    </div> <!-- section-content -->
+            </div>
+        </div>
+    </div>
     </section>
 
     <!-- FLIGHTS -->
@@ -3195,77 +3195,19 @@ Ay, mi gatito, miau, miau
     <section class="section game-section fade-in" id="gra">
         <div class="section-content">
         <h2 class="section-title">Ranking</h2>
-
-        <!-- Identity selector -->
-        <div class="game-identity">
-            <label for="game-who">Jestem:</label>
-            <select id="game-who">
-                <option value="">Wybierz siebie...</option>
-            </select>
-        </div>
-
-        <!-- Tabs -->
-        <div class="game-tabs">
-            <div class="game-tab active" data-panel="hero-panel">🏆 Hero of the Day</div>
-            <div class="game-tab" data-panel="ranking-panel">📊 Ranking</div>
-        </div>
-
-        <!-- PANEL: HERO VOTING -->
-        <div class="game-panel active" id="hero-panel">
-            <p style="text-align:center; color:var(--concrete); margin-bottom:1rem;">
-                Głosuj na Bohatera Dnia — jedna osoba, jeden głos dziennie. Reset o północy
-            </p>
-            <div class="hero-grid" id="hero-grid"></div>
-            <p id="hero-status" style="text-align:center; margin-top:1rem; font-size:0.85rem; color:var(--gray);"></p>
-        </div>
-
-        <!-- PANEL: RANKINGS -->
-        <div class="game-panel" id="ranking-panel">
-            <div class="hero-today-banner" id="hero-today-banner" style="display:none;">
-                <h3>🏆 Dzisiejszy betoniarz</h3>
-                <img id="hero-today-photo" class="hero-today-photo" src="" alt="" style="display:none;">
-                <p id="hero-today-name" style="font-size:1.5rem; margin:0.5rem 0;">—</p>
-                <p id="hero-today-votes" style="font-size:0.8rem; color:var(--concrete);">głosów: 0</p>
+        <div class="rankings-container">
+            <div class="ranking-card">
+                <h3>🌧️ Ranking chmurek</h3>
+                <ul class="ranking-list" id="cloud-ranking"></ul>
+                <ul class="ranking-list" id="cloud-full-ranking" style="display:none;"></ul>
+                <button class="show-full-ranking-btn" id="toggle-cloud-ranking" style="margin-top:0.75rem;background:none;border:1px solid var(--gray);color:var(--gray);padding:0.4rem 1rem;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:0.75rem;width:100%;display:none;">Pokaż cały ranking ▼</button>
             </div>
 
-            <div class="rankings-container">
-                <div class="ranking-card">
-                    <h3>🏆 Hall of Heroes</h3>
-                    <div class="podium" id="hero-podium">
-                        <div class="podium-place" id="podium-2">
-                            <div class="podium-bar">🥈</div>
-                            <div class="podium-name">—</div>
-                            <div class="podium-count">0</div>
-                        </div>
-                        <div class="podium-place" id="podium-1">
-                            <div class="podium-bar">🥇</div>
-                            <div class="podium-name">—</div>
-                            <div class="podium-count">0</div>
-                        </div>
-                        <div class="podium-place" id="podium-3">
-                            <div class="podium-bar">🥉</div>
-                            <div class="podium-name">—</div>
-                            <div class="podium-count">0</div>
-                        </div>
-                    </div>
-                    <ul class="ranking-list" id="hero-full-ranking" style="display:none;"></ul>
-                    <button class="show-full-ranking-btn" id="toggle-hero-ranking" style="margin-top:0.75rem;background:none;border:1px solid var(--gray);color:var(--gray);padding:0.4rem 1rem;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:0.75rem;width:100%;">Pokaż cały ranking ▼</button>
-                    <div class="hero-history" id="hero-history"></div>
-                </div>
-
-                <div class="ranking-card">
-                    <h3>🌧️ Ranking chmurek</h3>
-                    <ul class="ranking-list" id="cloud-ranking"></ul>
-                    <ul class="ranking-list" id="cloud-full-ranking" style="display:none;"></ul>
-                    <button class="show-full-ranking-btn" id="toggle-cloud-ranking" style="margin-top:0.75rem;background:none;border:1px solid var(--gray);color:var(--gray);padding:0.4rem 1rem;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:0.75rem;width:100%;display:none;">Pokaż cały ranking ▼</button>
-                </div>
-
-                <div class="ranking-card">
-                    <h3>😴 Ranking śpioszków</h3>
-                    <ul class="ranking-list" id="spioch-ranking"></ul>
-                    <ul class="ranking-list" id="spioch-full-ranking" style="display:none;"></ul>
-                    <button class="show-full-ranking-btn" id="toggle-spioch-ranking" style="margin-top:0.75rem;background:none;border:1px solid var(--gray);color:var(--gray);padding:0.4rem 1rem;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:0.75rem;width:100%;display:none;">Pokaż cały ranking ▼</button>
-                </div>
+            <div class="ranking-card">
+                <h3>😴 Ranking śpioszków</h3>
+                <ul class="ranking-list" id="spioch-ranking"></ul>
+                <ul class="ranking-list" id="spioch-full-ranking" style="display:none;"></ul>
+                <button class="show-full-ranking-btn" id="toggle-spioch-ranking" style="margin-top:0.75rem;background:none;border:1px solid var(--gray);color:var(--gray);padding:0.4rem 1rem;border-radius:6px;cursor:pointer;font-family:'Space Mono',monospace;font-size:0.75rem;width:100%;display:none;">Pokaż cały ranking ▼</button>
             </div>
         </div>
         </div>
