@@ -7,9 +7,6 @@ import { saveParticipant, isRedisAvailable } from './redis.js';
 export default async function handler(req, res) {
   const { code, error } = req.query;
 
-  console.log('DEBUG: Starting auth handler');
-  console.log('DEBUG: Environment vars present:', !!process.env.STRAVA_CLIENT_ID);
-
   // Load config from environment variables or file
   let config;
   let configPath = null;
