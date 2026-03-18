@@ -38,7 +38,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 2rem 1.5rem;
+            padding: 2rem 1.5rem 10rem; /* Zwiększony dolny padding, żeby przesunąć treść wyżej */
             position: relative;
             background: url('img/bck.jpg') 30% center/cover no-repeat, var(--black);
         }
@@ -95,6 +95,29 @@
             color: var(--white);
         }
 
+        .cta-button {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: var(--white);
+            color: var(--black);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .cta-button:hover {
+            background: var(--agh-green);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
         nav {
             position: absolute;
             bottom: 2rem;
@@ -126,6 +149,7 @@
         <h1 class="hero-title">
             <span>#BETON</span>
         </h1>
+        <a href="https://live.racetimingsystem.pl/publicRaces" target="_blank" class="cta-button">Puchar Betonu</a>
         <nav>
             <ul class="nav-links">
                 <li><a href="2026.html">Calpik 2026</a></li>
