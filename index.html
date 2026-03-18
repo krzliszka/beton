@@ -40,7 +40,7 @@
             text-align: center;
             padding: 2rem 1.5rem 10rem; /* Zwiększony dolny padding, żeby przesunąć treść wyżej */
             position: relative;
-            background: url('img/background1.png') center center/cover no-repeat, var(--black);
+            background: url('img/background.jpg?v=3') center center/cover no-repeat, var(--black);
         }
 
         .hero::before {
@@ -97,7 +97,7 @@
 
         .cta-button {
             display: inline-block;
-            margin-top: 2rem;
+            margin-top: 15vh; /* Przesunięcie przycisku znacznie niżej - np. na dół kocich łbów */
             padding: 1rem 2rem;
             background: var(--white);
             color: var(--black);
@@ -110,6 +110,12 @@
             border-radius: 4px;
             transition: all 0.3s ease;
             z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            .cta-button {
+                margin-top: 25vh; /* Jeszcze niżej na telefonach */
+            }
         }
 
         .cta-button:hover {
