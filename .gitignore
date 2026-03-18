@@ -15,4 +15,4 @@ package-lock.json
 Thumbs.db
 
 # Logs
-*.log
+*.log.DS_Store

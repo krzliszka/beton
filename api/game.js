@@ -1,4 +1,4 @@
-// Vercel Serverless Function - Game API (Clouds & Hero of the Day)
+
 import fetch from 'node-fetch';
 
 const REDIS_URL = process.env.KV_REST_API_URL;
